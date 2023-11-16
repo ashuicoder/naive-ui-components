@@ -16,7 +16,7 @@
 <script setup lang="tsx">
 import { computed, ref } from 'vue'
 import { NSpace, NButton } from 'naive-ui'
-import { NaiveUiForm, type FormSchema, useForm } from 'naive-ui-form'
+import { NaiveUiForm, type FormSchema, type Recordable, useForm } from 'naive-ui-form'
 
 const schemas: FormSchema[] = [
   // {
@@ -118,7 +118,7 @@ const [register, { getValue, getFieldValue, submit, setLoading }] = useForm({
       type: 'custom',
       label: '学校',
       required: true,
-      render(formValue, field) {
+      render(formValue: Recordable, field: string) {
         return <input v-model={formValue[field]} />
       }
     },
