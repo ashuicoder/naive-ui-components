@@ -1,6 +1,13 @@
 <template>
   <div>
-    <NaiveUiForm :schemas="schemas" style="width: 800px" size="small" @register="register">
+    <NaiveUiForm
+      ref="formRef"
+      :schemas="schemas"
+      style="width: 800px"
+      size="small"
+      @register="register"
+      @submit="handleSubmitEmit"
+    >
       <template #address="{ formValue, field }">
         <input v-model="formValue[field]" />
       </template>
@@ -16,7 +23,15 @@
 <script setup lang="tsx">
 import { computed, ref } from 'vue'
 import { NSpace, NButton } from 'naive-ui'
-import { NaiveUiForm, type FormSchema, type Recordable, useForm } from 'naive-ui-form'
+import {
+  NaiveUiForm,
+  type FormSchema,
+  type Recordable,
+  useForm,
+  type FormInstance
+} from 'naive-ui-form'
+
+const formRef = ref<FormInstance | null>(null)
 
 const schemas: FormSchema[] = [
   // {
@@ -185,11 +200,16 @@ function getFormFieldValue() {
 }
 
 async function handleSubmit() {
+  console.log(formRef.value?.getValue())
   const res = await submit()
 
-  setTimeout(() => {
-    setLoading(false)
-  }, 1000)
+  // setTimeout(() => {
+  //   setLoading(false)
+  // }, 1000)
+}
+
+function handleSubmitEmit(value: Recordable) {
+  console.log('emit', value)
 }
 </script>
 

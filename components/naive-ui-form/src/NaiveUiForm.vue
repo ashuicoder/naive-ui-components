@@ -79,8 +79,8 @@ export default defineComponent({
     NTransfer,
     NTreeSelect
   },
-  emits: ['register'],
-  setup(props, { emit, slots }) {
+  emits: ['register', 'submit', 'reset'],
+  setup(props, { emit, slots, expose }) {
     const hookProps = ref<Props>({})
 
     const commonProps = computed(() => {
@@ -97,8 +97,9 @@ export default defineComponent({
 
         if (err) {
           submitLoading.value = false
-          return
+          return Promise.reject(err)
         }
+        emit('submit', this.getValue())
         return this.getValue()
       },
       reset() {
@@ -108,6 +109,7 @@ export default defineComponent({
           }
           setDefaultValue(item)
           this.clearValidate()
+          emit('reset')
         })
       },
       getValue() {
@@ -136,6 +138,10 @@ export default defineComponent({
         submitLoading.value = loading
       }
     }
+
+    expose({
+      ...formMethod
+    })
 
     emit('register', formMethod)
 

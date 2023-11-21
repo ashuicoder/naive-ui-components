@@ -275,11 +275,7 @@ importers:
         specifier: ^1.8.19
         version: 1.8.22(typescript@5.2.2)
 
-  docs:
-    devDependencies:
-      vitepress:
-        specifier: 1.0.0-rc.25
-        version: 1.0.0-rc.25(@algolia/client-search@4.20.0)(@types/node@18.18.9)(search-insights@2.10.0)(typescript@5.2.2)
+  docs: {}
 
 packages:
 

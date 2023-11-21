@@ -2,10 +2,8 @@
   "name": "naive-ui-form",
   "version": "0.0.1",
   "private": false,
-  "main": "./dist/index.js",
+  "main": "./index.ts",
   "type": "module",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "description": "一个基于naive-ui封装的表单组件，一个配置，生成一个表单",
   "keywords": [
     "naive-ui",
