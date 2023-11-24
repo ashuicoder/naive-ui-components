@@ -1,37 +1,26 @@
 <template>
-  <div>
-    <NUpload
-      v-bind="getProps()"
-      v-model:file-list="fileList"
-      list-type="image-card"
-      :custom-request="handleCustomRequest"
-    >
-      <slot></slot>
-    </NUpload>
-
-    <VueCropper></VueCropper>
-  </div>
+  <NUpload
+    v-bind="props"
+    v-model:file-list="fileList"
+    :default-upload="false"
+    :custom-request="handleCustomRequest"
+  >
+    <slot></slot>
+  </NUpload>
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs, nextTick, inject } from 'vue'
+import { computed, nextTick, inject } from 'vue'
 import { NUpload } from 'naive-ui'
 import to from 'await-to-js'
-import 'vue-cropper/dist/index.css'
-import { VueCropper } from 'vue-cropper'
 
 import type { UploadCustomRequestOptions } from 'naive-ui'
 import type { Props, Emits, RequestFun } from './types'
 
-const attrs = useAttrs()
 const props = withDefaults(defineProps<Props>(), {
   multiple: false,
   max: 9
 })
-
-function getProps() {
-  return { ...attrs, props }
-}
 
 const emits = defineEmits<Emits>()
 const fileList = computed({
