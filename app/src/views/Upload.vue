@@ -1,20 +1,25 @@
 <template>
-  <!-- <naive-ui-upload
+  <naive-ui-upload
     v-model:value="fileList"
-    :cropper="true"
+    :cropper="{
+      autoCrop: true,
+      fixed: true,
+      fixedNumber: [1, 1],
+      centerBox: true
+    }"
+    :size="1"
+    multiple
     :requestFunc="handleUpload"
-  ></naive-ui-upload> -->
-
-  <UploadImage v-model:value="imageList" :requestFunc="handleUpload"></UploadImage>
+  ></naive-ui-upload>
 </template>
 
 <script setup lang="ts">
 import to from 'await-to-js'
-import { generateUploadInfo, UploadImage } from 'naive-ui-upload'
+import { generateUploadInfo, NaiveUiUpload } from 'naive-ui-upload'
 import { ref } from 'vue'
 import type { UploadFileInfo } from 'naive-ui'
 
-const imageList = ref<string[]>([])
+const fileList = ref<UploadFileInfo[]>([])
 
 async function handleUpload(file: File) {
   const formData = new FormData()
