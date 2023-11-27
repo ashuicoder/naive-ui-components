@@ -51,3 +51,7 @@ export interface FormInstance {
   setProps: (props: Props) => void
   setLoading(loading: boolean): void
 }
+
+export interface ModalFormProps {
+  show: boolean
+}
