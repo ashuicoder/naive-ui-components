@@ -29,7 +29,7 @@
           <VueCropper
             ref="cropperRef"
             :img="cropperUrl"
-            v-bind="cropper"
+            v-bind="getCropperProps"
             @realTime="handlePreview"
           ></VueCropper>
         </div>
@@ -58,6 +58,11 @@ const props = defineProps<Props>()
 
 function getProps() {
   return { ...attrs, ...props }
+}
+
+function getCropperProps() {
+  if (!props.cropper || typeof props.cropper === 'boolean') return {}
+  return props.cropper
 }
 
 const emits = defineEmits<Emits>()

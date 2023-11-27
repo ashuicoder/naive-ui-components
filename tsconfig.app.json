@@ -3,6 +3,7 @@
   "include": ["env.d.ts", "app/**/*", "app/**/*.vue","components/**/*", "components/**/*.vue"],
   "exclude": ["**/__tests__/*"],
   "compilerOptions": {
+    "noImplicitAny": false,
     "composite": true,
     "baseUrl": ".",
     "paths": {

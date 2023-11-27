@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "build:form": "pnpm -F naive-ui-form build",
+    "build:upload": "pnpm -F naive-ui-upload build",
     "dev": "pnpm -F app dev",
-    "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",

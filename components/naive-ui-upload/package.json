@@ -2,14 +2,25 @@
   "name": "naive-ui-upload",
   "version": "0.0.1",
   "private": false,
-  "main": "./index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "description": "一个基于naive-ui封装的文件上传组件，支持图片裁剪",
+  "keywords": [
+    "naive-ui",
+    "vue3",
+    "upload",
+    "cropper"
+  ],
+  "author": "ashuicoder",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
+    "type-check": "vue-tsc --noEmit -p ../../tsconfig.vitest.json --composite false"
   },
   "dependencies": {
     "vue": "^3.3.4",
