@@ -60,8 +60,6 @@ function getProps() {
   return { ...attrs, ...props }
 }
 
-console.log(getProps())
-
 const emits = defineEmits<Emits>()
 const fileList = computed({
   get() {
