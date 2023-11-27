@@ -18,7 +18,12 @@
       <NButton type="primary" @click="getFormFieldValue">取单个值</NButton>
     </NSpace>
 
-    <ModalForm v-model:show="showModal" title="新增" :schemas="schemas"></ModalForm>
+    <ModalForm
+      v-model:show="showModal"
+      title="新增"
+      :schemas="schemas"
+      style="width: 800px"
+    ></ModalForm>
   </div>
 </template>
 

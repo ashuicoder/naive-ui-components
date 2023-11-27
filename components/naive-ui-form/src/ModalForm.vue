@@ -6,7 +6,11 @@
     positive-text="确定"
     negative-text="取消"
   >
-    <BasicForm v-bind="getProps()"></BasicForm>
+    <BasicForm
+      v-bind="getProps()"
+      :show-action-btns="false"
+      style="width: 100%; margin: 20px 0"
+    ></BasicForm>
   </NModal>
 </template>
 
