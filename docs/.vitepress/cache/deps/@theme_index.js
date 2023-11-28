@@ -9,6 +9,7 @@ import {
   watch,
   watchEffect
 } from "./chunk-KYDTUX5N.js";
+import "./chunk-5WWUZCGV.js";
 
 // node_modules/.pnpm/vitepress@1.0.0-rc.25_@algolia+client-search@4.20.0_@types+node@18.18.9_sass@1.69.5_search-in_dbo57d3nsic27itderipp75bdq/node_modules/vitepress/dist/client/theme-default/index.js
 import "E:/my-projects/naive-ui-components/node_modules/.pnpm/vitepress@1.0.0-rc.25_@algolia+client-search@4.20.0_@types+node@18.18.9_sass@1.69.5_search-in_dbo57d3nsic27itderipp75bdq/node_modules/vitepress/dist/client/theme-default/styles/fonts.css";

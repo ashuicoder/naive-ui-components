@@ -1,11 +1,12 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "app/**/*", "app/**/*.vue","components/**/*", "components/**/*.vue"],
+  "include": ["env.d.ts", "app/**/*", "app/**/*.vue","components/**/*", "components/**/*.vue", "docs/**/*", "docs/**/*.vue"],
   "exclude": ["**/__tests__/*"],
   "compilerOptions": {
     "noImplicitAny": false,
     "composite": true,
     "baseUrl": ".",
+    "jsx": "preserve",
     "paths": {
       "app/*": ["./app/src/*"],
     }

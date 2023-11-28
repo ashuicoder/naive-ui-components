@@ -24,7 +24,6 @@ import {
 import type { Recordable, FormSchema } from '../types'
 export const componentMapInfo = {
   'auto-complete': {
-    component: 'NAutoComplete',
     outputStr: '输入',
     render(formValue: Recordable, schema: FormSchema) {
       return (
@@ -38,7 +37,6 @@ export const componentMapInfo = {
     }
   },
   cascader: {
-    component: 'NCascader',
     outputStr: '选择',
     render(formValue: Recordable, schema: FormSchema) {
       return (
@@ -52,7 +50,6 @@ export const componentMapInfo = {
     }
   },
   'color-picker': {
-    component: 'NColorPicker',
     outputStr: '选择',
     render(formValue: Recordable, schema: FormSchema) {
       return (
@@ -79,7 +76,6 @@ export const componentMapInfo = {
     }
   },
   checkbox: {
-    component: 'NCheckboxGroup',
     outputStr: '勾选',
     render(formValue: Recordable, schema: FormSchema) {
       if (!schema?.componentProps?.options) {
@@ -101,7 +97,6 @@ export const componentMapInfo = {
     }
   },
   'date-picker': {
-    component: 'NDatePicker',
     outputStr: '选择',
     render(formValue: Recordable, schema: FormSchema) {
       const valueFormat = schema.componentProps?.valueFormat || 'yyyy-MM-dd'
@@ -118,7 +113,6 @@ export const componentMapInfo = {
   },
 
   'dynamic-input': {
-    component: 'NDynamicInput',
     outputStr: '输入',
     render(formValue: Recordable, schema: FormSchema) {
       return (
@@ -133,7 +127,6 @@ export const componentMapInfo = {
   },
 
   'dynamic-tags': {
-    component: 'NDynamicTags',
     outputStr: '添加',
     render(formValue: Recordable, schema: FormSchema) {
       return (
@@ -147,7 +140,6 @@ export const componentMapInfo = {
   },
 
   input: {
-    component: 'NInput',
     outputStr: '输入',
     render(formValue: Recordable, schema: FormSchema) {
       return (
@@ -161,7 +153,6 @@ export const componentMapInfo = {
     }
   },
   'input-number': {
-    component: 'NInputNumber',
     outputStr: '输入',
     render(formValue: Recordable, schema: FormSchema) {
       return (
@@ -177,7 +168,6 @@ export const componentMapInfo = {
 
   mention: {
     component: 'NMention',
-    outputStr: '输入',
     render(formValue: Recordable, schema: FormSchema) {
       return (
         <NMention
@@ -191,7 +181,6 @@ export const componentMapInfo = {
   },
 
   'radio-single': {
-    component: 'NRadio',
     outputStr: '勾选',
     render(formValue: Recordable, schema: FormSchema) {
       return (
@@ -205,7 +194,6 @@ export const componentMapInfo = {
   },
 
   radio: {
-    component: 'NRadioGroup',
     outputStr: '勾选',
     render(formValue: Recordable, schema: FormSchema) {
       if (!schema?.componentProps?.options) {
@@ -232,7 +220,6 @@ export const componentMapInfo = {
   },
 
   rate: {
-    component: 'NRate',
     outputStr: '勾选',
     render(formValue: Recordable, schema: FormSchema) {
       return (
@@ -246,7 +233,6 @@ export const componentMapInfo = {
   },
 
   select: {
-    component: 'NSelect',
     outputStr: '选择',
     render(formValue: Recordable, schema: FormSchema) {
       return (
@@ -261,7 +247,6 @@ export const componentMapInfo = {
   },
 
   slider: {
-    component: 'NSlider',
     outputStr: '滑动选择',
     render(formValue: Recordable, schema: FormSchema) {
       return (
@@ -275,7 +260,6 @@ export const componentMapInfo = {
   },
 
   switch: {
-    component: 'NSwitch',
     outputStr: '开启',
     render(formValue: Recordable, schema: FormSchema) {
       return (
@@ -289,7 +273,6 @@ export const componentMapInfo = {
   },
 
   'time-picker': {
-    component: 'NTimePicker',
     outputStr: '选择',
     render(formValue: Recordable, schema: FormSchema) {
       const valueFormat = schema.componentProps?.valueFormat || 'HH:mm:ss'

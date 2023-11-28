@@ -10,6 +10,9 @@ hero:
     - theme: brand
       text: Markdown Examples
       link: /markdown-examples
+    - theme: brand
+      text: naive-ui-form
+      link: /naive-ui-form    
     - theme: alt
       text: API Examples
       link: /api-examples
