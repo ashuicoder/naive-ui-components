@@ -1,4 +1,3 @@
-import { nextTick } from 'vue'
 import type { FormInstance, Recordable, Props } from '../types'
 export function useForm(props?: Props): [(formIns: FormInstance) => void, FormInstance] {
   let formInstance: FormInstance | null = null
