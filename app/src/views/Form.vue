@@ -316,7 +316,7 @@ function handleSubmitEmit(value: Recordable) {
 }
 
 function handleModalSubmit(values) {
-  console.log(values)
+  console.log(values, 2333)
 }
 </script>
 

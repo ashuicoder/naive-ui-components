@@ -19,21 +19,25 @@
 <script setup lang="ts">
 import { NModal } from 'naive-ui'
 import { computed, useAttrs } from 'vue'
+import to from 'await-to-js'
 
 import BasicForm from './BasicForm.vue'
 import { useForm } from './hooks/useForm'
 
-import type { ModalFormProps, Recordable } from './types'
-import to from 'await-to-js'
+import type { Recordable } from './types'
+
+export interface Props {
+  show: boolean
+}
 
 interface Emits {
   (e: 'update:show', val: boolean): void
   (e: 'submit', val: Recordable): void
-  (e: 'cancel')
+  (e: 'cancel'): void
 }
 
 const attrs = useAttrs()
-const props = defineProps<ModalFormProps>()
+const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
 function getProps() {
@@ -42,8 +46,6 @@ function getProps() {
     ...props
   }
 }
-
-const [register, { submit, reset }] = useForm()
 
 const showModal = computed({
   get() {
@@ -54,6 +56,7 @@ const showModal = computed({
   }
 })
 
+const [register, { submit, reset }] = useForm()
 async function handleConfirm() {
   const [err, res] = await to<Recordable>(submit())
   if (err) return false
@@ -62,6 +65,7 @@ async function handleConfirm() {
 }
 
 function handleClose() {
+  console.log('close')
   reset()
 }
 </script>

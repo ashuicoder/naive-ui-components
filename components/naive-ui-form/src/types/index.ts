@@ -41,17 +41,13 @@ export interface Props extends FormProps {
 }
 
 export interface FormInstance {
-  reset() => void
-  submit() => Promise<any>
-  validate (nameList?: string[]) => Promise<any>
-  clearValidate:() => void
-  getValue() => Recordable
-  getFieldValue(field: string) => any
-  setValue (value: Recordable) => void
-  setProps (props: Props) => void
+  reset(): void
+  submit(): Promise<any>
+  validate(nameList?: string[]): Promise<any>
+  clearValidate(): void
+  getValue(): Recordable
+  getFieldValue(field: string): any
+  setValue(value: Recordable): void
+  setProps(props: Props): void
   setLoading(loading: boolean): void
-}
-
-export interface ModalFormProps {
-  show: boolean
 }
