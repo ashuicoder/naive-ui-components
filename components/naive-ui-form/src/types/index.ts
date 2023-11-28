@@ -4,7 +4,6 @@ import type { CSSProperties, VNode } from 'vue'
 
 export type Recordable<T = any> = Record<string, T>
 type CompentType = keyof typeof componentMapInfo | 'dynamic'
-type FormItemProps = 'feedback' | 'first' | 'igno'
 
 export interface FormSchema extends Omit<FormItemGiProps, 'labelProps'> {
   tip?: string | (() => VNode)
@@ -42,7 +41,7 @@ export interface Props extends FormProps {
 
 export interface FormInstance {
   reset(): void
-  submit(): Promise<any>
+  submit(): Promise<Recordable>
   validate(nameList?: string[]): Promise<any>
   clearValidate(): void
   getValue(): Recordable

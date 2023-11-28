@@ -10,21 +10,21 @@ export function useForm(props?: Props): [(formIns: FormInstance) => void, FormIn
 
   function handleNoInit() {
     if (!formInstance) {
-      console.warn('Form instance is not initialized, please use after initialized.')
+      throw new Error('Form instance is not initialized, please use after initialized.')
     }
   }
 
   const methods: FormInstance = {
-    getValue(field?: string) {
+    getValue() {
       handleNoInit()
-      return formInstance?.getValue() || {}
+      return formInstance!.getValue() || {}
     },
     getFieldValue(field: string) {
-      return formInstance?.getFieldValue(field)
+      return formInstance!.getFieldValue(field)
     },
     setValue(value: Recordable) {
       handleNoInit()
-      formInstance?.setValue(value)
+      formInstance!.setValue(value)
     },
     validate() {
       handleNoInit()
@@ -41,7 +41,7 @@ export function useForm(props?: Props): [(formIns: FormInstance) => void, FormIn
     },
     submit() {
       handleNoInit()
-      return formInstance?.submit()
+      return formInstance!.submit()
     },
     reset() {
       handleNoInit()
