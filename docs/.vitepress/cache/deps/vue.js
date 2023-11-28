@@ -153,7 +153,7 @@ import {
   withMemo,
   withModifiers,
   withScopeId
-} from "./chunk-PIYVVHYI.js";
+} from "./chunk-KYDTUX5N.js";
 export {
   BaseTransition,
   BaseTransitionPropsValidators,

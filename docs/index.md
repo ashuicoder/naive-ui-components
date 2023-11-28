@@ -4,11 +4,11 @@ layout: home
 
 hero:
   name: "naive-ui-components"
-  text: "基于naive-ui封装的一些使用组件"
+  text: "A VitePress Site"
   tagline: My great project tagline
   actions:
     - theme: brand
-      text: naive-ui-form
+      text: Markdown Examples
       link: /markdown-examples
     - theme: alt
       text: API Examples

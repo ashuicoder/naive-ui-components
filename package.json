@@ -12,9 +12,10 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "docs:dev": "pnpm -F docs dev",
-    "docs:build": "pnpm -F docs build",
-    "docs:preview": "pnpm -F docs preview"
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve",
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "await-to-js": "^3.0.0",
