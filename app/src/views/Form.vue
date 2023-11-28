@@ -23,6 +23,7 @@
       title="新增"
       :schemas="schemas"
       style="width: 800px"
+      @submit="handleModalSubmit"
     ></ModalForm>
   </div>
 </template>
@@ -312,6 +313,10 @@ async function handleSubmit() {
 
 function handleSubmitEmit(value: Recordable) {
   console.log('emit', value)
+}
+
+function handleModalSubmit(values) {
+  console.log(values)
 }
 </script>
 

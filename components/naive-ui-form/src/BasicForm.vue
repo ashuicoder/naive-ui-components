@@ -29,8 +29,7 @@ import {
   NSpace,
   NButton,
   NIcon,
-  NTooltip,
-  NPopover
+  NTooltip
 } from 'naive-ui'
 
 import to from 'await-to-js'
@@ -93,7 +92,7 @@ export default defineComponent({
     const formMethod: FormInstance = {
       async submit() {
         submitLoading.value = true
-        const [err] = await to(formRef.value!.validate())
+        const [err] = await to(this.validate())
 
         if (err) {
           submitLoading.value = false

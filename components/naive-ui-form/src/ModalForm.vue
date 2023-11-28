@@ -2,14 +2,16 @@
   <NModal
     v-model:show="showModal"
     preset="dialog"
-    type="info"
     positive-text="确定"
     negative-text="取消"
+    :onPositiveClick="handleConfirm"
+    :onAfterLeave="handleClose"
   >
     <BasicForm
       v-bind="getProps()"
       :show-action-btns="false"
-      style="width: 100%; margin: 20px 0"
+      style="width: 100%; margin: 40px 0"
+      @register="register"
     ></BasicForm>
   </NModal>
 </template>
@@ -19,16 +21,19 @@ import { NModal } from 'naive-ui'
 import { computed, useAttrs } from 'vue'
 
 import BasicForm from './BasicForm.vue'
+import { useForm } from './hooks/useForm'
 
-import type { ModalFormProps } from './types'
+import type { ModalFormProps, Recordable } from './types'
+import to from 'await-to-js'
 
 interface Emits {
   (e: 'update:show', val: boolean): void
+  (e: 'submit', val: Recordable): void
+  (e: 'cancel')
 }
 
 const attrs = useAttrs()
 const props = defineProps<ModalFormProps>()
-console.log(props)
 const emit = defineEmits<Emits>()
 
 function getProps() {
@@ -38,6 +43,8 @@ function getProps() {
   }
 }
 
+const [register, { submit, reset }] = useForm()
+
 const showModal = computed({
   get() {
     return props.show
@@ -46,6 +53,17 @@ const showModal = computed({
     emit('update:show', val)
   }
 })
+
+async function handleConfirm() {
+  const [err, res] = await to<Recordable>(submit())
+  if (err) return false
+  emit('submit', res)
+  return false
+}
+
+function handleClose() {
+  reset()
+}
 </script>
 
 <style scoped></style>
