@@ -16,7 +16,7 @@
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve",
     "docs:preview": "vitepress preview docs",
-    "docs:deploy": "sh deploy.sh"
+    "docs:publish": "sh deploy.sh"
   },
   "dependencies": {
     "await-to-js": "^3.0.0",
