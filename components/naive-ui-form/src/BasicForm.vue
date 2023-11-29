@@ -185,7 +185,12 @@ export default defineComponent({
     function renderSubmitBtn() {
       if (!commonProps.value.showActionBtns || !commonProps.value.showSubmitBtn) return null
       return (
-        <NButton type="primary" loading={submitLoading.value} onClick={() => formMethod.submit()}>
+        <NButton
+          type="primary"
+          loading={submitLoading.value}
+          disabled={props.disabled}
+          onClick={() => formMethod.submit()}
+        >
           {commonProps.value.submitBtnText}
         </NButton>
       )

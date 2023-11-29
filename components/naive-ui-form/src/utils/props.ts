@@ -56,5 +56,9 @@ export const props = {
   defaultShowExpandColumn: {
     type: Number,
     default: 2
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 }

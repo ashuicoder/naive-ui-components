@@ -37,6 +37,7 @@ export interface Props extends FormProps {
   expandBtnOnText?: string
   defaultExpand?: boolean
   defaultShowExpandColumn?: number
+  disabled?: boolean
 }
 
 export interface FormInstance {

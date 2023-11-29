@@ -4,25 +4,15 @@ layout: home
 
 hero:
   name: "naive-ui-components"
-  text: "A VitePress Site"
-  tagline: My great project tagline
+  tagline: 基于naive-ui封装的一些组件
   actions:
-    - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
     - theme: brand
       text: naive-ui-form
       link: /naive-ui-form    
-    - theme: alt
-      text: API Examples
-      link: /api-examples
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: naive-ui-form
+    details: 一个配置，生成一个表单
+
 ---
 

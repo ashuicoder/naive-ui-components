@@ -16,6 +16,7 @@
       <NButton type="primary" @click="handleSubmit">提交</NButton>
       <NButton type="primary" @click="getFormValue">取值</NButton>
       <NButton type="primary" @click="getFormFieldValue">取单个值</NButton>
+      <NButton type="primary" @click="handleSetProps">设置Props</NButton>
     </NSpace>
 
     <ModalForm
@@ -40,7 +41,7 @@ import {
   ModalForm
 } from 'naive-ui-form'
 
-const showModal = ref(true)
+const showModal = ref(false)
 
 const formProps = {}
 
@@ -166,7 +167,7 @@ const schemas: FormSchema[] = [
   }
 ]
 
-const [register, { getValue, getFieldValue, submit, setLoading }] = useForm({
+const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
   size: 'large',
   schemas: [
     {
@@ -317,6 +318,13 @@ function handleSubmitEmit(value: Recordable) {
 
 function handleModalSubmit(values) {
   console.log(values, 2333)
+}
+
+function handleSetProps() {
+  setProps({
+    showActionBtns: false,
+    disabled: true
+  })
 }
 </script>
 

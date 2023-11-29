@@ -16,7 +16,7 @@ const [register] = useForm({
         return (
           <input
             v-model={formValue[field]}
-            placeholder="请输入用户名"
+            placeholder="这是原生的input输入框"
             style={{ border: '1px solid #ccc' }}
           />
         )

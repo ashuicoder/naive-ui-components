@@ -63,7 +63,6 @@ export const componentMapInfo = {
   },
 
   'checkbox-single': {
-    component: 'NCheckbox',
     outputStr: '勾选',
     render(formValue: Recordable, schema: FormSchema) {
       return (
@@ -167,7 +166,7 @@ export const componentMapInfo = {
   },
 
   mention: {
-    component: 'NMention',
+    outputStr: '输入',
     render(formValue: Recordable, schema: FormSchema) {
       return (
         <NMention

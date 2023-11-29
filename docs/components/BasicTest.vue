@@ -3,11 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { BasicForm, useForm, type FormSchema } from 'naive-ui-form'
+import { BasicForm, useForm } from 'naive-ui-form'
 
-const schemas: FormSchema[] = []
-
-const [register] = useForm({
-  schemas
-})
+const [register, { submit }] = useForm()
 </script>

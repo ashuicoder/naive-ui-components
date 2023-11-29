@@ -5,6 +5,7 @@
     positive-text="确定"
     negative-text="取消"
     :onPositiveClick="handleConfirm"
+    :on-negative-click="handleCancel"
     :onAfterLeave="handleClose"
   >
     <BasicForm
@@ -65,8 +66,11 @@ async function handleConfirm() {
 }
 
 function handleClose() {
-  console.log('close')
   reset()
+}
+
+function handleCancel() {
+  emit('cancel')
 }
 </script>
 

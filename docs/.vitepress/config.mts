@@ -12,17 +12,10 @@ export default defineConfig({
     outline: 'deep',
     aside: true,
     // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
-    ],
+    nav: [{ text: '首页', link: '/' }],
 
-    sidebar: [
-      { text: 'naive-ui-form', link: '/naive-ui-form' },
-      { text: 'Markdown Examples', link: '/markdown-examples' },
-      { text: 'Runtime API Examples', link: '/api-examples' }
-    ],
+    sidebar: [{ text: 'naive-ui-form', link: '/naive-ui-form' }],
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }]
+    socialLinks: [{ icon: 'github', link: 'https://github.com/ashuicoder/naive-ui-components' }]
   }
 })

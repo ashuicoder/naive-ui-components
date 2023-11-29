@@ -3,6 +3,11 @@
 <script setup lang="ts">
   import BasicForm from './components/BasicForm.vue'
   import CustomForm from './components/CustomForm.vue'
+  import SlotForm from './components/SlotForm.vue'
+  import DynamicForm from './components/DynamicForm.vue'
+  import ModalForm from './components/ModalForm.vue'
+  import UseForm from './components/useForm.vue'
+  import InstanceForm from './components/InstanceForm.vue'
 </script>
 # naive-ui-form文档
 
@@ -216,7 +221,11 @@ import { BasicForm } from 'naive-ui-form'
 </script>
 ```
 
-给组件传递`props`有两种方法：
+### props
+
+
+
+传递`props`有两种方法：
 
 1. 受用经典传值方式:
 
@@ -250,6 +259,270 @@ import { BasicForm } from 'naive-ui-form'
 如果`props`和`useForm()`传值有冲突，以`useForm`的值为准。
 
 :::
+
+
+
+### 注册事件
+
+`naive-ui-form`注册了以下事件：
+
+- register： 使用`useForm`注册的时候用到
+- submit：表单提交出发（**只有表单校验成功后才会触发**）
+- reset：表单重置的时候触发
+
+
+
+### useForm
+
+`naive-ui-form`为了方便对表单的操作，封装了一些方法。
+
+::: danger 注意
+
+在使用这些方法之前，一定要先注册`register`到`naive-ui-form`上
+
+```vue{2,8}
+<template>
+  <BasicForm @register="register"></BasicForm>
+</template>
+
+<script setup lang="ts">
+import { BasicForm, useForm } from 'naive-ui-form'
+
+const [register, { submit }] = useForm()
+</script>
+
+```
+
+
+
+:::
+
+```ts
+interface FormInstance {
+  // 重置表单
+  reset(): void
+  // 提交表单，返回Promise<Recordable>,校验通过后返回表单的值，校验失败后返回校验的Error
+  submit(): Promise<Recordable>
+  // 校验表单，返回Primise，校验通过后进入resolve状态
+  validate(nameList?: string[]): Promise<any>
+  // 清空校验
+  clearValidate(): void
+  // 获取表单的值
+  getValue(): Recordable
+  // 获取表单某个项的值
+  getFieldValue(field: string): any
+  // 设置表单的值
+  setValue(value: Recordable): void
+  // 动态设置表单的Props
+  setProps(props: Props): void
+  // 手动设置表单提交按钮的加载状态
+  setLoading(loading: boolean): void
+}
+
+```
+
+
+
+<UseForm></UseForm>
+
+```vue
+<template>
+  <div>
+    <BasicForm @register="register" :show-action-btns="false"></BasicForm>
+    <NSpace>
+      <NButton type="primary" @click="handleSubmit">提交</NButton>
+      <NButton type="primary" @click="handleReset">重置</NButton>
+      <NButton type="primary" @click="handleVerify">校验</NButton>
+      <NButton type="primary" @click="handleClearVerify">清空校验</NButton>
+      <NButton type="primary" @click="handleGetValue">获取表单值</NButton>
+      <NButton type="primary" @click="handleGetFieldValue">获取某个值</NButton>
+      <NButton type="primary" @click="handleSetValue">手动赋值</NButton>
+    </NSpace>
+  </div>
+</template>
+
+<script setup lang="tsx">
+import { NSpace, NButton } from 'naive-ui'
+import { BasicForm, useForm, type Recordable } from 'naive-ui-form'
+
+const [
+  register,
+  { submit, reset, validate, clearValidate, getValue, getFieldValue, setValue, setProps }
+] = useForm({
+  schemas: [
+    {
+      field: 'name',
+      type: 'input',
+      label: '姓名',
+      required: true,
+      labelPlacement: 'left',
+      defaultValue: '张三',
+      componentProps: {
+        onUpdateValue(value: string) {
+          console.log(value)
+        }
+      },
+      style: {
+        width: '200px'
+      }
+    },
+    {
+      field: 'sex',
+      type: 'radio',
+      label: '性别',
+      required: true,
+      componentProps: {
+        options: [
+          {
+            label: '男',
+            value: 'male'
+          },
+          {
+            label: '女',
+            value: 'female'
+          }
+        ]
+      }
+    },
+    {
+      field: 'hobbies',
+      type: 'checkbox',
+      label: '爱好',
+      required: true,
+      requiredType: 'array',
+      componentProps: {
+        options: [
+          {
+            label: '吃饭',
+            value: 'eat'
+          },
+          {
+            label: '睡觉',
+            value: 'sleep'
+          },
+          {
+            label: '打豆豆',
+            value: 'play'
+          }
+        ]
+      }
+    },
+    {
+      field: 'birthday',
+      type: 'date-picker',
+      label: '生日'
+    },
+    {
+      field: 'school',
+      type: 'custom',
+      label: '学校',
+      required: true,
+      render(formValue: Recordable, field: string) {
+        return <input v-model={formValue[field]} style={{ border: '1px solid #ccc' }} />
+      }
+    }
+  ]
+})
+
+function handleSubmit() {
+  submit()
+    .then((res: Recordable) => {
+      console.log(`表单校验成功`)
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log('表单校验失败失败', err)
+    })
+}
+
+function handleReset() {
+  reset()
+  console.log('表单已重置')
+}
+
+function handleVerify() {
+  validate()
+    .then(() => console.log('校验通过'))
+    .catch(() => console.log('校验失败'))
+}
+
+function handleClearVerify() {
+  clearValidate()
+  console.log('校验已清空')
+}
+
+function handleGetValue() {
+  console.log(getValue())
+}
+
+function handleGetFieldValue() {
+  console.log(getFieldValue('name'))
+}
+
+function handleSetValue() {
+  setValue({
+    name: '李四',
+    school: '北京大学',
+    sex: 'male',
+    hobbies: ['eat', 'sleep'],
+    birthday: '2000-01-01'
+  })
+}
+</script>
+
+<style scoped></style>
+
+```
+
+
+
+### 组件api
+
+如果不想使用[useForm](#useForm)，也可以直接通过`naive-form-ui`组件自身调用上面的方法：
+
+<InstanceForm></InstanceForm>
+
+```vue
+<template>
+  <div>
+    <BasicForm ref="formRef" :schemas="schemas" :show-action-btns="false"></BasicForm>
+    <NSpace>
+      <NButton type="primary" @click="handleSubmit">提交</NButton>
+      <NButton type="primary" @click="handleReset">重置</NButton>
+    </NSpace>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { NSpace, NButton } from 'naive-ui'
+import { BasicForm, type FormSchema, type FormInstance } from 'naive-ui-form'
+import { ref } from 'vue'
+const formRef = ref<FormInstance | null>(null)
+const schemas: FormSchema[] = [
+  {
+    field: 'name',
+    label: '姓名',
+    type: 'input',
+    required: true
+  }
+]
+
+function handleSubmit() {
+  formRef.value?.submit()
+}
+
+function handleReset() {
+  formRef.value?.reset()
+}
+</script>
+
+<style scoped></style>
+
+```
+
+
+
+
 
 
 
@@ -353,6 +626,52 @@ const [register] = useForm({
 | slot          | 见[插槽](#插槽)             |
 | dynamic       | 见[动态表单](#动态表单)     |
 
+::: tip 提示
+
+一些特`type`的说明:
+
+- `radio`： 需要在`componentProps`传入`options`字段，如果是异步数据可以定义为`ref`响应数据。
+
+  ```ts{3,6-17}
+      {
+        field: 'sex',
+        type: 'radio',
+        label: '性别',
+        required: true,
+        componentProps: {
+          options: [
+            {
+              label: '男',
+              value: 'male'
+            },
+            {
+              label: '女',
+              value: 'female'
+            }
+          ]
+        }
+      }
+  ```
+
+- `checkbox`：同上`radio`
+
+- `date-picker`： 默认的格式为`yyyy-MM-dd`，格式请参考[这里](https://ui.naiveadmin.com/zh-CN/os-theme/components/date-picker#datetimeformat.vue)修改方式如下：
+
+  ```ts{6}
+      {
+        field: 'birthday',
+        type: 'date-picker',
+        label: '生日',
+        componentProps: {
+          valueFormat: 'xxxxx'
+        }
+      }
+  ```
+
+- `time-picker`:  默认的格式为`HH:mm:ss`，修改同上。
+
+:::
+
 ### 自定义组件
 
 当`naive-ui`的表单组件不满足需求的时候，可自定义组件，`type`设置为`custom`，`render`函数返回自定义组件示例如下：
@@ -396,11 +715,146 @@ const [register] = useForm({
 
 ### 插槽
 
+除了[](#自定义组件)外，你也可以使用插槽。`type`设置为`slot`， 再加一个`slot`名称，示例如下：
+<SlotForm></SlotForm>
+
+```vue{3-10,21,24}
+<template>
+  <BasicForm @register="register">
+    <template #username="{ formValue, field }">
+      <input
+        v-model="formValue[field]"
+        type="text"
+        placeholder="这是插槽"
+        style="border: 1px solid #ccc"
+      />
+    </template>
+  </BasicForm>
+</template>
+
+<script setup lang="ts">
+import { BasicForm, useForm } from 'naive-ui-form'
+
+const [register] = useForm({
+  schemas: [
+    {
+      field: 'username',
+      type: 'slot',
+      label: '用户名',
+      required: true,
+      slot: 'username'
+    }
+  ]
+})
+</script>
+
+<style scoped></style>
+
+```
+
 
 
 ### 动态表单
 
+`动态表单`需要将`type `设置为`dynamic`，再新增一个`dynamicOptions`配置，示例如下：
 
+<DynamicForm></DynamicForm>
+
+```vue{13-27}
+<template>
+  <BasicForm @register="register"></BasicForm>
+</template>
+
+<script setup lang="ts">
+import { BasicForm, useForm } from 'naive-ui-form'
+
+const [register] = useForm({
+  schemas: [
+    {
+      field: 'family',
+      label: '家庭成员',
+      type: 'dynamic',
+      dynamicOptions: [
+        {
+          field: 'name',
+          label: '姓名',
+          type: 'input',
+          required: true
+        },
+        {
+          field: 'age',
+          label: '年龄',
+          type: 'input-number',
+          required: true
+        }
+      ]
+    }
+  ]
+})
+</script>
+
+<style scoped></style>
+
+```
 
 ## ModalForm
+
+`ModalForm`是`BasicForm`的封装，主要是为了方便在弹窗中使用。您可以直接传入`BasicForm`、[n-modal](https://ui.naiveadmin.com/zh-CN/os-theme/components/modal)、[dialog](https://ui.naiveadmin.com/zh-CN/os-theme/components/dialog)支持的`props`。`ModalForm`会在校验通过后出发`submit`事件，参数就是表单的值。点击`取消按钮`时还会触发`cancel`事件。
+
+<ModalForm></ModalForm>
+
+```vue
+<template>
+  <div>
+    <NButton type="primary" @click="showModal = true">显示弹窗</NButton>
+    <ModalForm
+      v-model:show="showModal"
+      :schemas="schemas"
+      title="新增用户"
+      :loading="loading"
+      @submit="handleSubmit"
+    ></ModalForm>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { NButton } from 'naive-ui'
+import { ModalForm, type FormSchema, type Recordable } from 'naive-ui-form'
+
+const showModal = ref(false)
+const schemas: FormSchema[] = [
+  {
+    field: 'name',
+    label: '姓名',
+    type: 'input',
+    required: true
+  },
+  {
+    field: 'age',
+    label: '年龄',
+    type: 'input-number',
+    required: true,
+    requiredType: 'number'
+  }
+]
+
+const loading = ref(false)
+function handleSubmit(values: Recordable) {
+  console.log(values)
+  loading.value = true
+  setTimeout(() => {
+    loading.value = false
+    showModal.value = false
+  }, 2000)
+}
+</script>
+
+<style scoped></style>
+
+```
+
+
+
+
 
