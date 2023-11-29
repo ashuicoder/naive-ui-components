@@ -296,7 +296,7 @@ importers:
   docs:
     dependencies:
       naive-ui-form:
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../components/naive-ui-form
 
 packages:

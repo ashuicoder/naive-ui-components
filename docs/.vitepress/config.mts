@@ -1,10 +1,15 @@
 import { defineConfig } from 'vitepress'
+
 import vueJsx from '@vitejs/plugin-vue-jsx'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   vite: {
-    plugins: [vueJsx()]
+    plugins: [vueJsx()],
+    ssr: {
+      noExternal: ['naive-ui']
+    }
   },
+  base: '/naive-ui-components/',
   lang: 'zh-CN',
   title: 'naive-ui-components',
   head: [['link', { rel: 'icon', href: '/logo.svg' }]],
@@ -14,6 +19,7 @@ export default defineConfig({
     lastUpdated: {
       text: '上次更新'
     },
+    outline: 'deep',
     aside: true,
     // https://vitepress.dev/reference/default-theme-config
     nav: [{ text: '首页', link: '/' }],

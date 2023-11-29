@@ -6,7 +6,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
   "dependencies": {
-    "naive-ui-form": "workspace:^"
+    "naive-ui-form": "workspace:*"
   }
 }
