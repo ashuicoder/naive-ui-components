@@ -168,7 +168,7 @@ const [register] = useForm({
 
 ## 安装
 
-```shel
+```shell
 pnpm add naive-ui-form 
 ```
 

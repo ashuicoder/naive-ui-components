@@ -5,11 +5,15 @@ export default defineConfig({
   vite: {
     plugins: [vueJsx()]
   },
+  lang: 'zh-CN',
   title: 'naive-ui-components',
+  head: [['link', { rel: 'icon', href: '/logo.svg' }]],
   description: '基于naive-ui封装的一些组件',
-
   themeConfig: {
-    outline: 'deep',
+    logo: '/logo.svg',
+    lastUpdated: {
+      text: '上次更新'
+    },
     aside: true,
     // https://vitepress.dev/reference/default-theme-config
     nav: [{ text: '首页', link: '/' }],
