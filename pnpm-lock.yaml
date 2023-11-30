@@ -298,6 +298,9 @@ importers:
       naive-ui-form:
         specifier: workspace:*
         version: link:../components/naive-ui-form
+      naive-ui-upload:
+        specifier: workspace:^
+        version: link:../components/naive-ui-upload
 
 packages:
 

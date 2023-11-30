@@ -9,10 +9,15 @@ hero:
     - theme: brand
       text: naive-ui-form
       link: /naive-ui-form    
+    - theme: brand
+      text: naive-ui-upload
+      link: /naive-ui-upload    
 
 features:
   - title: naive-ui-form
     details: 一个配置，生成一个表单
+  - title: naive-ui-upload
+    details: 文件上传，支持图片裁剪
 
 ---
 

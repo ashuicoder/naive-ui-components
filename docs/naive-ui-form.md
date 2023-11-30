@@ -221,7 +221,7 @@ import { BasicForm } from 'naive-ui-form'
 </script>
 ```
 
-### props
+### props传值方式
 
 
 

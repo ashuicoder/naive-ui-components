@@ -3,10 +3,8 @@
     <NUpload
       v-bind="getProps()"
       v-model:file-list="fileList"
-      list-type="image-card"
-      ref="uploadRef"
-      @before-upload="handleBeforeUpload"
-      @custom-request="handleCustomRequest"
+      :on-before-upload="handleBeforeUpload"
+      :custom-request="handleCustomRequest"
     >
       <slot></slot>
     </NUpload>
@@ -50,8 +48,6 @@ import { VueCropper } from 'vue-cropper'
 
 import type { UploadCustomRequestOptions, UploadFileInfo } from 'naive-ui'
 import type { Props, Emits, RequestFun } from './types'
-
-const uploadRef = ref<InstanceType<typeof NUpload> | null>(null)
 const attrs = useAttrs()
 const message = useMessage()
 const props = defineProps<Props>()
@@ -75,7 +71,7 @@ const fileList = computed({
   }
 })
 
-const injectRequestFunc = inject<RequestFun | undefined>('requestFunc')
+const injectRequestFunc = inject<RequestFun | undefined>('requestFunc', undefined)
 const uploadApi = props.requestFunc ?? injectRequestFunc
 
 if (!uploadApi) {
@@ -97,7 +93,6 @@ function handleBeforeUpload({ file }: { file: UploadFileInfo }) {
     return false
   }
   if (!verifySize(file.file)) return false
-
   return true
 }
 
@@ -149,12 +144,17 @@ function handleCloseCropper() {
   cropperLoading.value = false
 }
 
-async function handleCustomRequest({ file, onError, onFinish }: UploadCustomRequestOptions) {
+async function handleCustomRequest({
+  file,
+  onError,
+  onFinish,
+  onProgress
+}: UploadCustomRequestOptions) {
   if (!uploadApi) {
     onError()
     throw new Error('requestFunc is required')
   }
-  const [err, res] = await to(uploadApi(file.file as File))
+  const [err, res] = await to(uploadApi(file.file as File, onProgress))
   if (err) {
     onError()
     return

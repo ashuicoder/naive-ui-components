@@ -1,15 +1,10 @@
 <template>
   <naive-ui-upload
     v-model:value="fileList"
-    :cropper="{
-      autoCrop: true,
-      fixed: true,
-      fixedNumber: [1, 1],
-      centerBox: true
-    }"
-    :size="1"
+    :size="5"
     multiple
     :requestFunc="handleUpload"
+    list-type="image-card"
   ></naive-ui-upload>
 </template>
 

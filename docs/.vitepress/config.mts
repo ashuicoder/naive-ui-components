@@ -24,7 +24,10 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [{ text: '首页', link: '/' }],
 
-    sidebar: [{ text: 'naive-ui-form', link: '/naive-ui-form' }],
+    sidebar: [
+      { text: 'naive-ui-form', link: '/naive-ui-form' },
+      { text: 'naive-ui-upload', link: '/naive-ui-upload' }
+    ],
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/ashuicoder/naive-ui-components' }]
   }

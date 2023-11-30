@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "private": false,
   "main": "./index.ts",
-  "types": "./dist/index.d.ts",
   "type": "module",
   "description": "一个基于naive-ui封装的文件上传组件，支持图片裁剪",
   "keywords": [

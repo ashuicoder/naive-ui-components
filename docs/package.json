@@ -12,6 +12,7 @@
     "preview": "vitepress preview"
   },
   "dependencies": {
-    "naive-ui-form": "workspace:*"
+    "naive-ui-form": "workspace:*",
+    "naive-ui-upload": "workspace:^"
   }
 }
