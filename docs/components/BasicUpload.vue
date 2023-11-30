@@ -11,12 +11,12 @@
 </template>
 
 <script setup lang="ts">
-import { NConfigProvider, zhCN, dateZhCN, NMessageProvider, type UploadFileInfo } from 'naive-ui'
+import { NConfigProvider, zhCN, dateZhCN, NMessageProvider } from 'naive-ui'
 import { NaiveUiUpload } from 'naive-ui-upload'
 import { ref } from 'vue'
 
-const fileList = ref<UploadFileInfo[]>([])
-function handleUpload(file: File) {
+const fileList = ref([])
+function handleUpload(): Promise<string> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve('https://picsum.photos/200/300')

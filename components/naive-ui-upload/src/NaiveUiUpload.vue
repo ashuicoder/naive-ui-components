@@ -9,7 +9,7 @@
       <slot></slot>
     </NUpload>
 
-    <NModal
+    <!-- <NModal
       v-model:show="showCropper"
       preset="dialog"
       title="图片裁剪"
@@ -35,7 +35,7 @@
           <img :src="previewUrl" style="width: 100%" />
         </div>
       </div>
-    </NModal>
+    </NModal> -->
   </div>
 </template>
 
@@ -43,8 +43,8 @@
 import { computed, useAttrs, nextTick, inject, ref } from 'vue'
 import { NUpload, useMessage, NModal } from 'naive-ui'
 import to from 'await-to-js'
-import 'vue-cropper/dist/index.css'
-import { VueCropper } from 'vue-cropper'
+// import 'vue-cropper/dist/index.css'
+// import { VueCropper } from 'vue-cropper'
 
 import type { UploadCustomRequestOptions, UploadFileInfo } from 'naive-ui'
 import type { Props, Emits, RequestFun } from './types'
@@ -96,7 +96,7 @@ function handleBeforeUpload({ file }: { file: UploadFileInfo }) {
   return true
 }
 
-const cropperRef = ref<InstanceType<typeof VueCropper> | null>(null)
+// const cropperRef = ref<InstanceType<typeof VueCropper> | null>(null)
 const showCropper = ref(false)
 const cropperUrl = ref('')
 const cropperLoading = ref(false)
@@ -109,12 +109,12 @@ function handleCropperInit(file: UploadFileInfo) {
 }
 
 const previewUrl = ref('')
-function handlePreview() {
-  cropperRef.value?.getCropBlob((data: Blob) => {
-    currentBlob.value = data
-    previewUrl.value = URL.createObjectURL(data)
-  })
-}
+// function handlePreview() {
+//   cropperRef.value?.getCropBlob((data: Blob) => {
+//     currentBlob.value = data
+//     previewUrl.value = URL.createObjectURL(data)
+//   })
+// }
 
 async function handleConfirmCropper() {
   if (!uploadApi) {
