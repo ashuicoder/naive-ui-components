@@ -2,7 +2,7 @@
   "name": "naive-ui-upload",
   "version": "0.0.2",
   "private": false,
-  "main": "/.index.ts",
+  "main": "index.ts",
   "type": "module",
   "description": "一个基于naive-ui封装的文件上传组件，支持图片裁剪",
   "keywords": [
