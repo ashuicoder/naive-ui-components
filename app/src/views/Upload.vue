@@ -4,13 +4,14 @@
     :size="5"
     multiple
     :requestFunc="handleUpload"
+    :cropper="true"
     list-type="image-card"
   ></naive-ui-upload>
 </template>
 
 <script setup lang="ts">
 import to from 'await-to-js'
-import { generateUploadInfo, NaiveUiUpload } from 'naive-ui-upload'
+import { NaiveUiUpload } from 'naive-ui-upload'
 import { ref } from 'vue'
 import type { UploadFileInfo } from 'naive-ui'
 
