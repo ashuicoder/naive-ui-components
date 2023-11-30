@@ -16,7 +16,7 @@ import { NaiveUiUpload } from 'naive-ui-upload'
 import { ref } from 'vue'
 
 const fileList = ref<UploadFileInfo[]>([])
-function handleUpload() {
+function handleUpload(file: File) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve('https://picsum.photos/200/300')
