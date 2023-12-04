@@ -1,6 +1,6 @@
 {
   "name": "naive-ui-form",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "private": false,
   "main": "index.ts",
   "type": "module",

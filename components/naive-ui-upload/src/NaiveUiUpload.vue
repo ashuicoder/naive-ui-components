@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs, nextTick, inject, ref, defineAsyncComponent, watch } from 'vue'
+import { useAttrs, nextTick, inject, ref, defineAsyncComponent, watch } from 'vue'
 import { NUpload, useMessage, NModal } from 'naive-ui'
 import to from 'await-to-js'
 import 'vue-cropper/dist/index.css'
@@ -49,21 +49,17 @@ import 'vue-cropper/dist/index.css'
 import type { UploadCustomRequestOptions, UploadFileInfo } from 'naive-ui'
 import type { RequestFun } from './types'
 
-export interface Props {
+const VueCropper = defineAsyncComponent(() => import('vue-cropper/lib/vue-cropper.vue'))
+
+const attrs = useAttrs()
+const message = useMessage()
+
+interface Props {
   requestFunc?: RequestFun
   value: string[]
   size?: number
   cropper?: boolean | Record<string, any>
 }
-
-export interface Emits {
-  (e: 'update:value', value: string[]): void
-}
-
-const VueCropper = defineAsyncComponent(() => import('vue-cropper/lib/vue-cropper.vue'))
-
-const attrs = useAttrs()
-const message = useMessage()
 const props = defineProps<Props>()
 
 function getProps() {
@@ -75,7 +71,9 @@ function getCropperProps() {
   return props.cropper
 }
 
-const emits = defineEmits<Emits>()
+const emits = defineEmits<{
+  'update:value': [value: string[]]
+}>()
 const fileList = ref<UploadFileInfo[]>([])
 
 const injectRequestFunc = inject<RequestFun | undefined>('requestFunc', undefined)
