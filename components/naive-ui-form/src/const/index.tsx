@@ -343,7 +343,12 @@ export const componentMapInfo = {
         <NaiveUiUpload
           style={{ width: '100%' }}
           {...schema.componentProps}
-          v-model:value={formValue[schema.field] as string[]}
+          value={formValue[schema.field] as string[]}
+          {...{
+            'onUpdate:value': (val: string[]) => {
+              formValue[schema.field] = val
+            }
+          }}
         ></NaiveUiUpload>
       )
     }
