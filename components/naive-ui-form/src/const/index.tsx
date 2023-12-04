@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import {
   NAutoComplete,
   NCascader,
@@ -21,8 +22,6 @@ import {
   NTransfer,
   NTreeSelect
 } from 'naive-ui'
-
-import { NaiveUiUpload } from 'naive-ui-upload'
 
 import type { Recordable, FormSchema } from '../types'
 export const componentMapInfo = {
@@ -339,8 +338,9 @@ export const componentMapInfo = {
   upload: {
     outputStr: '上传',
     render(formValue: Recordable, schema: FormSchema, slots: any) {
+      const AsyncComp = defineAsyncComponent(() => import('naive-ui-upload/src/NaiveUiUpload.vue'))
       return (
-        <NaiveUiUpload
+        <AsyncComp
           style={{ width: '100%' }}
           {...schema.componentProps}
           value={formValue[schema.field] as string[]}
@@ -349,7 +349,7 @@ export const componentMapInfo = {
               formValue[schema.field] = val
             }
           }}
-        ></NaiveUiUpload>
+        ></AsyncComp>
       )
     }
   }
