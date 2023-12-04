@@ -47,7 +47,18 @@ import to from 'await-to-js'
 import 'vue-cropper/dist/index.css'
 
 import type { UploadCustomRequestOptions, UploadFileInfo } from 'naive-ui'
-import type { Props, Emits, RequestFun } from './types'
+import type { RequestFun } from './types'
+
+export interface Props {
+  requestFunc?: RequestFun
+  value: string[]
+  size?: number
+  cropper?: boolean | Record<string, any>
+}
+
+export interface Emits {
+  (e: 'update:value', value: string[]): void
+}
 
 const VueCropper = defineAsyncComponent(() => import('vue-cropper/lib/vue-cropper.vue'))
 

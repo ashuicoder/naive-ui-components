@@ -147,16 +147,17 @@ export default defineComponent({
     const isExpand = ref(commonProps.value.defaultExpand)
 
     function setDefaultValue(schema: FormSchema) {
+      if (schema.defaultValue) {
+        formValue[schema.field] = schema.defaultValue
+        return
+      }
+
       if (schema.type === 'dynamic') {
-        if (schema.defaultValue) {
-          formValue[schema.field] = schema.defaultValue
-        } else {
-          formValue[schema.field] = [getDynamicValue(schema)]
-        }
-      } else {
-        if (schema.defaultValue) {
-          formValue[schema.field] = schema.defaultValue
-        }
+        formValue[schema.field] = [getDynamicValue(schema)]
+      }
+
+      if (schema.type === 'upload') {
+        formValue[schema.field] = []
       }
     }
 

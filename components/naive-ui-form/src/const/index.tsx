@@ -21,6 +21,9 @@ import {
   NTransfer,
   NTreeSelect
 } from 'naive-ui'
+
+import { NaiveUiUpload } from 'naive-ui-upload'
+
 import type { Recordable, FormSchema } from '../types'
 export const componentMapInfo = {
   'auto-complete': {
@@ -331,6 +334,18 @@ export const componentMapInfo = {
         return null
       }
       return slots[schema.slot]({ formValue, field: schema.field })
+    }
+  },
+  upload: {
+    outputStr: '上传',
+    render(formValue: Recordable, schema: FormSchema, slots: any) {
+      return (
+        <NaiveUiUpload
+          style={{ width: '100%' }}
+          {...schema.componentProps}
+          v-model:value={formValue[schema.field] as string[]}
+        ></NaiveUiUpload>
+      )
     }
   }
 }
