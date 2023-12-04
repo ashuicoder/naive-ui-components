@@ -4,6 +4,7 @@
       v-bind="getProps()"
       v-model:file-list="fileList"
       :on-before-upload="handleBeforeUpload"
+      :on-remove="handleRemove"
       :custom-request="handleCustomRequest"
     >
       <slot></slot>
@@ -27,7 +28,7 @@
           <VueCropper
             ref="cropperRef"
             :img="cropperUrl"
-            v-bind="getCropperProps"
+            v-bind="getCropperProps()"
             @realTime="handlePreview"
           ></VueCropper>
         </div>
@@ -40,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs, nextTick, inject, ref, defineAsyncComponent } from 'vue'
+import { computed, useAttrs, nextTick, inject, ref, defineAsyncComponent, watch } from 'vue'
 import { NUpload, useMessage, NModal } from 'naive-ui'
 import to from 'await-to-js'
 import 'vue-cropper/dist/index.css'
@@ -64,14 +65,7 @@ function getCropperProps() {
 }
 
 const emits = defineEmits<Emits>()
-const fileList = computed({
-  get() {
-    return props.value
-  },
-  set(val) {
-    emits('update:value', val)
-  }
-})
+const fileList = ref<UploadFileInfo[]>([])
 
 const injectRequestFunc = inject<RequestFun | undefined>('requestFunc', undefined)
 const uploadApi = props.requestFunc ?? injectRequestFunc
@@ -87,6 +81,27 @@ function verifySize(file: File) {
   }
   return true
 }
+
+let isChangeFromProps = true
+watch(
+  () => props.value,
+  (val) => {
+    if (!isChangeFromProps) return
+    fileList.value = val.map((item) => {
+      return {
+        id: window.crypto?.randomUUID() || Math.random().toString(36).substring(2, 9),
+        url: item,
+        name: item,
+        status: 'finished'
+      }
+    })
+    isChangeFromProps = true
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+)
 
 function handleBeforeUpload({ file }: { file: UploadFileInfo }) {
   if (!file.file) return false
@@ -137,6 +152,7 @@ async function handleConfirmCropper() {
   currentCropperFile.value.url = res
   currentCropperFile.value.status = 'finished'
   fileList.value.push(currentCropperFile.value)
+  nextTick(() => handleFileListChange())
 }
 
 function handleCloseCropper() {
@@ -165,7 +181,25 @@ async function handleCustomRequest({
   nextTick(() => {
     const index = fileList.value.findIndex((item) => item.id === file.id)
     fileList.value[index].url = res
+    handleFileListChange()
   })
+}
+
+function handleRemove({ file }: { file: UploadFileInfo }) {
+  const fileLIst = fileList.value
+    .filter((item) => item.id !== file.id && item.status === 'finished')
+    .map((item) => item.url) as string[]
+  isChangeFromProps = false
+  emits('update:value', fileLIst)
+  return true
+}
+
+function handleFileListChange() {
+  const uploadFileList = fileList.value
+    .filter((item) => item.status === 'finished')
+    .map((item) => item.url) as string[]
+  isChangeFromProps = false
+  emits('update:value', uploadFileList)
 }
 </script>
 

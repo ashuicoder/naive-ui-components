@@ -4,8 +4,10 @@
     :size="5"
     multiple
     :requestFunc="handleUpload"
-    :cropper="true"
     list-type="image-card"
+    :cropper="{
+      autoCrop: true
+    }"
   ></naive-ui-upload>
 </template>
 
@@ -13,9 +15,13 @@
 import to from 'await-to-js'
 import { NaiveUiUpload } from 'naive-ui-upload'
 import { ref } from 'vue'
-import type { UploadFileInfo } from 'naive-ui'
 
-const fileList = ref<UploadFileInfo[]>([])
+const fileList = ref<string[]>([
+  'http://localhost:3000/1701653775189.jpg',
+  'http://localhost:3000/1701653775189.jpg'
+])
+
+console.log(fileList.value)
 
 async function handleUpload(file: File) {
   const formData = new FormData()
@@ -32,6 +38,10 @@ async function handleUpload(file: File) {
   const data = await res.json()
   return data.url
 }
+
+setTimeout(() => {
+  fileList.value.push('http://localhost:3000/1701653775189.jpg')
+}, 3000)
 </script>
 
 <style scoped></style>

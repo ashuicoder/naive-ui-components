@@ -7,13 +7,13 @@ export type RequestFun = (
 
 export interface Props {
   requestFunc?: RequestFun
-  value: UploadFileInfo[]
+  value: string[]
   size?: number
   cropper?: boolean | Record<string, any>
 }
 
 export interface Emits {
-  (e: 'update:value', value: UploadFileInfo[]): void
+  (e: 'update:value', value: string[]): void
 }
 
 export interface Option {
