@@ -1,11 +1,10 @@
 import NaiveUiUpload from './src/NaiveUiUpload.vue'
 
 import type { App } from 'vue'
-import type { Option } from './src/types/index'
-export type { UploadFileInfo } from 'naive-ui'
+import type { Option, RequestFun } from './src/types/index'
 
+export type { RequestFun }
 export { NaiveUiUpload }
-export { generateUploadInfo, getUploadedUrlList } from './src/utils/index'
 
 export default {
   install(app: App, option?: Option) {

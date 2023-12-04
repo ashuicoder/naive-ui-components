@@ -1,47 +1,41 @@
 {
-  "hash": "6f1350dd",
-  "browserHash": "1733a589",
+  "hash": "a51fb75c",
+  "browserHash": "b28d4155",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/.pnpm/vue@3.3.8_typescript@5.2.2/node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "e788b80d",
+      "fileHash": "392edc90",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../../node_modules/.pnpm/@vue+devtools-api@6.5.1/node_modules/@vue/devtools-api/lib/esm/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "ff634777",
+      "fileHash": "c6f39f94",
       "needsInterop": false
     },
     "@theme/index": {
       "src": "../../../../node_modules/.pnpm/vitepress@1.0.0-rc.25_@algolia+client-search@4.20.0_@types+node@18.18.9_sass@1.69.5_search-in_dbo57d3nsic27itderipp75bdq/node_modules/vitepress/dist/client/theme-default/index.js",
       "file": "@theme_index.js",
-      "fileHash": "6c52235d",
+      "fileHash": "28ee2b12",
       "needsInterop": false
     },
     "naive-ui": {
       "src": "../../../../node_modules/.pnpm/naive-ui@2.35.0_vue@3.3.8/node_modules/naive-ui/es/index.js",
       "file": "naive-ui.js",
-      "fileHash": "d1bab351",
+      "fileHash": "ae8485c6",
       "needsInterop": false
     },
     "await-to-js": {
       "src": "../../../../node_modules/.pnpm/await-to-js@3.0.0/node_modules/await-to-js/dist/await-to-js.es5.js",
       "file": "await-to-js.js",
-      "fileHash": "be43027a",
+      "fileHash": "c0603c96",
       "needsInterop": false
     },
     "@vicons/ionicons5": {
       "src": "../../../../node_modules/.pnpm/@vicons+ionicons5@0.12.0/node_modules/@vicons/ionicons5/es/index.js",
       "file": "@vicons_ionicons5.js",
-      "fileHash": "2d252a5f",
-      "needsInterop": false
-    },
-    "vue-cropper": {
-      "src": "../../../../node_modules/.pnpm/vue-cropper@1.1.1/node_modules/vue-cropper/dist/vue-cropper.es.js",
-      "file": "vue-cropper.js",
-      "fileHash": "c161a01c",
+      "fileHash": "e5fb3917",
       "needsInterop": false
     }
   },

@@ -2,6 +2,8 @@ import type { FormItemRule, NIcon, FormItemGiProps, FormProps, GridProps } from 
 import { componentMapInfo } from '../const'
 import type { CSSProperties, VNode } from 'vue'
 
+import type { RequestFun } from 'naive-ui-upload'
+
 export type Recordable<T = any> = Record<string, T>
 type CompentType = keyof typeof componentMapInfo | 'dynamic'
 
@@ -50,4 +52,10 @@ export interface FormInstance {
   setValue(value: Recordable): void
   setProps(props: Props): void
   setLoading(loading: boolean): void
+}
+
+export interface Option {
+  upload: {
+    requestFunc?: RequestFun
+  }
 }

@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
+import NaiveUiForm from 'naive-ui-form'
+
 import NaiveUiUpload from 'naive-ui-upload'
 
 import App from './App.vue'

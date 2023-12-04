@@ -34,11 +34,11 @@ pnpm add naive-ui-upload
 </template>
 
 <script setup lang="ts">
-import { NConfigProvider, zhCN, dateZhCN, NMessageProvider, type UploadFileInfo } from 'naive-ui'
+import { NConfigProvider, zhCN, dateZhCN, NMessageProvider } from 'naive-ui'
 import { NaiveUiUpload } from 'naive-ui-upload'
 import { ref } from 'vue'
 
-const fileList = ref<UploadFileInfo[]>([])
+const fileList = ref<string[]>([])
 function handleUpload() {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -78,7 +78,7 @@ app.use(NaiveUiUpload, {
 | 字段          | 类型                                                         | 描述                                                     | 必传 | 默认值 |
 | ------------- | ------------------------------------------------------------ | -------------------------------------------------------- | ---- | ------ |
 | requestFunc   | Function，见下发说明                                         | 上传文件的放大                                           | 否   | -      |
-| v-model:value | UploadFileInfo[]                                             | 文件列表，需要双向绑定                                   | 是   |        |
+| v-model:value | string[]                                             | 文件列表，需要双向绑定                                   | 是   |        |
 | size          | number                                                       | 单个文件上传的限制大小（单位：M）                        | 否   |        |
 | cropper       | Objec，具体参数见[vue-cropper](https://github.com/xyxiao001/vue-cropper) | 是否需要裁剪（**设置该值时确保上传的是图片格式的文件**） | 否   |        |
 
