@@ -21,6 +21,10 @@ const menuList = [
   {
     name: '表格',
     url: '/table'
+  },
+  {
+    name: '富文本',
+    url: '/editor'
   }
 ]
 </script>

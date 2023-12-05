@@ -96,6 +96,9 @@ importers:
 
   app:
     dependencies:
+      naive-ui-editor:
+        specifier: workspace:^
+        version: link:../components/naive-ui-editor
       naive-ui-form:
         specifier: workspace:^
         version: link:../components/naive-ui-form
@@ -151,6 +154,40 @@ importers:
       vitest:
         specifier: ^0.34.6
         version: 0.34.6(jsdom@22.1.0)(sass@1.69.5)
+      vue-tsc:
+        specifier: ^1.8.19
+        version: 1.8.22(typescript@5.2.2)
+
+  components/naive-ui-editor:
+    dependencies:
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.8(typescript@5.2.2)
+    devDependencies:
+      '@tsconfig/node18':
+        specifier: ^18.2.2
+        version: 18.2.2
+      '@types/node':
+        specifier: ^18.18.5
+        version: 18.18.9
+      '@vitejs/plugin-vue':
+        specifier: ^4.4.0
+        version: 4.4.0(vite@4.5.0)(vue@3.3.8)
+      '@vitejs/plugin-vue-jsx':
+        specifier: ^3.0.2
+        version: 3.0.2(vite@4.5.0)(vue@3.3.8)
+      '@vue/tsconfig':
+        specifier: ^0.4.0
+        version: 0.4.0
+      npm-run-all2:
+        specifier: ^6.1.1
+        version: 6.1.1
+      typescript:
+        specifier: ~5.2.0
+        version: 5.2.2
+      vite:
+        specifier: ^4.4.11
+        version: 4.5.0(@types/node@18.18.9)(sass@1.69.5)
       vue-tsc:
         specifier: ^1.8.19
         version: 1.8.22(typescript@5.2.2)

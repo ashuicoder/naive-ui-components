@@ -22,6 +22,11 @@ const router = createRouter({
       path: '/table',
       name: 'table',
       component: () => import('app/views/Table.vue')
+    },
+    {
+      path: '/editor',
+      name: 'editor',
+      component: () => import('app/views/Editor.vue')
     }
   ]
 })
