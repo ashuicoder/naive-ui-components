@@ -1,4 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
+import { resolve } from 'path'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -13,6 +14,21 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  esbuild: {
+    drop: ['console', 'debugger']
+  },
+  build: {
+    lib: {
+      entry: resolve(__dirname, 'index.ts'),
+      formats: ['es'],
+      fileName: (format, entryName) => {
+        return `${entryName}.js`
+      }
+    },
+    rollupOptions: {
+      external: ['vue', 'naive-ui', '@wangeditor/editor-for-vue']
     }
   }
 })

@@ -1,7 +1,51 @@
+<script lang="ts" setup>
+import { NSpin } from 'naive-ui'
+
+import '@wangeditor/editor/dist/css/style.css'
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+
+import { useEditor } from './hooks'
+import type { Props, Emits } from './types'
+
+const props = withDefaults(defineProps<Props>(), {
+  mode: 'default',
+  height: 500,
+  editorConfig: {
+    placeholder: '请输入内容...',
+    MENU_CONF: {},
+  }
+})
+
+const emits = defineEmits<Emits>()
+
+const {
+  loading,
+  editorRef,
+  style,
+  customConfig,
+  customPaste,
+  handleCreated,
+  handleChange
+} = useEditor({ props, emits })
+</script>
+
 <template>
-  <div>editor</div>
+  <n-spin :show="loading">
+    <Toolbar
+      :editor="editorRef"
+      :mode="mode"
+      :defaultConfig="toolbarConfig"
+      style="border-bottom: 1px solid #ccc"
+    />
+    <Editor
+      class="editor-content-view"
+      :defaultConfig="customConfig"
+      :mode="mode"
+      :modelValue="value || ''"
+      :style="{ height: height + 'px', overflowY: 'hidden' }"
+      @customPaste="customPaste"
+      @onCreated="handleCreated"
+      @onChange="handleChange"
+    />
+  </n-spin>
 </template>
-
-<script setup lang="ts"></script>
-
-<style scoped></style>

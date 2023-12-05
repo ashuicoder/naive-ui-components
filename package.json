@@ -5,6 +5,7 @@
   "scripts": {
     "build:form": "pnpm -F naive-ui-form build",
     "build:upload": "pnpm -F naive-ui-upload build",
+    "build:editor": "pnpm -F naive-ui-editor build",
     "dev": "pnpm -F app dev",
     "preview": "vite preview",
     "test:unit": "vitest",
