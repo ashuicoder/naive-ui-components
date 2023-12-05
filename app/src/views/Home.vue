@@ -17,6 +17,10 @@ const menuList = [
   {
     name: '上传',
     url: '/upload'
+  },
+  {
+    name: '表格',
+    url: '/table'
   }
 ]
 </script>

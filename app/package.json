@@ -11,8 +11,9 @@
     "type-check": "vue-tsc --noEmit -p ../tsconfig.vitest.json --composite false"
   },
   "dependencies": {
-    "naive-ui-upload": "workspace:^",
     "naive-ui-form": "workspace:^",
+    "naive-ui-table": "workspace:^",
+    "naive-ui-upload": "workspace:^",
     "pinia": "^2.1.7",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
