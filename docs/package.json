@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "naive-ui-form": "workspace:*",
-    "naive-ui-upload": "workspace:^"
+    "naive-ui-upload": "workspace:^",
+    "naive-ui-editor": "workspace:^"
   }
 }

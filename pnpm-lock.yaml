@@ -359,6 +359,9 @@ importers:
 
   docs:
     dependencies:
+      naive-ui-editor:
+        specifier: workspace:^
+        version: link:../components/naive-ui-editor
       naive-ui-form:
         specifier: workspace:*
         version: link:../components/naive-ui-form
