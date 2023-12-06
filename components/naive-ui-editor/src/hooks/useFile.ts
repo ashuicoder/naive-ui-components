@@ -1,9 +1,8 @@
 import { findImgFromHtml, extractImgFromRtf, transAsImgToFile, replaceAsUpdSrc } from '../utils/file'
 import to from 'await-to-js'
 
-import type { Ref } from 'vue'
-import type { InsertFnType, IEditorConfig } from '@wangeditor/editor';
-import type { RequestFun } from '../types'
+import type { IEditorConfig, IDomEditor } from '@wangeditor/editor';
+import type { InsertFnType, UseFile, UseFileProps } from '../types'
 
 /**
  * @name 富文本文件相关处理方法
@@ -11,19 +10,16 @@ import type { RequestFun } from '../types'
  * @param requestFunc
  * @returns 
  */
-export const useFile = ({
+export const useFile: UseFile = ({
   loading,
   requestFunc,
-}: {
-  loading: Ref<boolean>,
-  requestFunc: RequestFun,
-}) => {
+}: UseFileProps) => {
   /**
    * 获取图片、视频、链接标签数
    * @param editor 
    * @returns 
    */
-  const getElementLen = (editor) => {
+  const getElementLen = (editor: IDomEditor) => {
     return ['image', 'link', 'video']
       .map((tag) => editor.getElemsByType(tag).length)
       .reduce((a, b) => a + b, 0);
@@ -42,15 +38,17 @@ export const useFile = ({
   /**
    * 自定义配置
    */
-  const formatConfig = (editorConfig: Partial<IEditorConfig>) => {
-    const config = { ...(editorConfig || {}) }
-    config.MENU_CONF = {
-      uploadImage: {
-        customUpload,
-      },
-      ...(config.MENU_CONF || {})
+  const formatConfig = (editorConfig: Partial<IEditorConfig> | undefined) => {
+    return {
+      placeholder: '请输入内容...',
+      ...(editorConfig || {}),
+      MENU_CONF: {
+        ...(editorConfig?.MENU_CONF || {}),
+        uploadImage: {
+          customUpload,
+        },
+      }
     }
-    return config
   }
 
   /**
@@ -60,12 +58,12 @@ export const useFile = ({
    * @param event
    * @returns 
    */
-  const customPaste = async (editor, event) => {
+  const customPaste = async (editor: IDomEditor, event: ClipboardEvent): Promise<boolean | void> => {
     // 获取粘贴的html部分，该部分包含了图片img标签
-    let html = event.clipboardData.getData('text/html');
+    let html = event.clipboardData?.getData('text/html') || '';
   
     // 获取rtf数据（从word、wps复制粘贴时有），复制粘贴过程中图片的数据就保存在rtf中
-    const rtf = event.clipboardData.getData('text/rtf');
+    const rtf = event.clipboardData?.getData('text/rtf') || '';
   
     if (html && rtf) {
       // 该条件分支即表示要自定义word粘贴

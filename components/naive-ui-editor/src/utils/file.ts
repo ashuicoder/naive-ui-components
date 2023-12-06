@@ -1,3 +1,5 @@
+import type { HexSource } from '../types'
+
 /**
  * base64转buffer
  * @param base64 文件base64 file
@@ -34,7 +36,7 @@ const transAsB64ToFile = (base64: string, reportName: string, type = 'image/png'
  * @param htmlData
  * @return Array
  */
-export const findImgFromHtml = (htmlData) => {
+export const findImgFromHtml = (htmlData: string) => {
   const imgReg = /<img.*?(?:>|\/>)/gi; //匹配图片中的img标签
   const srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i; // 匹配图片中的src
 
@@ -45,9 +47,9 @@ export const findImgFromHtml = (htmlData) => {
 
   const srcArr: string[] = [];
   for (let i = 0; i < arr.length; i++) {
-    const src: string[] = arr[i].match(srcReg);
+    const src: string[] | null = arr[i].match(srcReg);
     // 获取图片地址
-    srcArr.push(src[1]);
+    src && srcArr.push(src[1]);
   }
 
   return srcArr;
@@ -58,7 +60,7 @@ export const findImgFromHtml = (htmlData) => {
  * @param rtfData
  * @return Array
  */
-export const extractImgFromRtf = (rtfData) => {
+export const extractImgFromRtf = (rtfData: string) => {
   if (!rtfData) {
     return [];
   }
@@ -84,7 +86,7 @@ export const extractImgFromRtf = (rtfData) => {
 
       if (imageType) {
         result.push({
-          hex: image.replace(regexPictureHeader, '').replace(/[^\da-fA-F]/g, ''),
+          hex: image.replace(regexPictureHeader, '').replace(/[^\da-fA-F]/g, '') || '',
           type: imageType,
           name,
         });
@@ -102,7 +104,8 @@ export const extractImgFromRtf = (rtfData) => {
  * @param isBase64Data 是否是Base64的图片数据
  * @return File
  */
-export const transAsImgToFile = (imageSrcs, imagesHexSources, isBase64Data = true) => {
+
+export const transAsImgToFile = (imageSrcs: string[], imagesHexSources: HexSource[], isBase64Data = true) => {
   const imgs: File[] = [];
   if (imageSrcs.length === imagesHexSources.length) {
     for (let i = 0; i < imageSrcs.length; i++) {
@@ -128,7 +131,7 @@ export const transAsImgToFile = (imageSrcs, imagesHexSources, isBase64Data = tru
  * @param imageSrcs html中img的属性src的值的集合
  * @return String
  */
-export const replaceAsUpdSrc = (htmlData, imageSrcs, imagesHexSources, newImgs) => {
+export const replaceAsUpdSrc = (htmlData: string, imageSrcs: string[], imagesHexSources: HexSource[], newImgs: string[]) => {
   if (imageSrcs.length === imagesHexSources.length) {
     for (let i = 0; i < imageSrcs.length; i++) {
       htmlData = htmlData.replace(imageSrcs[i], newImgs[i]);
@@ -143,11 +146,6 @@ export const replaceAsUpdSrc = (htmlData, imageSrcs, imagesHexSources, newImgs) 
  */
 const transAsHexToB64 = (hexStr) => {
   return window.btoa(
-    hexStr
-      .match(/\w{2}/g)
-      .map((char) => {
-        return String.fromCharCode(parseInt(char, 16));
-      })
-      .join('')
+    hexStr.match(/\w{2}/g).map((char) => String.fromCharCode(parseInt(char, 16)))?.join('') || []
   );
 }

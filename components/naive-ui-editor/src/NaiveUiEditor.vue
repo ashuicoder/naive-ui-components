@@ -10,10 +10,6 @@ import type { Props, Emits } from './types'
 const props = withDefaults(defineProps<Props>(), {
   mode: 'default',
   height: 500,
-  editorConfig: {
-    placeholder: '请输入内容...',
-    MENU_CONF: {},
-  }
 })
 
 const emits = defineEmits<Emits>()
