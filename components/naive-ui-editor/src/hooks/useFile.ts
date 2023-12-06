@@ -31,7 +31,7 @@ export const useFile: UseFile = ({
   const customUpload = async (file: File, insertFn?: InsertFnType) => {
     const [err, url] = await to(requestFunc(file));
     if (err) return '';
-    insertFn && insertFn(url, file.name);
+    insertFn && insertFn(url);
     return url;
   };
 
@@ -47,6 +47,9 @@ export const useFile: UseFile = ({
         uploadImage: {
           customUpload,
         },
+        uploadVideo: {
+          customUpload,
+        }
       }
     }
   }
