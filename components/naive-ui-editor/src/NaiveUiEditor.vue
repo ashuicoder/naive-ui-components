@@ -2,6 +2,7 @@
 import { NSpin } from 'naive-ui'
 
 import '@wangeditor/editor/dist/css/style.css'
+import './styles/index.css'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 
 import { useEditor } from './hooks'
