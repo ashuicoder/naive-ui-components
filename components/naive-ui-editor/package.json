@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": false,
   "main": "index.ts",
-  "types": "./dist/index.d.ts",
   "type": "module",
   "description": "基于naive-ui和wangEditor 5封装的富文本组件",
   "author": "zyuting",
@@ -43,5 +42,8 @@
     "@wangeditor/editor-for-vue": ">=5.1.12",
     "naive-ui": ">=2.34.0",
     "vue": ">=3.2.0"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
