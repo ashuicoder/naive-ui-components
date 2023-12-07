@@ -1,7 +1,7 @@
 {
   "name": "naive-ui-editor",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
