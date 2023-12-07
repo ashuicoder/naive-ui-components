@@ -6,7 +6,7 @@
   "types": "./dist/index.d.ts",
   "type": "module",
   "description": "基于naive-ui和wangEditor 5封装的富文本组件",
-  "author": "昆明企安科技有限公司-前端组",
+  "author": "zyuting",
   "keywords": [
     "naive-ui",
     "vue3",
