@@ -95,7 +95,8 @@ const [register] = useForm({
           type: 'input-number',
           rules: {
             required: true,
-            message: ''
+            type: 'number',
+            message: '请输入年龄'
           }
         },
         {

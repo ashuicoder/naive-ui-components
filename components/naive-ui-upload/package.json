@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "description": "一个基于naive-ui封装的文件上传组件，支持图片裁剪",
-  "keywords": [
+  "keywords": [ 
     "naive-ui",
     "vue3",
     "upload",

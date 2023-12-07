@@ -1,36 +1,6 @@
 <script lang="tsx">
 import { defineComponent, reactive, ref, toRaw, computed, watchEffect } from 'vue'
-import {
-  NForm,
-  NFormItem,
-  NGrid,
-  NGridItem,
-  NFormItemGi,
-  NAutoComplete,
-  NCascader,
-  NColorPicker,
-  NCheckbox,
-  NCheckboxGroup,
-  NDatePicker,
-  NDynamicInput,
-  NDynamicTags,
-  NInput,
-  NInputNumber,
-  NMention,
-  NRadio,
-  NRadioGroup,
-  NRate,
-  NSelect,
-  NSlider,
-  NSwitch,
-  NTimePicker,
-  NTransfer,
-  NTreeSelect,
-  NSpace,
-  NButton,
-  NIcon,
-  NTooltip
-} from 'naive-ui'
+import { NForm, NGrid, NGridItem, NFormItemGi, NSpace, NButton, NIcon, NTooltip } from 'naive-ui'
 
 import to from 'await-to-js'
 
@@ -51,33 +21,6 @@ import type { FormInstance, Recordable, FormSchema, Props } from './types'
 
 export default defineComponent({
   props,
-  components: {
-    NForm,
-    NFormItem,
-    NGrid,
-    NGridItem,
-    NFormItemGi,
-    NAutoComplete,
-    NCascader,
-    NColorPicker,
-    NCheckbox,
-    NCheckboxGroup,
-    NDatePicker,
-    NDynamicInput,
-    NDynamicTags,
-    NInput,
-    NInputNumber,
-    NMention,
-    NRadio,
-    NRadioGroup,
-    NRate,
-    NSelect,
-    NSlider,
-    NSwitch,
-    NTimePicker,
-    NTransfer,
-    NTreeSelect
-  },
   emits: ['register', 'submit', 'reset'],
   setup(props, { emit, slots, expose }) {
     const hookProps = ref<Props>({})
@@ -107,9 +50,9 @@ export default defineComponent({
             formValue[item.field] = null
           }
           setDefaultValue(item)
-          this.clearValidate()
-          emit('reset')
         })
+        this.clearValidate()
+        emit('reset')
       },
       getValue() {
         return toRaw(formValue)

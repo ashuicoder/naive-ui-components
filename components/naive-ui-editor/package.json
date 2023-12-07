@@ -16,7 +16,7 @@
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
+    "type-check": "vue-tsc --noEmit -p ../../tsconfig.vitest.json --composite false"
   },
   "dependencies": {
     "vue": "^3.3.4"
