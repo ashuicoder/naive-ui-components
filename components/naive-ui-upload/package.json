@@ -2,11 +2,11 @@
   "name": "naive-ui-upload",
   "version": "2.0.2",
   "private": false,
-  "main": "index.ts",
+  "main": "./dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
   "description": "一个基于naive-ui封装的文件上传组件，支持图片裁剪",
-  "keywords": [ 
+  "keywords": [
     "naive-ui",
     "vue3",
     "upload",
