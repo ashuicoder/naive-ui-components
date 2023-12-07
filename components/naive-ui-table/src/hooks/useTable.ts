@@ -1,6 +1,6 @@
 import { reactive } from 'vue'
-import type { Props } from '../types'
 import { PageField, SizeField, ListField, TotalField, DefaultPageSize } from '../const'
+import type { Props } from '../types'
 
 export function useTable(
   api?: Props['requestApi'],
@@ -14,8 +14,8 @@ export function useTable(
   const state = reactive({
     tableData: [], // 表格数据
     loading: true,
+    // 分页数据
     pageAble: {
-      // 分页数据
       current: 1,
       size: DefaultPageSize,
       total: 0
@@ -36,7 +36,6 @@ export function useTable(
   // 获取表格数据
   async function getTableList() {
     if (!api) return
-
     state.loading = true
     try {
       // 分页参数
@@ -50,7 +49,6 @@ export function useTable(
       // 总参数
       const totalParam = { ...initParam, ...pageParam, ...state.searchParam }
       let res = await api(totalParam)
-      console.log('res: ', res)
       dataCallBack && (res = dataCallBack(res))
       state.tableData = isPage ? res[ListField] : res
       if (isPage) {

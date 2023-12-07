@@ -66,14 +66,8 @@ const search = {
       defaultValue: 'male',
       componentProps: {
         options: [
-          {
-            label: '男',
-            value: 'male'
-          },
-          {
-            label: '女',
-            value: 'female'
-          }
+          { label: '男', value: 'male' },
+          { label: '女', value: 'female' }
         ]
       }
     },

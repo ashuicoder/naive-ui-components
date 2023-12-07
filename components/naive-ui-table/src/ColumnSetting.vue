@@ -39,13 +39,13 @@
 </template>
 
 <script setup lang="ts">
-import { NButton, NSwitch, NIcon } from 'naive-ui'
 import { computed } from 'vue'
-import Draggable from 'vuedraggable'
+import { NButton, NSwitch, NIcon } from 'naive-ui'
 import { Move, ChevronBackCircleOutline, ChevronForwardCircleOutline } from '@vicons/ionicons5'
+import Draggable from 'vuedraggable'
+import type { PropType } from 'vue'
 import type { DataTableColumns } from 'naive-ui'
 import type { Recordable } from './types'
-import type { PropType } from 'vue'
 
 const props = defineProps({
   columns: {
@@ -61,7 +61,6 @@ const columnsList = computed({
     return props.columns.filter((item: any) => item.key !== 'operation')
   },
   set(value) {
-    console.log('value: ', value)
     let arr: Recordable[] = value.concat(props.columns)
     arr.forEach((item: Recordable, index) => {
       for (let i = arr.length - 1; i > index; i--) {

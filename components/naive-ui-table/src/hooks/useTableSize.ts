@@ -6,7 +6,6 @@ export function useTableSize(tableRef, resizeHeightOffset) {
   const tableMaxHeight = ref(0)
 
   function handleResize() {
-    // 视口高度
     const clientHeight = window.document.documentElement.clientHeight
 
     const headEl = tableRef.value.$el.querySelector('.n-data-table-thead ')

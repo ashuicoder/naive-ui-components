@@ -24,7 +24,8 @@ export default defineConfig({
     sidebar: [
       { text: 'naive-ui-form', link: '/naive-ui-form' },
       { text: 'naive-ui-upload', link: '/naive-ui-upload' },
-      { text: 'naive-ui-editor', link: '/naive-ui-editor' }
+      { text: 'naive-ui-editor', link: '/naive-ui-editor' },
+      { text: 'naive-ui-table', link: '/naive-ui-table' },
     ],
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/ashuicoder/naive-ui-components' }]

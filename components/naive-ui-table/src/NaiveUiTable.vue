@@ -89,18 +89,16 @@
 <script setup lang="ts">
 import { NButton, NDataTable, NDropdown, NDrawer, NDrawerContent, NTooltip, NIcon } from 'naive-ui'
 import type { DataTableRowKey } from 'naive-ui'
-import { ref, computed, onMounted } from 'vue'
-
+import { ref, computed, onMounted, useSlots } from 'vue'
 import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
+import _ from 'lodash'
 import { BasicForm, useForm } from 'naive-ui-form'
 import { useTable } from './hooks/useTable'
 import ColumnSetting from './ColumnSetting.vue'
-import { useSlots } from 'vue'
-import _ from 'lodash'
-import type { Props } from './types'
 import { isFunction } from './utils'
 import { PageSizes } from './const'
 import { useTableSize } from './hooks/useTableSize'
+import type { Props } from './types'
 
 const props = withDefaults(defineProps<Props>(), {
   columns: () => [],

@@ -380,6 +380,9 @@ importers:
       naive-ui-form:
         specifier: workspace:*
         version: link:../components/naive-ui-form
+      naive-ui-table:
+        specifier: workspace:^
+        version: link:../components/naive-ui-table
       naive-ui-upload:
         specifier: workspace:^
         version: link:../components/naive-ui-upload
