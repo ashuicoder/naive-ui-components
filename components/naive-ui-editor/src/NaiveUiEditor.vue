@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { defineAsyncComponent } from 'vue'
 import { NSpin } from 'naive-ui'
 
 import '@wangeditor/editor/dist/css/style.css'
@@ -10,20 +11,13 @@ import type { Props, Emits } from './types'
 
 const props = withDefaults(defineProps<Props>(), {
   mode: 'default',
-  height: 500,
+  height: 500
 })
 
 const emits = defineEmits<Emits>()
 
-const {
-  loading,
-  editorRef,
-  style,
-  customConfig,
-  customPaste,
-  handleCreated,
-  handleChange
-} = useEditor({ props, emits })
+const { loading, editorRef, style, customConfig, customPaste, handleCreated, handleChange } =
+  useEditor({ props, emits })
 </script>
 
 <template>

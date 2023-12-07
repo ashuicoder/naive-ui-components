@@ -45,11 +45,10 @@ import { useAttrs, nextTick, inject, ref, defineAsyncComponent, watch } from 'vu
 import { NUpload, useMessage, NModal } from 'naive-ui'
 import to from 'await-to-js'
 import 'vue-cropper/dist/index.css'
+import { VueCropper } from 'Vue-Cropper'
 
 import type { UploadCustomRequestOptions, UploadFileInfo } from 'naive-ui'
 import type { RequestFun } from './types'
-
-const VueCropper = defineAsyncComponent(() => import('vue-cropper/lib/vue-cropper.vue'))
 
 const attrs = useAttrs()
 const message = useMessage()

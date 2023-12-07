@@ -4,10 +4,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   vite: {
-    plugins: [vueJsx()],
-    ssr: {
-      noExternal: ['naive-ui']
-    }
+    plugins: [vueJsx()]
   },
   base: '/naive-ui-components/',
   lang: 'zh-CN',

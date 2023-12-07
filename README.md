@@ -2,5 +2,6 @@
 - navie-ui-form
 - naive-ui-upload
 - naive-ui-table
+- naive-ui-editor
 
 [文档地址](https://ashuicoder.github.io/naive-ui-components/)

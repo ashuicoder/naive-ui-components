@@ -3,7 +3,6 @@
   "version": "2.0.2",
   "private": false,
   "main": "index.ts",
-  "types": "dist/index.d.ts",
   "type": "module",
   "description": "一个基于naive-ui封装的文件上传组件，支持图片裁剪",
   "keywords": [
@@ -45,5 +44,8 @@
     "vue": ">=3.2.0",
     "naive-ui": ">=2.34.0",
     "@vicons/ionicons5": ">=0.12.0"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
