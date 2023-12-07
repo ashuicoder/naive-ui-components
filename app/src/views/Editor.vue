@@ -6,7 +6,7 @@
 import { ref, watch } from 'vue'
 import { NaiveUiEditor } from 'naive-ui-editor'
 
-const content = ref('')
+const content = ref<string | null>(null)
 
 watch(content, () => {
   console.log(content.value)
