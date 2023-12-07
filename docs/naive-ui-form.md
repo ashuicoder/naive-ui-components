@@ -1,14 +1,4 @@
 
-
-<script setup lang="ts">
-  import BasicForm from './components/BasicForm.vue'
-  import CustomForm from './components/CustomForm.vue'
-  import SlotForm from './components/SlotForm.vue'
-  import DynamicForm from './components/DynamicForm.vue'
-  import ModalForm from './components/ModalForm.vue'
-  import UseForm from './components/useForm.vue'
-  import InstanceForm from './components/InstanceForm.vue'
-</script>
 # naive-ui-form文档
 
 ## 简介
@@ -34,9 +24,6 @@
 **下面是`naive-ui-form`的一个完整表单的示例：**
 
 
-
-
-<BasicForm></BasicForm>
 
 ```vue
 <template>
@@ -363,9 +350,6 @@ interface FormInstance {
 ```
 
 
-
-<UseForm></UseForm>
-
 ```vue
 <template>
   <div>
@@ -521,7 +505,6 @@ function handleSetValue() {
 
 如果不想使用[useForm](#useForm)，也可以直接通过`naive-form-ui`组件自身调用上面的方法：
 
-<InstanceForm></InstanceForm>
 
 ```vue
 <template>
@@ -718,7 +701,6 @@ const [register] = useForm({
 
 当`naive-ui`的表单组件不满足需求的时候，可自定义组件，`type`设置为`custom`，`render`函数返回自定义组件示例如下：
 
-<CustomForm></CustomForm>
 
 ```vue{12,15-23}
 <template>
@@ -800,7 +782,6 @@ const [register] = useForm({
 
 `动态表单`需要将`type `设置为`dynamic`，再新增一个`dynamicOptions`配置，示例如下：
 
-<DynamicForm></DynamicForm>
 
 ```vue{13-27}
 <template>
@@ -843,7 +824,6 @@ const [register] = useForm({
 
 `ModalForm`是`BasicForm`的封装，主要是为了方便在弹窗中使用。您可以直接传入`BasicForm`、[n-modal](https://ui.naiveadmin.com/zh-CN/os-theme/components/modal)、[dialog](https://ui.naiveadmin.com/zh-CN/os-theme/components/dialog)支持的`props`。`ModalForm`会在校验通过后出发`submit`事件，参数就是表单的值。点击`取消按钮`时还会触发`cancel`事件。
 
-<ModalForm></ModalForm>
 
 ```vue
 <template>

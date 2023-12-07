@@ -1,6 +1,4 @@
-<script setup lang="ts">
-  import NaiveUiEditor from './components/NaiveUiEditor.vue'
-</script>
+
 
 # naive-ui-editor文档
 
@@ -21,8 +19,6 @@ pnpm add naive-ui-editor @wangeditor/editor  @wangeditor/editor-for-vue
 ## 使用
 
 ### 局部导入
-
-<NaiveUiEditor></NaiveUiEditor>
 
 ```vue{4-8,15}
 <template>

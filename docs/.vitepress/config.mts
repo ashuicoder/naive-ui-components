@@ -6,7 +6,7 @@ export default defineConfig({
   vite: {
     plugins: [vueJsx()],
     ssr: {
-      noExternal: ['naive-ui']
+      noExternal: ['naive-ui', 'naive-ui-editor']
     }
   },
   base: '/naive-ui-components/',

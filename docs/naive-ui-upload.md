@@ -1,6 +1,4 @@
-<script setup lang="ts">
-  import BasicUpload from './components/BasicUpload.vue'
-</script>
+
 
 # naive-ui-upload文档
 
@@ -17,8 +15,6 @@ pnpm add naive-ui-upload
 ## 使用
 
 ### 局部导入
-
-<BasicUpload></BasicUpload>
 
 ```vue{4-8,15}
 <template>

@@ -2,7 +2,7 @@
   "name": "naive-ui-editor",
   "version": "1.0.0",
   "private": false,
-  "main": "./dist/index.js",
+  "main": "index.ts",
   "types": "./dist/index.d.ts",
   "type": "module",
   "description": "基于naive-ui和wangEditor 5封装的富文本组件",
