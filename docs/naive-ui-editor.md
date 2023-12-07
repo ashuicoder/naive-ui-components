@@ -13,7 +13,7 @@
 
 ## 安装
 ```bash
-pnpm add naive-ui-editor
+pnpm add naive-ui-editor @wangeditor/editor  @wangeditor/editor-for-vue
 
 ```
 也可以使用`npm`、`yarn`等安装。

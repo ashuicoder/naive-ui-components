@@ -26,7 +26,7 @@ export default defineConfig({
       }
     },
     rollupOptions: {
-      external: ['vue', 'naive-ui']
+      external: ['vue', 'naive-ui', '@wangeditor/editor', '@wangeditor/editor-for-vue']
     }
   }
 })
