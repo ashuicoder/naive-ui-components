@@ -1,24 +1,24 @@
 {
-  "name": "app",
-  "version": "0.0.0",
-  "private": true,
+  "name": "naive-ui-editor-view",
+  "version": "1.0.0",
+  "private": false,
+  "main": "index.ts",
+  "type": "module",
+  "description": "基于vue-dompurify-html渲染富文本内容",
+  "author": "zyuting",
+  "keywords": [
+    "vue3"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p ../tsconfig.vitest.json --composite false"
+    "type-check": "vue-tsc --noEmit -p ../../tsconfig.vitest.json --composite false"
   },
   "dependencies": {
-    "naive-ui-editor": "workspace:^",
-    "naive-ui-editor-view": "workspace:^",
-    "naive-ui-form": "workspace:^",
-    "naive-ui-table": "workspace:^",
-    "naive-ui-upload": "workspace:^",
-    "pinia": "^2.1.7",
-    "vue": "^3.3.4",
-    "vue-router": "^4.2.5"
+    "vue": "^3.3.4"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",
@@ -34,5 +34,12 @@
     "vite": "^4.4.11",
     "vitest": "^0.34.6",
     "vue-tsc": "^1.8.19"
-  }
+  },
+  "peerDependencies": {
+    "vue-dompurify-html": ">=4.1.4",
+    "vue": ">=3.2.0"
+  },
+  "files": [
+    "dist"
+  ]
 }

@@ -2,7 +2,7 @@ import type { Ref } from 'vue';
 import type { IEditorConfig, IToolbarConfig, IDomEditor } from '@wangeditor/editor';
 
 export interface Props {
-  value?: string
+  value?: string | null
   mode?: 'default' | 'simple'
   height?: number
   editorConfig?: Partial<IEditorConfig>
