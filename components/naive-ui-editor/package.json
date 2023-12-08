@@ -1,6 +1,6 @@
 {
   "name": "naive-ui-editor",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": false,
   "main": "index.ts",
   "type": "module",
@@ -42,8 +42,5 @@
     "@wangeditor/editor-for-vue": ">=5.1.12",
     "naive-ui": ">=2.34.0",
     "vue": ">=3.2.0"
-  },
-  "files": [
-    "dist"
-  ]
+  }
 }

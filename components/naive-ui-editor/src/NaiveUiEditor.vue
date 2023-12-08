@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { defineAsyncComponent } from 'vue'
 import { NSpin } from 'naive-ui'
 
 import '@wangeditor/editor/dist/css/style.css'
@@ -32,7 +31,7 @@ const { loading, editorRef, style, customConfig, customPaste, handleCreated, han
       class="editor-content-view"
       :defaultConfig="customConfig"
       :mode="mode"
-      :modelValue="value"
+      :modelValue="value || ''"
       :style="style"
       @customPaste="customPaste"
       @onCreated="handleCreated"

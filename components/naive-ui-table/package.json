@@ -11,7 +11,12 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
   },
   "dependencies": {
-    "vue": "^3.3.4"
+    "@vicons/ionicons5": "^0.12.0",
+    "lodash": "^4.17.21",
+    "naive-ui": "^2.35.0",
+    "naive-ui-form": "workspace:^",
+    "vue": "^3.3.4",
+    "vuedraggable": "4"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",

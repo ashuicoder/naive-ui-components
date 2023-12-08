@@ -32,7 +32,7 @@ pnpm add naive-ui-editor @wangeditor/editor  @wangeditor/editor-for-vue
 import { NaiveUiEditor } from 'naive-ui-editor'
 import { ref } from 'vue'
 
-const content = ref<string>('')
+const content = ref<string | null>(null)
 function handleUpload() {
   return new Promise((resolve) => {
     setTimeout(() => {
