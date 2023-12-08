@@ -10,12 +10,5 @@
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview"
-  },
-  "dependencies": {
-    "naive-ui-editor": "workspace:^",
-    "naive-ui-editor-view": "workspace:^",
-    "naive-ui-form": "workspace:*",
-    "naive-ui-table": "workspace:^",
-    "naive-ui-upload": "workspace:^"
   }
 }
