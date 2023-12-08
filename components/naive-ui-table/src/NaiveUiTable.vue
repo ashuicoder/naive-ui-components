@@ -1,5 +1,6 @@
 <template>
   <BasicForm
+    v-if="search"
     @register="register"
     :grid="{ cols: 4, xGap: 14 }"
     submitBtnText="查询"
@@ -13,12 +14,13 @@
       <div class="table-header-left">
         <slot name="tableHeader"></slot>
       </div>
-      <div v-if="toolButton" class="table-header-right">
-        <slot name="toolButton">
+      <div class="table-header-right">
+        <slot name="toolButton"> </slot>
+        <template v-if="toolButton">
           <!-- 刷新 -->
           <n-tooltip v-if="showToolButton('refresh')">
             <template #trigger>
-              <n-button circle @click="getTableList">
+              <n-button circle @click="refresh">
                 <template #icon>
                   <n-icon><SyncOutline /></n-icon>
                 </template>
@@ -56,7 +58,7 @@
             </template>
             <span>列设置</span>
           </n-tooltip>
-        </slot>
+        </template>
       </div>
     </div>
 
@@ -163,6 +165,12 @@ const { state, getTableList, handleSearch, handleReset, onUpdatePage, onUpdatePa
 onMounted(() => {
   props.requestAuto && getTableList()
 })
+
+/* 刷新 */
+function refresh() {
+  checkedRowKeys.value = []
+  getTableList()
+}
 
 /* 分页 */
 const newPagination = computed(() => {
