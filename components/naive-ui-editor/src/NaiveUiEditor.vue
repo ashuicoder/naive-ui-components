@@ -32,7 +32,7 @@ const { loading, editorRef, style, customConfig, customPaste, handleCreated, han
       class="editor-content-view"
       :defaultConfig="customConfig"
       :mode="mode"
-      :modelValue="value"
+      :modelValue="value || ''"
       :style="style"
       @customPaste="customPaste"
       @onCreated="handleCreated"
