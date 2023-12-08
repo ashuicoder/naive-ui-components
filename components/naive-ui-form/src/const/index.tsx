@@ -1,4 +1,4 @@
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, type Component } from 'vue'
 import {
   NAutoComplete,
   NCascader,
@@ -337,7 +337,7 @@ export const componentMapInfo = {
   },
   upload: {
     outputStr: '上传',
-    render(formValue: Recordable, schema: FormSchema, slots: any) {
+    render(formValue: Recordable, schema: FormSchema) {
       const AsyncComp = defineAsyncComponent(() => import('naive-ui-upload/src/NaiveUiUpload.vue'))
       return (
         <AsyncComp
@@ -350,6 +350,15 @@ export const componentMapInfo = {
             }
           }}
         ></AsyncComp>
+      )
+    }
+  },
+  editor: {
+    outputStr: '输入',
+    render(formValue: Recordable, schema: FormSchema) {
+      const AsyncComp = defineAsyncComponent(() => import('naive-ui-editor/src/NaiveUiEditor.vue'))
+      return (
+        <AsyncComp v-model:value={formValue[schema.field]} {...schema.componentProps}></AsyncComp>
       )
     }
   }

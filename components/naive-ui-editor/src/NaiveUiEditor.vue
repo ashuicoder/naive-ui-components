@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { defineAsyncComponent } from 'vue'
 import { NSpin } from 'naive-ui'
 
 import '@wangeditor/editor/dist/css/style.css'

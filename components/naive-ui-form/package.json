@@ -23,6 +23,7 @@
     "type-check": "vue-tsc --noEmit -p  ../../tsconfig.vitest.json --composite false"
   },
   "dependencies": {
+    "naive-ui-editor": "workspace:^",
     "naive-ui-upload": "workspace:^",
     "vue": "^3.3.4"
   },
