@@ -9,7 +9,7 @@ type CompentType = keyof typeof componentMapInfo | 'dynamic'
 
 export interface FormSchema extends Omit<FormItemGiProps, 'labelProps'> {
   tip?: string | (() => VNode)
-  tipIconProps?: InstanceType<typeof NIcon>['$props']
+  tipIconProps?: Recordable
   field: string
   type: CompentType
   defaultValue?: any
@@ -21,9 +21,8 @@ export interface FormSchema extends Omit<FormItemGiProps, 'labelProps'> {
   rules?: FormItemRule | FormItemRule[]
   style?: CSSProperties
   vif?: (value: Recordable) => boolean
-  render?: (formValue: Recordable, filed: string) => VNode
   slot?: string
-  dynamicOptions?: FormSchema[]
+  dynamicOptions?: Omit<FormSchema, 'vif'>[]
 }
 
 export interface BasicProps {

@@ -76,10 +76,6 @@
     v-model:value="record[schema.field]"
   ></EditorComponent>
 
-  <template v-else-if="schema.type === 'slot'">
-    <slot :name="schema.slot" :formValue="record" :field="schema.field"></slot>
-  </template>
-
   <component
     v-else
     :is="`n-${schema.type}`"

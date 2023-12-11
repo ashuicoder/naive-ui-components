@@ -7,13 +7,34 @@
     >
       <template v-for="schema in commonProps.schemas">
         <template v-if="schema.type !== 'dynamic'">
-          <NFormItemGi v-bind="schema" :path="schema.field" :rule="getFormRule(schema)">
-            <RenderComponent :schema="schema" :record="formValue"></RenderComponent>
+          <NFormItemGi
+            v-show="typeof schema.vif === 'function' ? schema.vif(formValue) : true"
+            v-bind="schema"
+            :path="schema.field"
+            :rule="getFormRule(schema)"
+          >
+            <template v-if="schema.tip" #label>
+              <div style="display: flex; align-items: center">
+                <span>{{ schema.label }}</span>
+
+                <NPopover>
+                  <template #trigger>
+                    <NIcon color="#999" :size="18" v-bind="schema.tipIconProps">
+                      <HelpCircleOutline></HelpCircleOutline>
+                    </NIcon>
+                  </template>
+                  <NText> {{ schema.tip }}</NText>
+                </NPopover>
+              </div>
+            </template>
+            <RenderComponent v-if="schema.type !== 'slot'" :schema="schema" :record="formValue">
+            </RenderComponent>
+            <slot v-else :name="schema.slot" :formValue="formValue" :field="schema.field"></slot>
           </NFormItemGi>
         </template>
 
         <template v-else>
-          <NGridItem>
+          <NGridItem v-show="typeof schema.vif === 'function' ? schema.vif(formValue) : true">
             <NGrid
               v-for="(item, index) in formValue[schema.field]"
               :cols="schema.dynamicOptions!.length + 1"
@@ -25,7 +46,32 @@
                 :path="`${schema.field}[${index}].${dynamicSchema.field}`"
                 :rule="getFormRule(dynamicSchema)"
               >
-                <RenderComponent :schema="dynamicSchema" :record="item"></RenderComponent>
+                <template v-if="dynamicSchema.tip" #label>
+                  <div style="display: flex; align-items: center">
+                    <span>{{ dynamicSchema.label }}</span>
+
+                    <NPopover>
+                      <template #trigger>
+                        <NIcon color="#999" :size="18" v-bind="dynamicSchema.tipIconProps">
+                          <HelpCircleOutline></HelpCircleOutline>
+                        </NIcon>
+                      </template>
+                      <NText> {{ dynamicSchema.tip }}</NText>
+                    </NPopover>
+                  </div>
+                </template>
+                <RenderComponent
+                  v-if="dynamicSchema.type !== 'slot'"
+                  :schema="dynamicSchema"
+                  :record="item"
+                ></RenderComponent>
+
+                <slot
+                  v-else
+                  :name="dynamicSchema.slot"
+                  :formValue="item"
+                  :field="dynamicSchema.field"
+                ></slot>
               </NFormItemGi>
               <NFormItemGi>
                 <NSpace>
@@ -82,7 +128,17 @@
 
 <script setup lang="ts">
 import { ref, computed, reactive, toRaw, watchEffect } from 'vue'
-import { NForm, NGrid, NFormItemGi, NGridItem, NSpace, NButton, NIcon } from 'naive-ui'
+import {
+  NForm,
+  NGrid,
+  NFormItemGi,
+  NGridItem,
+  NSpace,
+  NButton,
+  NIcon,
+  NPopover,
+  NText
+} from 'naive-ui'
 
 import to from 'await-to-js'
 
@@ -187,6 +243,11 @@ defineExpose(formMethod)
 emit('register', formMethod)
 
 const isExpand = ref(commonProps.value.defaultExpand)
+
+function shouldRenderComponent(schema: FormSchema, record: Recordable) {
+  if (!schema.vif) return true
+  return schema.vif(record)
+}
 
 function setDefaultValue(schema: FormSchema) {
   if (schema.defaultValue) {
