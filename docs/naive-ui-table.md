@@ -6,15 +6,15 @@ naive-ui-table是基于naive-ui的表格组件，主要用于展示大量结构�
 
 功能如下：
 
-- 表格列`columns`配置与`naive-ui`完全一致，且自定义列增加了插槽配置
-- 自带分页，只需要传入异步请求接口api，即可实现分页查询功能
-- 自带搜索，只需要传入`search`配置，即可实现搜索功能
-- 自带列设置，可设置列显隐，列固定，拖拽排序列顺序
-- 表格高度自适应，避免数据过多时页面出现滚动条
+- 表格列`columns`配置与`naive-ui`完全一致，且自定义列增加了插槽配置；
+- 自带分页，只需要传入异步请求接口api，即可实现分页查询功能；
+- 自带搜索，只需要传入`search`配置，即可实现搜索功能；
+- 自带列设置，可设置列显隐、列固定，可拖拽排序列顺序；
+- 表格高度自适应，避免数据过多时页面出现滚动条。
 
-::: info 提示
+::: tip 提示
 
-`naive-ui-table`支持`naive-ui`的所有属性，因此可在`naive-ui-table`传递`naive-ui`属性，将其传递到`naive-ui`组件上，覆盖内部封装的属性。
+**`naive-ui-table`支持`naive-ui`的所有属性**，因此可在`naive-ui-table`传递`naive-ui`属性，将其传递到`naive-ui`组件上，覆盖内部封装的属性。
 
 :::
 
@@ -32,22 +32,11 @@ pnpm add naive-ui-table
 
 ```vue
 <template>
-  <NaiveUiTable :columns="columns" :requestApi="getTableList"></NaiveUiTable>
+  <NaiveUiTable></NaiveUiTable>
 </template>
 
 <script setup lang="ts">
 import { NaiveUiTable } from 'naive-ui-table'
-
-const columns = [
-  { type: 'selection', multiple: true },
-  { title: '姓名', key: 'name' },
-  { title: '年龄', key: 'age' }
-  // ...
-]
-
-async function getTableList(params: any) {
-  return await api(params)
-}
 </script>
 ```
 
@@ -79,6 +68,7 @@ const columns: DataTableColumns = [
   { title: '年龄', key: 'age' }
 ]
 
+// 返回带结果的promise对象
 async function getTableList(params: any) {
   return await api(params)
 }
@@ -86,14 +76,14 @@ async function getTableList(params: any) {
 ```
 
 ::: danger 注意
-该`columns`配置与`naive-ui`的`columns`完全一致。因此按照`naive-ui`的`columns`来配置就好。
+该`columns`配置与`naive-ui`的`columns`完全一致。具体属性参考`naive-ui`的`columns`。
 :::
 
 ## 表格左上角-自定义按钮
 
-- `tableHeader`插槽，可以自定义表格左上角按钮。
+- `tableHeader`插槽，可以自定义表格左上角的内容，例如标题、按钮等。
 
-```vue
+```vue{3-6}
 <template>
   <NaiveUiTable :columns="columns" :requestApi="getTableList">
     <template #tableHeader>
@@ -122,10 +112,9 @@ async function getTableList(params: any) {
 
 左上角工具按钮，由`toolButton`属性控制，默认为`true`，展示全部：
 
-- 刷新：刷新当前页数据；
-- 密度：也就是表格的`size`属性；
-- 列设置：
-  - 列设置抽屉里，可拖拽改变列的顺序，可设置列的显隐、固定右侧列或固定左侧列。
+- 【刷新】：刷新当前页数据
+- 【密度】：也就是表格的`size`属性
+- 【列设置】：列设置抽屉里，可拖拽改变列的顺序，可设置列的显隐、固定右侧列或固定左侧列
 
 ```ts
 // 是否显示表格功能按钮
@@ -134,7 +123,7 @@ toolButton?: ('refresh' | 'size' | 'setting')[] | boolean
 
 ---
 
-若只想展示【刷新】【密度】两个功能：
+若只想展示【刷新】【密度】两个按钮：
 
 ```vue
 <template>
@@ -169,13 +158,13 @@ toolButton?: ('refresh' | 'size' | 'setting')[] | boolean
 
 ## 表格列自定义
 
-- 按原来属性，在`columns`里用`render`函数自定义列；
+- 按原来的属性，在`columns`里用`render`函数自定义列；
 - 同时可在插槽里进行自定义列，接收数据`row`为每一行数据，插槽名需与该列的`key`保持一致
 
-```vue{4-8,17}
+```vue{4-8,18}
 <template>
   <NaiveUiTable :columns="columns" :requestApi="getTableList">
-    <!-- 表格单元格 -->
+    <!-- 用插槽自定义列 -->
     <template #address="row">
       <n-button type="primary">
         {{ row.address }}
@@ -189,6 +178,7 @@ import { NaiveUiTable } from 'naive-ui-table'
 import type { DataTableColumns } from 'naive-ui'
 
 const columns: DataTableColumns = [
+  // 用render函数自定义列
   { title: '姓名', key: 'name', render: (row) => <n-tag type="primary">{row.name}</n-tag> },
   { title: '年龄', key: 'age' },
   { title: '地址', key: 'address' }
@@ -204,13 +194,13 @@ async function getTableList(params: any) {
 ## 表格操作列
 
 - 操作列的 key 固定为`operation`；
-- 同样可在 columns 的`operation`列，用`render`函数自定义该列的按钮；
+- 同样可在 columns 的`operation`列配置里，用`render`函数自定义该列的按钮；
 - **也可在`operation`插槽里自定义按钮，接收`row`为每一行的数据**。
 
 ```vue{4-9,21}
 <template>
   <NaiveUiTable :columns="columns" :requestApi="getTableList">
-    <!-- 表格操作 -->
+    <!-- 表格操作列 -->
     <template #operation="row">
       <n-button type="primary" ghost @click="fun('查看', row)">查看</n-button>
       <n-button type="primary" ghost @click="fun('编辑', row)">编辑</n-button>
@@ -290,10 +280,15 @@ async function getTableList(params: any) {
 
 ## 可勾选
 
-- `@update:checked-row-keys`与naive-ui的`@update:checked-row-keys`完全一致；只需要传入该回调函数，就可获取到已勾选的`keys`。
-- 默认的 row-key 是`(row) => row.id`，可自行传入`row-key`属性将其覆盖。
+只需传入`@update:checked-row-keys`回调函数，就可获取到已勾选的`keys`
+::: tip 注意
 
-```vue{5,15}
+- 该`@update:checked-row-keys`与naive-ui的`@update:checked-row-keys`完全一致
+- 默认的 row-key 是`(row) => row.id`，可自行传入`row-key`属性将其覆盖
+
+:::
+
+```vue{5,15,25-28}
 <template>
   <NaiveUiTable
     :columns="columns"
@@ -346,7 +341,7 @@ resizeHeightOffset?: number
 
 ---
 
-若需要固定高度，则自行传入`maxHeight`将其覆盖
+若需要固定高度，不需要自适应，则自行传入`maxHeight`将其覆盖
 
 ```vue
 <template>
@@ -354,8 +349,109 @@ resizeHeightOffset?: number
 </template>
 ```
 
+## 增加接口请求的参数
+
+### 方式一：传入`initParams`对象
+
+- 要额外增加接口请求的参数，可传入`initParams`对象，该对象将会与接口请求的参数合并。
+
+```vue{5-8}
+<template>
+  <NaiveUiTable
+    :columns="columns"
+    :requestApi="getTableList"
+    :initParams="{
+      type: 1,
+      id: 'xxxxxx'
+    }"
+  >
+  </NaiveUiTable>
+</template>
+
+<script setup lang="tsx">
+import { NaiveUiTable } from 'naive-ui-table'
+import type { DataTableColumns } from 'naive-ui'
+
+const columns: DataTableColumns = [
+  { title: '姓名', key: 'name' },
+  { title: '年龄', key: 'age' },
+  { title: '地址', key: 'address' }
+]
+
+async function getTableList(params: any) {
+  return await api(params)
+}
+/* 参数：{type: 1, id: 'xxxxxx', current: 1, size: 10} */
+</script>
+```
+
+### 方式二：在`requestApi`接口请求之前处理
+
+- 在`requestApi`接口请求之前，可在`params`对象上增加额外的参数。
+
+```vue{16-17}
+<template>
+  <NaiveUiTable :columns="columns" :requestApi="getTableList"> </NaiveUiTable>
+</template>
+
+<script setup lang="tsx">
+import { NaiveUiTable } from 'naive-ui-table'
+import type { DataTableColumns } from 'naive-ui'
+
+const columns: DataTableColumns = [
+  { title: '姓名', key: 'name' },
+  { title: '年龄', key: 'age' },
+  { title: '地址', key: 'address' }
+]
+
+async function getTableList(params: any) {
+  params.type = 1
+  params.id = 'xxxxxx'
+  return await api(params)
+}
+/* 参数：{current: 1, size: 10, type: 1, id: 'xxxxxx'} */
+</script>
+```
+
+## 数据处理回调`dataCallback`
+
+- 可在`dataCallback`回调函数中处理接口请求返回的数据。
+- 该回调函数接收*接口返回的数据`data`*，可在其中进行数据处理，并*返回处理好的数据*。
+
+```vue{20-27}
+<template>
+  <NaiveUiTable :columns="columns" :requestApi="getTableList" :dataCallback="dataCallback">
+  </NaiveUiTable>
+</template>
+
+<script setup lang="tsx">
+import { NaiveUiTable } from 'naive-ui-table'
+import type { DataTableColumns } from 'naive-ui'
+
+const columns: DataTableColumns = [
+  { title: '姓名', key: 'name' },
+  { title: '年龄', key: 'age' },
+  { title: '地址', key: 'address' }
+]
+
+async function getTableList(params: any) {
+  return await api(params)
+}
+
+// 数据处理
+function dataCallback(data) {
+  data.records = data.records.map((item, index) => {
+    item.name = item.name + index
+    return item
+  })
+  return data
+}
+</script>
+```
+
 ## Props
 
+- 支持naive-ui的`data-table`组件的全部属性
 - 前四个`columns`、`maxHeight`、`scrollX`、`pagination`，与naive-ui的一致，从外部传进去可覆盖内部的
 
 | 属性               | 类型                            | 描述                               | 必传 | 默认值 |
@@ -371,4 +467,4 @@ resizeHeightOffset?: number
 | dataCallback       | `(data: object) => object`      | 处理接口请求回来的数据，返回该数据 | 否   | -      |
 | requestError       | `(error: Error) => void`        | 请求接口出错时回调                 | 否   | -      |
 | toolButton         | `boolean`                       | 是否显示工具栏按钮                 | 否   | true   |
-| resizeHeightOffset | `number`                        | 表格高度变化时，底部留白距离       | 否   | 0      |
+| resizeHeightOffset | `number`                        | 表格高度自适应变化时，底部留白距离 | 否   | 0      |

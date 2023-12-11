@@ -153,7 +153,7 @@ const tableColumns = computed(() => {
 
 const { state, getTableList, handleSearch, handleReset, onUpdatePage, onUpdatePageSize } = useTable(
   props.requestApi,
-  props.initParam,
+  props.initParams,
   props.pagination,
   props.dataCallback,
   props.requestError,
