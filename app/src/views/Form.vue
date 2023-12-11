@@ -110,15 +110,15 @@ const schemas: FormSchema[] = [
     type: 'date-picker',
     label: '生日'
   },
-  {
-    field: 'school',
-    type: 'custom',
-    label: '学校',
-    required: true,
-    render(formValue: Recordable, field: string) {
-      return <input v-model={formValue[field]} />
-    }
-  },
+  // {
+  //   field: 'school',
+  //   type: 'custom',
+  //   label: '学校',
+  //   required: true,
+  //   render(formValue: Recordable, field: string) {
+  //     return <input v-model={formValue[field]} />
+  //   }
+  // },
   // {
   //   field: 'address',
   //   label: '地址',
@@ -232,15 +232,15 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
       type: 'date-picker',
       label: '生日'
     },
-    {
-      field: 'school',
-      type: 'custom',
-      label: '学校',
-      required: true,
-      render(formValue: Recordable, field: string) {
-        return <input v-model={formValue[field]} />
-      }
-    },
+    // {
+    //   field: 'school',
+    //   type: 'custom',
+    //   label: '学校',
+    //   required: true,
+    //   render(formValue: Recordable, field: string) {
+    //     return <input v-model={formValue[field]} />
+    //   }
+    // },
     {
       field: 'address',
       label: '地址',
@@ -294,6 +294,11 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
       componentProps: {
         listType: 'image-card'
       }
+    },
+    {
+      field: 'content',
+      type: 'editor',
+      label: '内容'
     }
   ],
 
