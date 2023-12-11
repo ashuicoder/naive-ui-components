@@ -53,7 +53,7 @@ export const props = {
     type: Boolean,
     default: false
   },
-  defaultShowExpandColumn: {
+  defaultShowExpandRows: {
     type: Number,
     default: 2
   },
