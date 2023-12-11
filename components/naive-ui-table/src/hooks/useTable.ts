@@ -4,7 +4,7 @@ import type { Props } from '../types'
 
 export function useTable(
   api?: Props['requestApi'],
-  initParam?: Props['initParam'],
+  initParams?: Props['initParams'],
   isPage?: Props['pagination'],
   dataCallBack?: Props['dataCallback'],
   requestError?: Props['requestError'],
@@ -47,7 +47,7 @@ export function useTable(
         : {}
 
       // 总参数
-      const totalParam = { ...initParam, ...pageParam, ...state.searchParam }
+      const totalParam = { ...initParams, ...pageParam, ...state.searchParam }
       let res = await api(totalParam)
       dataCallBack && (res = dataCallBack(res))
       state.tableData = isPage ? res[ListField] : res

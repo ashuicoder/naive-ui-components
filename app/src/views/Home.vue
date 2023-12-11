@@ -25,6 +25,10 @@ const menuList = [
   {
     name: '富文本',
     url: '/editor'
+  },
+  {
+    name: '富文本内容展示',
+    url: '/editor-view'
   }
 ]
 </script>

@@ -9,7 +9,7 @@
       @submit="handleSubmitEmit"
     >
       <template #address="{ formValue, field }">
-        <input v-model="formValue[field]" />
+        <input style="1px solid #ccc" v-model="formValue[field]" />
       </template>
     </BasicForm>
     <NSpace>
@@ -69,7 +69,9 @@ const schemas: FormSchema[] = [
     type: 'radio',
     label: '性别',
     required: true,
+
     componentProps: {
+      disabled: true,
       options: [
         {
           label: '男',
@@ -110,15 +112,15 @@ const schemas: FormSchema[] = [
     type: 'date-picker',
     label: '生日'
   },
-  {
-    field: 'school',
-    type: 'custom',
-    label: '学校',
-    required: true,
-    render(formValue: Recordable, field: string) {
-      return <input v-model={formValue[field]} />
-    }
-  },
+  // {
+  //   field: 'school',
+  //   type: 'custom',
+  //   label: '学校',
+  //   required: true,
+  //   render(formValue: Recordable, field: string) {
+  //     return <input v-model={formValue[field]} />
+  //   }
+  // },
   // {
   //   field: 'address',
   //   label: '地址',
@@ -174,6 +176,7 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
       field: 'name',
       type: 'input',
       label: '姓名',
+      tip: '233333333333333333333',
       required: true,
       labelPlacement: 'left',
       defaultValue: '张三',
@@ -191,6 +194,10 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
       type: 'radio',
       label: '性别',
       required: true,
+      vif(record) {
+        console.log('vif')
+        return !!record.name
+      },
       componentProps: {
         options: [
           {
@@ -232,15 +239,15 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
       type: 'date-picker',
       label: '生日'
     },
-    {
-      field: 'school',
-      type: 'custom',
-      label: '学校',
-      required: true,
-      render(formValue: Recordable, field: string) {
-        return <input v-model={formValue[field]} />
-      }
-    },
+    // {
+    //   field: 'school',
+    //   type: 'custom',
+    //   label: '学校',
+    //   required: true,
+    //   render(formValue: Recordable, field: string) {
+    //     return <input v-model={formValue[field]} />
+    //   }
+    // },
     {
       field: 'address',
       label: '地址',
@@ -252,6 +259,10 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
       field: 'family',
       label: '家庭成员',
       type: 'dynamic',
+      vif(record) {
+        console.log('vif')
+        return !!record.name
+      },
       dynamicOptions: [
         {
           field: 'name',
@@ -294,6 +305,11 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
       componentProps: {
         listType: 'image-card'
       }
+    },
+    {
+      field: 'content',
+      type: 'editor',
+      label: '内容'
     }
   ],
 

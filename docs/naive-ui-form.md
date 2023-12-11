@@ -98,15 +98,6 @@ const [register] = useForm({
       label: '生日'
     },
     {
-      field: 'school',
-      type: 'custom',
-      label: '学校',
-      required: true,
-      render(formValue: Recordable, field: string) {
-        return <input v-model={formValue[field]} style={{ border: '1px solid #ccc' }} />
-      }
-    },
-    {
       field: 'family',
       label: '家庭成员',
       type: 'dynamic',
@@ -615,7 +606,6 @@ const [register] = useForm({
 | rules           | `FormItemRule`或`FormItemRule[]`                | `required`为`true`时无效，自定义表单校验，同[n-form-item](https://ui.naiveadmin.com/zh-CN/os-theme/components/form#FormItem-Props)的`rule`属性 | 否       |
 | style           | Object                                          | 设置`n-form-item`的style                                     | 否       |
 | vif             | (value:Recordable) => boolean                   | 动态显示该表单，需要返回一个布尔值，`value`是表单的值        | 否       |
-| render          | (formValue: Recordable, filed: string) => VNode | 当[type](#type字段说明)字段为`custom`的时候必传，自定义渲染表单项 | 否       |
 | slot            | string                                          | 当[type](#type字段说明)字段为`slot`的时候必传，插槽名称      | 否       |
 | dynamicOptions  | FormSchema[]                                    | 动态表单的配置，当[type](#type字段说明)字段为`dynamic`的时候必传 | 否       |
 
@@ -646,7 +636,6 @@ const [register] = useForm({
 | time-picker   | NTimePicker                           |
 | transfer      | NTransfer                             |
 | tree-select   | NTreeSelect                           |
-| custom        | 见[自定义组件](#自定义组件)           |
 | slot          | 见[插槽](#插槽)                       |
 | dynamic       | 见[动态表单](#动态表单)               |
 | upload        | 见[naive-ui-upload](/naive-ui-upload) |
@@ -697,43 +686,7 @@ const [register] = useForm({
 
 :::
 
-### 自定义组件
 
-当`naive-ui`的表单组件不满足需求的时候，可自定义组件，`type`设置为`custom`，`render`函数返回自定义组件示例如下：
-
-
-```vue{12,15-23}
-<template>
-  <BasicForm @register="register"></BasicForm>
-</template>
-
-<script setup lang="tsx">
-import { BasicForm, useForm } from 'naive-ui-form'
-
-const [register] = useForm({
-  schemas: [
-    {
-      field: 'username',
-      type: 'custom',
-      label: '用户名',
-      required: true,
-      render(formValue, field) {
-        return (
-          <input
-            v-model={formValue[field]}
-            placeholder="请输入用户名"
-            style={{ border: '1px solid #ccc' }}
-          />
-        )
-      }
-    }
-  ]
-})
-</script>
-
-<style scoped></style>
-
-```
 
 
 

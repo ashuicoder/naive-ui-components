@@ -33,8 +33,9 @@
 
 <script setup lang="tsx">
 import { NaiveUiTable } from 'naive-ui-table'
-import { NButton, NDataTable, NDrawer, NDrawerContent, NTooltip } from 'naive-ui'
-import { useMessage } from 'naive-ui'
+import { NButton, NDataTable, NDrawer, NDrawerContent, NTooltip, useMessage } from 'naive-ui'
+import type { DataTableColumns } from 'naive-ui'
+import { type FormSchema } from 'naive-ui-form'
 
 const message = useMessage()
 
@@ -44,7 +45,7 @@ function handleCheck(param) {
 }
 
 // 搜索栏配置
-const search = {
+const search: { schemas: FormSchema[] } = {
   schemas: [
     {
       label: '姓名',
@@ -66,8 +67,14 @@ const search = {
       defaultValue: 'male',
       componentProps: {
         options: [
-          { label: '男', value: 'male' },
-          { label: '女', value: 'female' }
+          {
+            label: '男',
+            value: 'male'
+          },
+          {
+            label: '女',
+            value: 'female'
+          }
         ]
       }
     },
@@ -87,7 +94,7 @@ const search = {
 }
 
 // 表格配置项
-const columns = [
+const columns: DataTableColumns = [
   {
     type: 'selection',
     multiple: true

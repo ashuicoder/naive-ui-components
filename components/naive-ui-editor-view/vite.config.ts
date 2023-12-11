@@ -6,6 +6,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import dts from 'vite-plugin-dts'
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), vueJsx(), dts()],
   resolve: {
@@ -25,7 +26,7 @@ export default defineConfig({
       }
     },
     rollupOptions: {
-      external: ['vue', 'naive-ui', '@vicons/ionicons5', 'naive-ui-upload', 'naive-ui-editor']
+      external: ['vue', 'vue-dompurify-html']
     }
   }
 })
