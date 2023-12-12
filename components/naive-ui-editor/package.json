@@ -1,6 +1,6 @@
 {
   "name": "naive-ui-editor",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": false,
   "main": "index.ts",
   "type": "module",
