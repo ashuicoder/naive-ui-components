@@ -5,16 +5,13 @@ export { useForm } from './src/hooks/useForm'
 
 export { BasicForm, ModalForm }
 
-import type { FormSchema, Recordable, FormInstance, Option } from './src/types'
+import type { FormSchema, Recordable, FormInstance } from './src/types'
 
-export type { FormSchema, Recordable, FormInstance, Option }
+export type { FormSchema, Recordable, FormInstance }
 
 export default {
-  install(app: App, option?: Option) {
+  install(app: App) {
     app.component('BasicForm', BasicForm)
     app.component('ModalForm', ModalForm)
-    if (option?.upload?.requestFunc) {
-      app.provide('requestFunc', option.upload.requestFunc)
-    }
   }
 }

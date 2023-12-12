@@ -46,6 +46,7 @@ import { NUpload, useMessage, NModal } from 'naive-ui'
 import to from 'await-to-js'
 import 'vue-cropper/dist/index.css'
 import { VueCropper } from 'Vue-Cropper'
+import { provideKey } from './const'
 
 import type { UploadCustomRequestOptions, UploadFileInfo } from 'naive-ui'
 import type { RequestFun } from './types'
@@ -75,7 +76,7 @@ const emits = defineEmits<{
 }>()
 const fileList = ref<UploadFileInfo[]>([])
 
-const injectRequestFunc = inject<RequestFun | undefined>('requestFunc', undefined)
+const injectRequestFunc = inject<RequestFun | undefined>(provideKey, undefined)
 const uploadApi = props.requestFunc ?? injectRequestFunc
 
 if (!uploadApi) {
