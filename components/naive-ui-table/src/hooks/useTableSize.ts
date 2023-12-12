@@ -1,5 +1,5 @@
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
-import {debounce} from '../utils'
+import { debounce } from '../utils'
 
 export function useTableSize(tableRef, resizeHeightOffset) {
   // 表格高度
@@ -7,10 +7,11 @@ export function useTableSize(tableRef, resizeHeightOffset) {
 
   function handleResize() {
     const clientHeight = window.document.documentElement.clientHeight
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
 
     const headEl = tableRef.value.$el.querySelector('.n-data-table-thead ')
     const { top, height } = headEl.getBoundingClientRect()
-    const tableHeight = clientHeight - top
+    const tableHeight = clientHeight - (top + scrollTop)
 
     let marginH = 24
     let paginationHeight = 0

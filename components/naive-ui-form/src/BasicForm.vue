@@ -1,5 +1,5 @@
 <template>
-  <NForm v-bind="{ commonProps }" ref="formRef" :model="formValue">
+  <NForm v-bind="commonProps" ref="formRef" :model="formValue">
     <NGrid
       v-bind="commonProps.grid"
       :collapsed="isExpand"
@@ -99,7 +99,7 @@
         </template>
       </template>
 
-      <NFormItemGi suffix>
+      <NFormItemGi v-if="commonProps.showActionBtns" suffix>
         <NSpace>
           <NButton
             v-if="commonProps.showSubmitBtn"
