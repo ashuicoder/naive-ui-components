@@ -28,6 +28,17 @@ pnpm add naive-ui-table
 
 > 也可以使用`npm`、`yarn`等安装。
 
+### 全局导入
+
+```ts
+import { createApp } from 'vue'
+import NaiveUiTable from 'naive-ui-table'
+import 'naive-ui-table/dist/style.css'
+
+const app = createApp(App)
+app.use(NaiveUiTable)
+```
+
 ### 局部导入
 
 ```vue
@@ -39,17 +50,6 @@ pnpm add naive-ui-table
 import { NaiveUiTable } from 'naive-ui-table'
 import 'naive-ui-table/dist/style.css'
 </script>
-```
-
-### 全局导入
-
-```ts
-import { createApp } from 'vue'
-import NaiveUiTable from 'naive-ui-table'
-import 'naive-ui-table/dist/style.css'
-
-const app = createApp(App)
-app.use(NaiveUiTable)
 ```
 
 ## 基础用法
