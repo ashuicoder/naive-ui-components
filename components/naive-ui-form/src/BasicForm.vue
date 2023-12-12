@@ -40,39 +40,41 @@
               :cols="schema.dynamicOptions!.length + 1"
               :xGap="14"
             >
-              <NFormItemGi
-                v-for="dynamicSchema in schema.dynamicOptions"
-                v-bind="dynamicSchema"
-                :path="`${schema.field}[${index}].${dynamicSchema.field}`"
-                :rule="getFormRule(dynamicSchema)"
-              >
-                <template v-if="dynamicSchema.tip" #label>
-                  <div style="display: flex; align-items: center">
-                    <span>{{ dynamicSchema.label }}</span>
+              <template v-for="dynamicSchema in schema.dynamicOptions">
+                <NFormItemGi
+                  v-show="typeof dynamicSchema.vif === 'function' ? dynamicSchema.vif(item) : true"
+                  v-bind="dynamicSchema"
+                  :path="`${schema.field}[${index}].${dynamicSchema.field}`"
+                  :rule="getFormRule(dynamicSchema)"
+                >
+                  <template v-if="dynamicSchema.tip" #label>
+                    <div style="display: flex; align-items: center">
+                      <span>{{ dynamicSchema.label }}</span>
 
-                    <NPopover>
-                      <template #trigger>
-                        <NIcon color="#999" :size="18" v-bind="dynamicSchema.tipIconProps">
-                          <HelpCircleOutline></HelpCircleOutline>
-                        </NIcon>
-                      </template>
-                      <NText> {{ dynamicSchema.tip }}</NText>
-                    </NPopover>
-                  </div>
-                </template>
-                <RenderComponent
-                  v-if="dynamicSchema.type !== 'slot'"
-                  :schema="dynamicSchema"
-                  :record="item"
-                ></RenderComponent>
+                      <NPopover>
+                        <template #trigger>
+                          <NIcon color="#999" :size="18" v-bind="dynamicSchema.tipIconProps">
+                            <HelpCircleOutline></HelpCircleOutline>
+                          </NIcon>
+                        </template>
+                        <NText> {{ dynamicSchema.tip }}</NText>
+                      </NPopover>
+                    </div>
+                  </template>
+                  <RenderComponent
+                    v-if="dynamicSchema.type !== 'slot'"
+                    :schema="dynamicSchema"
+                    :record="item"
+                  ></RenderComponent>
 
-                <slot
-                  v-else
-                  :name="dynamicSchema.slot"
-                  :formValue="item"
-                  :field="dynamicSchema.field"
-                ></slot>
-              </NFormItemGi>
+                  <slot
+                    v-else
+                    :name="dynamicSchema.slot"
+                    :formValue="item"
+                    :field="dynamicSchema.field"
+                  ></slot>
+                </NFormItemGi>
+              </template>
               <NFormItemGi>
                 <NSpace>
                   <NButton
