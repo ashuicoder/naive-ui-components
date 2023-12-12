@@ -37,6 +37,7 @@ pnpm add naive-ui-table
 
 <script setup lang="ts">
 import { NaiveUiTable } from 'naive-ui-table'
+import 'naive-ui-table/dist/style.css'
 </script>
 ```
 
@@ -45,6 +46,7 @@ import { NaiveUiTable } from 'naive-ui-table'
 ```ts
 import { createApp } from 'vue'
 import NaiveUiTable from 'naive-ui-table'
+import 'naive-ui-table/dist/style.css'
 
 const app = createApp(App)
 app.use(NaiveUiTable)
