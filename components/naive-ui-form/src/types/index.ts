@@ -22,7 +22,7 @@ export interface FormSchema extends Omit<FormItemGiProps, 'labelProps'> {
   style?: CSSProperties
   vif?: (value: Recordable) => boolean
   slot?: string
-  dynamicOptions?: Omit<FormSchema, 'vif'>[]
+  dynamicOptions?: FormSchema[]
 }
 
 export interface BasicProps {
