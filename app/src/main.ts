@@ -1,9 +1,8 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
-import NaiveUiForm from 'naive-ui-form'
-
 import NaiveUiUpload from 'naive-ui-upload'
+import NaiveuiEditor from 'naive-ui-editor'
 
 import App from './App.vue'
 import router from './router'
@@ -20,6 +19,8 @@ app.use(NaiveUiUpload, {
     })
   }
 })
+
+app.use(NaiveuiEditor)
 
 app.use(createPinia())
 app.use(router)
