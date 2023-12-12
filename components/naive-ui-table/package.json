@@ -3,8 +3,8 @@
   "version": "1.0.6",
   "private": false,
   "description": "基于naive-ui封装的表格组件",
-  "main": "index.ts",
-  "type": "module",
+  "main": "./dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "autumnLeaves-lady",
   "license": "MIT",
   "keywords": [
