@@ -93,7 +93,7 @@ import { NButton, NDataTable, NDropdown, NDrawer, NDrawerContent, NTooltip, NIco
 import type { DataTableRowKey } from 'naive-ui'
 import { ref, computed, onMounted, useSlots } from 'vue'
 import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
-import _ from 'lodash'
+import _ from 'lodash-es'
 import { BasicForm, useForm } from 'naive-ui-form'
 import { useTable } from './hooks/useTable'
 import ColumnSetting from './ColumnSetting.vue'
