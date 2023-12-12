@@ -5,6 +5,7 @@ import type { Props, RequestFun } from './src/types/index'
 
 export type { Props, RequestFun }
 export { NaiveUiEditor }
+export { provideKey }
 
 export default {
   install(app: App, option?: Props) {
