@@ -100,7 +100,8 @@ editorConfig: {
 也可以通过`provide`注入：
 
 ```ts
-app.provide('requestFunc', function)
+import { provideKey } from 'naive-ui-editor'
+app.provide(provideKey, function)
 ```
 
 ::: danger 提示

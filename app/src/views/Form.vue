@@ -258,6 +258,9 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
           field: 'sex',
           label: '性别',
           type: 'radio',
+          vif(record) {
+            return !!record.age
+          },
           componentProps: {
             options: [
               {

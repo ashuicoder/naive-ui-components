@@ -1,16 +1,14 @@
 import { ref, shallowRef, inject, computed, onBeforeUnmount } from 'vue'
 import { useFile } from './useFile'
+import { provideKey } from '../const'
 
 import type { Props, Emits, RequestFun } from '../types'
 
-export const useEditor = ({ props, emits }: {
-  props: Props,
-  emits: Emits
-}) => {
+export const useEditor = ({ props, emits }: { props: Props; emits: Emits }) => {
   const loading = ref(false)
   const editorRef = shallowRef()
 
-  const injectRequestFunc = inject<RequestFun | undefined>('requestFunc', undefined)
+  const injectRequestFunc = inject<RequestFun | undefined>(provideKey, undefined)
   const requestFunc = props.requestFunc ?? injectRequestFunc
 
   if (!requestFunc) {
@@ -24,8 +22,8 @@ export const useEditor = ({ props, emits }: {
 
   // 编辑器回调函数
   const handleCreated = (editor) => {
-    editorRef.value = editor; // 记录 editor 实例
-  };
+    editorRef.value = editor // 记录 editor 实例
+  }
 
   // 编辑器change
   const handleChange = (editor) => {
@@ -36,14 +34,14 @@ export const useEditor = ({ props, emits }: {
         .replace(/[\r\n]/g, '')
         .replace(/&nbsp;/gi, '')
         .trim() &&
-        !getElementLen(editor));
-    emits('update:value', isEmpty ? null : editor.getHtml());
-  };
+        !getElementLen(editor))
+    emits('update:value', isEmpty ? null : editor.getHtml())
+  }
 
   // 组件销毁时，及时销毁编辑器
   onBeforeUnmount(() => {
-    editorRef.value?.destroy();
-  });
+    editorRef.value?.destroy()
+  })
 
   return {
     loading,
@@ -52,7 +50,6 @@ export const useEditor = ({ props, emits }: {
     customConfig,
     customPaste,
     handleCreated,
-    handleChange,
+    handleChange
   }
 }
-
