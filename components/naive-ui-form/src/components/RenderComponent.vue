@@ -62,19 +62,19 @@
     v-model:formatted-value="record[schema.field]"
   ></NTimePicker>
 
-  <UploadComponent
+  <NaiveUiUpload
     v-else-if="schema.type === 'upload'"
     list-type="image-card"
     :style="schema?.style"
     v-bind="schema.componentProps"
     v-model:value="record[schema.field]"
-  ></UploadComponent>
-  <EditorComponent
+  ></NaiveUiUpload>
+  <NaiveUiEditor
     v-else-if="schema.type === 'editor'"
     :style="schema?.style"
     v-bind="schema.componentProps"
     v-model:value="record[schema.field]"
-  ></EditorComponent>
+  ></NaiveUiEditor>
 
   <component
     v-else
@@ -111,7 +111,6 @@ import {
 } from 'naive-ui'
 
 import type { FormSchema, Recordable } from '../types'
-import { defineAsyncComponent } from 'vue'
 
 defineOptions({
   components: {
@@ -142,10 +141,7 @@ interface Props {
   schema: FormSchema
   record: Recordable
 }
-const props = defineProps<Props>()
-
-const EditorComponent = defineAsyncComponent(() => import('naive-ui-editor/src/NaiveUiEditor.vue'))
-const UploadComponent = defineAsyncComponent(() => import('naive-ui-upload/src/NaiveUiUpload.vue'))
+defineProps<Props>()
 </script>
 
 <style scoped></style>
