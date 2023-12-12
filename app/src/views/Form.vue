@@ -155,6 +155,8 @@ const schemas: FormSchema[] = [
 
 const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
   size: 'large',
+  showActionBtns: false,
+  labelPlacement: 'left',
   schemas: [
     {
       field: 'name',
@@ -275,20 +277,20 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
           }
         }
       ]
-    },
-    {
-      field: 'photos',
-      type: 'upload',
-      label: '照片',
-      componentProps: {
-        listType: 'image-card'
-      }
-    },
-    {
-      field: 'content',
-      type: 'editor',
-      label: '内容'
     }
+    // {
+    //   field: 'photos',
+    //   type: 'upload',
+    //   label: '照片',
+    //   componentProps: {
+    //     listType: 'image-card'
+    //   }
+    // },
+    // {
+    //   field: 'content',
+    //   type: 'editor',
+    //   label: '内容'
+    // }
   ],
 
   grid: {

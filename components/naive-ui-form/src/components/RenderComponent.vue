@@ -110,6 +110,9 @@ import {
   NTreeSelect
 } from 'naive-ui'
 
+import { NaiveUiUpload } from 'naive-ui-upload'
+import { NaiveUiEditor } from 'naive-ui-editor'
+
 import type { FormSchema, Recordable } from '../types'
 
 defineOptions({
