@@ -216,6 +216,16 @@ const tableWidth = tableColumns.value.reduce(
 const scrollWidth = computed(() => {
   return props.scrollX || tableWidth
 })
+
+defineExpose({
+  refresh,
+  openDrawer,
+  state,
+  tableColumns,
+  tableRef,
+  maxHeight,
+  scrollWidth
+})
 </script>
 
 <style scoped>
