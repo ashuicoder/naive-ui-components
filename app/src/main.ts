@@ -10,25 +10,25 @@ import to from 'await-to-js'
 
 const app = createApp(App)
 
-app.use(NaiveUiUpload, {
-  requestFunc() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve('https://picsum.photos/200/300')
-      }, 1000)
-    })
-  }
-})
+// app.use(NaiveUiUpload, {
+//   requestFunc() {
+//     return new Promise((resolve) => {
+//       setTimeout(() => {
+//         resolve('https://picsum.photos/200/300')
+//       }, 1000)
+//     })
+//   }
+// })
 
-app.use(NaiveuiEditor, {
-  requestFunc() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve('https://picsum.photos/200/300')
-      }, 1000)
-    })
-  }
-})
+// app.use(NaiveuiEditor, {
+//   requestFunc() {
+//     return new Promise((resolve) => {
+//       setTimeout(() => {
+//         resolve('https://picsum.photos/200/300')
+//       }, 1000)
+//     })
+//   }
+// })
 
 app.use(createPinia())
 app.use(router)
