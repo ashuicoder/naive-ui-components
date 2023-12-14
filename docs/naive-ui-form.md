@@ -158,7 +158,7 @@ pnpm add naive-ui-form
 }
 ```
 
-`naive-ui`已经配置到项目中：
+确保`naive-ui`已经配置到项目中：
 
 ```vue
 <template>
@@ -186,6 +186,11 @@ import { NConfigProvider, zhCN, dateZhCN, NMessageProvider } from 'naive-ui'
 pnpm add naive-ui-upload
 ```
 
+如果您在表单中使用了`type: 'editpr'`，则需要安装`naive-ui-editor`
+
+```shell
+pnpm add naive-ui-editor
+```
 :::
 
 ## 基本使用
@@ -213,18 +218,7 @@ const app = createApp(App)
 app.use(NaiveUiForm, Option)
 ```
 
-`Option`类型：
 
-```ts
-type RequestFun = (file: File, onProgerss?: (e: { percent: number }) => void) => Promise<string>
-
-interface Option {
-  // `naive-ui-upload`
-  upload: {
-    requestFunc?: RequestFun
-  }
-}
-```
 
 ### props传值方式
 
@@ -256,7 +250,7 @@ interface Option {
 
 ::: tip 提示
 
-如果`props`和`useForm()`传值有冲突，以`useForm`的值为准。
+如果`props`和`useForm()`传值有冲突，`useForm`会覆盖`props`。
 
 :::
 
