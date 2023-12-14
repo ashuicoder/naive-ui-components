@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { buildVueDompurifyHTMLDirective  } from 'vue-dompurify-html'
+import { buildVueDompurifyHTMLDirective } from 'vue-dompurify-html'
 
 import './styles/index.css'
 import type { Props } from './types'

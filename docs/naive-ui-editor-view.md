@@ -1,14 +1,15 @@
-
-
 # naive-ui-editor-view文档
 
 ## 介绍
+
 `naive-ui-editor-view`是基于`vue-dompurify-html`封装的一个富文本内容渲染组件
 
 ## 安装
+
 ```bash
 pnpm add naive-ui-editor-view vue-dompurify-html
 ```
+
 也可以使用`npm`、`yarn`等安装。
 
 ## 使用
@@ -40,6 +41,6 @@ app.use(NaiveUiEditorView)
 
 ## props
 
-| 字段          | 类型                        | 描述                             | 必传 | 默认值 |
-| ------------- | ------------------------------------------------------------ | -------------------------------------------------------- | ---- | ------ |
-| value | string null                                             | 富文本内容                                   | 是   |        |
+| 字段  | 类型        | 描述       | 必传 | 默认值 |
+| ----- | ----------- | ---------- | ---- | ------ |
+| value | string null | 富文本内容 | 是   |        |

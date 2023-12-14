@@ -1,5 +1,5 @@
-import type { Ref } from 'vue';
-import type { IEditorConfig, IToolbarConfig, IDomEditor } from '@wangeditor/editor';
+import type { Ref } from 'vue'
+import type { IEditorConfig, IToolbarConfig, IDomEditor } from '@wangeditor/editor'
 
 export interface Props {
   value?: string | null
@@ -27,8 +27,8 @@ export type UseFile = (e: UseFileProps) => {
   customPaste: (editor: IDomEditor, event: ClipboardEvent) => Promise<boolean | void>
 }
 export interface UseFileProps {
-  loading: Ref<boolean>,
-  requestFunc: RequestFun,
+  loading: Ref<boolean>
+  requestFunc: RequestFun
 }
 
 export interface HexSource extends File {

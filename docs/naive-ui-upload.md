@@ -1,15 +1,16 @@
-
-
 # naive-ui-upload文档
 
 ## 介绍
+
 `naive-ui-upload`是基于`naive-ui`的`n-upload`封装的一个文件上传组件。支持**图片裁剪**功能。
 
 ## 安装
+
 ```bash
 pnpm add naive-ui-upload
 
 ```
+
 也可以使用`npm`、`yarn`等安装。
 
 ## 使用
@@ -67,15 +68,13 @@ app.use(NaiveUiUpload, {
 })
 ```
 
-
-
 ## props
 
-| 字段          | 类型                                                         | 描述                                                     | 必传 | 默认值 |
-| ------------- | ------------------------------------------------------------ | -------------------------------------------------------- | ---- | ------ |
-| requestFunc   | Function，见下发说明                                         | 上传文件的方法                                           | 否   | -      |
-| v-model:value | string[]                                             | 文件列表，需要双向绑定                                   | 是   |        |
-| size          | number                                                       | 单个文件上传的限制大小（单位：M）                        | 否   |        |
+| 字段          | 类型                                                                     | 描述                                                     | 必传 | 默认值 |
+| ------------- | ------------------------------------------------------------------------ | -------------------------------------------------------- | ---- | ------ |
+| requestFunc   | Function，见下发说明                                                     | 上传文件的方法                                           | 否   | -      |
+| v-model:value | string[]                                                                 | 文件列表，需要双向绑定                                   | 是   |        |
+| size          | number                                                                   | 单个文件上传的限制大小（单位：M）                        | 否   |        |
 | cropper       | Objec，具体参数见[vue-cropper](https://github.com/xyxiao001/vue-cropper) | 是否需要裁剪（**设置该值时确保上传的是图片格式的文件**） | 否   |        |
 
 此外，还可以传入[n-upload](https://ui.naiveadmin.com/zh-CN/os-theme/components/upload)的大部分`props`。
@@ -83,10 +82,7 @@ app.use(NaiveUiUpload, {
 `requestFunc`字段定义类型如下：
 
 ```ts
-type RequestFun = (
-  file: File,
-  onProgerss?: (e: { percent: number }) => void
-) => Promise<string>
+type RequestFun = (file: File, onProgerss?: (e: { percent: number }) => void) => Promise<string>
 ```
 
 可以在`全局注册`传入`requestFunc`，也可在`naive-ui-upload`的`props`传入。`props`优先级最高。
