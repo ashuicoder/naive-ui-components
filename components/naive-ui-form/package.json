@@ -1,6 +1,6 @@
 {
   "name": "naive-ui-form",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "private": false,
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
@@ -24,8 +24,6 @@
     "type-check": "vue-tsc --noEmit -p  ../../tsconfig.vitest.json --composite false"
   },
   "dependencies": {
-    "naive-ui-editor": "workspace:^",
-    "naive-ui-upload": "workspace:^",
     "vue": "^3.3.4"
   },
   "devDependencies": {

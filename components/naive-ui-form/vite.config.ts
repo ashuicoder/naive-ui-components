@@ -25,7 +25,7 @@ export default defineConfig({
       }
     },
     rollupOptions: {
-      external: ['vue', 'naive-ui', '@vicons/ionicons5', 'naive-ui-upload', 'naive-ui-editor']
+      external: ['vue', 'naive-ui', '@vicons/ionicons5']
     }
   }
 })
