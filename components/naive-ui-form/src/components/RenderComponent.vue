@@ -62,22 +62,22 @@
     v-model:formatted-value="record[schema.field]"
   ></NTimePicker>
 
-  <template v-else-if="schema.type === 'upload'">
-    <NaiveUiUpload
-      list-type="image-card"
-      :style="schema?.style"
-      v-bind="schema.componentProps"
-      v-model:value="record[schema.field]"
-    ></NaiveUiUpload>
-  </template>
+  <component
+    is="naive-ui-upload"
+    v-else-if="schema.type === 'upload'"
+    list-type="image-card"
+    :style="schema?.style"
+    v-bind="schema.componentProps"
+    v-model:value="record[schema.field]"
+  ></component>
 
-  <template v-else-if="schema.type === 'editor'">
-    <NaiveUiEditor
-      :style="schema?.style"
-      v-bind="schema.componentProps"
-      v-model:value="record[schema.field]"
-    ></NaiveUiEditor>
-  </template>
+  <component
+    v-else-if="schema.type === 'editor'"
+    is="naive-ui-editor"
+    :style="schema?.style"
+    v-bind="schema.componentProps"
+    v-model:value="record[schema.field]"
+  ></component>
 
   <component
     v-else
@@ -113,9 +113,6 @@ import {
   NTreeSelect
 } from 'naive-ui'
 
-// import { NaiveUiUpload } from 'naive-ui-upload'
-// import { NaiveUiEditor } from 'naive-ui-editor'
-
 import type { FormSchema, Recordable } from '../types'
 
 defineOptions({
@@ -147,6 +144,7 @@ interface Props {
   schema: FormSchema
   record: Recordable
 }
+
 defineProps<Props>()
 </script>
 
