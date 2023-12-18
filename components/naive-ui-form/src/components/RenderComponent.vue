@@ -62,19 +62,22 @@
     v-model:formatted-value="record[schema.field]"
   ></NTimePicker>
 
-  <NaiveUiUpload
-    v-else-if="schema.type === 'upload'"
-    list-type="image-card"
-    :style="schema?.style"
-    v-bind="schema.componentProps"
-    v-model:value="record[schema.field]"
-  ></NaiveUiUpload>
-  <NaiveUiEditor
-    v-else-if="schema.type === 'editor'"
-    :style="schema?.style"
-    v-bind="schema.componentProps"
-    v-model:value="record[schema.field]"
-  ></NaiveUiEditor>
+  <template v-else-if="schema.type === 'upload'">
+    <NaiveUiUpload
+      list-type="image-card"
+      :style="schema?.style"
+      v-bind="schema.componentProps"
+      v-model:value="record[schema.field]"
+    ></NaiveUiUpload>
+  </template>
+
+  <template v-else-if="schema.type === 'editor'">
+    <NaiveUiEditor
+      :style="schema?.style"
+      v-bind="schema.componentProps"
+      v-model:value="record[schema.field]"
+    ></NaiveUiEditor>
+  </template>
 
   <component
     v-else
@@ -114,7 +117,6 @@ import {
 // import { NaiveUiEditor } from 'naive-ui-editor'
 
 import type { FormSchema, Recordable } from '../types'
-import { defineAsyncComponent } from 'vue'
 
 defineOptions({
   components: {
@@ -146,22 +148,6 @@ interface Props {
   record: Recordable
 }
 defineProps<Props>()
-
-const NaiveUiUpload = defineAsyncComponent(() => {
-  return new Promise((resolve) => {
-    import('naive-ui-upload').then((module) => {
-      resolve(module.NaiveUiUpload as any)
-    })
-  })
-})
-
-const NaiveUiEditor = defineAsyncComponent(() => {
-  return new Promise((resolve) => {
-    import('naive-ui-editor').then((module) => {
-      resolve(module.NaiveUiEditor as any)
-    })
-  })
-})
 </script>
 
 <style scoped></style>

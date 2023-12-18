@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -273,12 +273,6 @@ importers:
       naive-ui:
         specifier: '>=2.34.0'
         version: 2.35.0(vue@3.3.8)
-      naive-ui-editor:
-        specifier: workspace:^
-        version: link:../naive-ui-editor
-      naive-ui-upload:
-        specifier: workspace:^
-        version: link:../naive-ui-upload
       vue:
         specifier: ^3.3.4
         version: 3.3.8(typescript@5.2.2)
