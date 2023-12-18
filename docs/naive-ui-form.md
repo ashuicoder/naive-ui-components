@@ -1,4 +1,3 @@
-
 # naive-ui-form文档
 
 ## 简介
@@ -19,11 +18,7 @@
 
 ---
 
-
-
 **下面是`naive-ui-form`的一个完整表单的示例：**
-
-
 
 ```vue
 <template>
@@ -141,13 +136,12 @@ const [register] = useForm({
 </script>
 
 <style scoped></style>
-
 ```
 
 ## 安装
 
 ```shell
-pnpm add naive-ui-form 
+pnpm add naive-ui-form
 ```
 
 也可以使用`npm` 、`yarn`等安装。
@@ -158,13 +152,13 @@ pnpm add naive-ui-form
 
 ```json
 {
-    "vue": ">=3.2.0",
-    "naive-ui": ">=2.34.0",
-    "@vicons/ionicons5": ">=0.12.0"
+  "vue": ">=3.2.0",
+  "naive-ui": ">=2.34.0",
+  "@vicons/ionicons5": ">=0.12.0"
 }
 ```
 
-`naive-ui`已经配置到项目中：
+确保`naive-ui`已经配置到项目中：
 
 ```vue
 <template>
@@ -180,12 +174,9 @@ import { NConfigProvider, zhCN, dateZhCN, NMessageProvider } from 'naive-ui'
 </script>
 
 <style scoped></style>
-
 ```
 
 :::
-
-
 
 ::: tip 提示
 
@@ -195,13 +186,17 @@ import { NConfigProvider, zhCN, dateZhCN, NMessageProvider } from 'naive-ui'
 pnpm add naive-ui-upload
 ```
 
+如果您在表单中使用了`type: 'editpr'`，则需要安装`naive-ui-editor`
+
+```shell
+pnpm add naive-ui-editor
+```
 :::
-
-
 
 ## 基本使用
 
 ### 局部导入
+
 ```vue
 <template>
   <BasicForm></BasicForm>
@@ -213,6 +208,7 @@ import { BasicForm } from 'naive-ui-form'
 ```
 
 ### 全局导入
+
 ```ts
 import { createApp } from 'vue'
 import NaiveUiForm from 'naive-ui-form'
@@ -222,27 +218,9 @@ const app = createApp(App)
 app.use(NaiveUiForm, Option)
 ```
 
-`Option`类型：
-```ts
-type RequestFun = (
-  file: File,
-  onProgerss?: (e: { percent: number }) => void
-) => Promise<string>
-
-
-interface Option {
-  // `naive-ui-upload`
-  upload: {
-    requestFunc?: RequestFun
-  }
-}
-
-```
 
 
 ### props传值方式
-
-
 
 传递`props`有两种方法：
 
@@ -260,26 +238,21 @@ interface Option {
    <template>
      <BasicForm @register="register"></BasicForm>
    </template>
-   
+
    <script setup lang="ts">
    import { BasicForm, useForm } from 'naive-ui-form'
-   
+
    const [register] = useForm({
      schemas: []
    })
    </script>
-   
    ```
-
-
 
 ::: tip 提示
 
-如果`props`和`useForm()`传值有冲突，以`useForm`的值为准。
+如果`props`和`useForm()`传值有冲突，`useForm`会覆盖`props`。
 
 :::
-
-
 
 ### 注册事件
 
@@ -288,8 +261,6 @@ interface Option {
 - register： 使用`useForm`注册的时候用到
 - submit：表单提交出发（**只有表单校验成功后才会触发**）
 - reset：表单重置的时候触发
-
-
 
 ### useForm
 
@@ -311,8 +282,6 @@ const [register, { submit }] = useForm()
 </script>
 
 ```
-
-
 
 :::
 
@@ -337,9 +306,7 @@ interface FormInstance {
   // 手动设置表单提交按钮的加载状态
   setLoading(loading: boolean): void
 }
-
 ```
-
 
 ```vue
 <template>
@@ -487,15 +454,11 @@ function handleSetValue() {
 </script>
 
 <style scoped></style>
-
 ```
-
-
 
 ### 组件api
 
 如果不想使用[useForm](#useForm)，也可以直接通过`naive-form-ui`组件自身调用上面的方法：
-
 
 ```vue
 <template>
@@ -532,33 +495,24 @@ function handleReset() {
 </script>
 
 <style scoped></style>
-
 ```
-
-
-
-
-
-
 
 ## props说明
 
-
-
-| 字段                    | 类型         | 描述                                                         | 必传 | 默认值 |
-| ----------------------- | ------------ | ------------------------------------------------------------ | ---- | ------ |
-| schemas                 | FormSchema[] | 表单配置，详见[schemas](#schemas)                            | 是   | -      |
+| 字段                    | 类型         | 描述                                                                                      | 必传 | 默认值 |
+| ----------------------- | ------------ | ----------------------------------------------------------------------------------------- | ---- | ------ |
+| schemas                 | FormSchema[] | 表单配置，详见[schemas](#schemas)                                                         | 是   | -      |
 | grid                    | Object       | `<n-grid>`的props，详见[n-grid](https://ui.naiveadmin.com/zh-CN/os-theme/components/grid) | 否   | -      |
-| showActionBtns          | Boolean      | 是否展示表单的操作按钮(提交、重置、展开)，优先级最高         | 否   | true   |
-| showSubmitBtn           | Boolean      | 是否展示提交按钮                                             | 否   | true   |
-| submitBtnText           | String       | 提交按钮文字                                                 | 否   | "提交" |
-| showResetBtn            | Boolean      | 是否展示重置按钮                                             | 否   | true   |
-| resetBtnText            | String       | 重置按钮文字                                                 | 否   | "重置" |
-| showExpandBtn           | Boolean      | 是否展示展开/折叠按钮                                        | 否   | true   |
-| expandBtnOffText        | String       | ”折叠“状态时候的文字                                         | 否   | ”展开“ |
-| expandBtnOnText         | String       | ”展开“状态时候的文字                                         | 否   | ”收起“ |
-| defaultExpand           | Boolean      | 是否默认折叠                                                 | 否   | false  |
-| defaultShowExpandColumn | Number       | 默认展开的行数                                               | 否   | 2      |
+| showActionBtns          | Boolean      | 是否展示表单的操作按钮(提交、重置、展开)，优先级最高                                      | 否   | true   |
+| showSubmitBtn           | Boolean      | 是否展示提交按钮                                                                          | 否   | true   |
+| submitBtnText           | String       | 提交按钮文字                                                                              | 否   | "提交" |
+| showResetBtn            | Boolean      | 是否展示重置按钮                                                                          | 否   | true   |
+| resetBtnText            | String       | 重置按钮文字                                                                              | 否   | "重置" |
+| showExpandBtn           | Boolean      | 是否展示展开/折叠按钮                                                                     | 否   | true   |
+| expandBtnOffText        | String       | ”折叠“状态时候的文字                                                                      | 否   | ”展开“ |
+| expandBtnOnText         | String       | ”展开“状态时候的文字                                                                      | 否   | ”收起“ |
+| defaultExpand           | Boolean      | 是否默认折叠                                                                              | 否   | false  |
+| defaultShowExpandColumn | Number       | 默认展开的行数                                                                            | 否   | 2      |
 
 ::: tip 提示
 
@@ -584,32 +538,27 @@ const [register] = useForm({
   schemas
 })
 </script>
-
 ```
-
-
 
 ### FormSchema字段说明
 
-| 字段            | 类型                                            | 描述                                                         | 是否必填 |
-| --------------- | ----------------------------------------------- | ------------------------------------------------------------ | -------- |
-| tip             | `string`或`() => VNode`                         | 填写此字段会在label后面出现一个“问号”，鼠标移入就会显示该字段 | 否       |
-| tipIconProps    | Object                                          | 在label后面”问号“的props，可以传入[n-icon](https://ui.naiveadmin.com/zh-CN/os-theme/components/icon)的props | 否       |
-| field           | string                                          | 整个表单的值是一个对象，该字段就是描述需要v-model到该字段上，如该字段设置为"name"，那么表单的值就是{name: xxx} | 是       |
-| type            | string                                          | 见[type字段说明](#type字段说明)                              | 是       |
-| defaultValue    | any                                             | 该项的默认值                                                 | 否       |
-| componentProps  | Object                                          | `naive-ui`原生表单项(如`n-input`、`n-select`等)的props，通过该字段传入 | 否       |
-| required        | boolean                                         | 该项是否必填，如果设置为`true`组件内部会自动校验必填，优先级最高 | 否       |
-| requiredType    | string                                          | `required`为`true`时校验的特殊类型，如`array`、`number`      | 否       |
-| requiredMessage | string                                          | `required`为`true`校验未通过的信息                           | 否       |
-| requiredTrigger | `string` 或`string[]`                           | `required`为`true`校验的出发方式                             | 否       |
-| rules           | `FormItemRule`或`FormItemRule[]`                | `required`为`true`时无效，自定义表单校验，同[n-form-item](https://ui.naiveadmin.com/zh-CN/os-theme/components/form#FormItem-Props)的`rule`属性 | 否       |
-| style           | Object                                          | 设置`n-form-item`的style                                     | 否       |
-| vif             | (value:Recordable) => boolean                   | 动态显示该表单，需要返回一个布尔值，`value`是表单的值        | 否       |
-| slot            | string                                          | 当[type](#type字段说明)字段为`slot`的时候必传，插槽名称      | 否       |
-| dynamicOptions  | FormSchema[]                                    | 动态表单的配置，当[type](#type字段说明)字段为`dynamic`的时候必传 | 否       |
-
-
+| 字段            | 类型                             | 描述                                                                                                                                           | 是否必填 |
+| --------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| tip             | `string`或`() => VNode`          | 填写此字段会在label后面出现一个“问号”，鼠标移入就会显示该字段                                                                                  | 否       |
+| tipIconProps    | Object                           | 在label后面”问号“的props，可以传入[n-icon](https://ui.naiveadmin.com/zh-CN/os-theme/components/icon)的props                                    | 否       |
+| field           | string                           | 整个表单的值是一个对象，该字段就是描述需要v-model到该字段上，如该字段设置为"name"，那么表单的值就是{name: xxx}                                 | 是       |
+| type            | string                           | 见[type字段说明](#type字段说明)                                                                                                                | 是       |
+| defaultValue    | any                              | 该项的默认值                                                                                                                                   | 否       |
+| componentProps  | Object                           | `naive-ui`原生表单项(如`n-input`、`n-select`等)的props，通过该字段传入                                                                         | 否       |
+| required        | boolean                          | 该项是否必填，如果设置为`true`组件内部会自动校验必填，优先级最高                                                                               | 否       |
+| requiredType    | string                           | `required`为`true`时校验的特殊类型，如`array`、`number`                                                                                        | 否       |
+| requiredMessage | string                           | `required`为`true`校验未通过的信息                                                                                                             | 否       |
+| requiredTrigger | `string` 或`string[]`            | `required`为`true`校验的出发方式                                                                                                               | 否       |
+| rules           | `FormItemRule`或`FormItemRule[]` | `required`为`true`时无效，自定义表单校验，同[n-form-item](https://ui.naiveadmin.com/zh-CN/os-theme/components/form#FormItem-Props)的`rule`属性 | 否       |
+| style           | Object                           | 设置`n-form-item`的style                                                                                                                       | 否       |
+| vif             | (value:Recordable) => boolean    | 动态显示该表单，需要返回一个布尔值，`value`是表单的值                                                                                          | 否       |
+| slot            | string                           | 当[type](#type字段说明)字段为`slot`的时候必传，插槽名称                                                                                        | 否       |
+| dynamicOptions  | FormSchema[]                     | 动态表单的配置，当[type](#type字段说明)字段为`dynamic`的时候必传                                                                               | 否       |
 
 ### type字段说明
 
@@ -682,13 +631,9 @@ const [register] = useForm({
       }
   ```
 
-- `time-picker`:  默认的格式为`HH:mm:ss`，修改同上。
+- `time-picker`: 默认的格式为`HH:mm:ss`，修改同上。
 
 :::
-
-
-
-
 
 ### 插槽
 
@@ -729,12 +674,9 @@ const [register] = useForm({
 
 ```
 
-
-
 ### 动态表单
 
 `动态表单`需要将`type `设置为`dynamic`，再新增一个`dynamicOptions`配置，示例如下：
-
 
 ```vue{13-27}
 <template>
@@ -776,7 +718,6 @@ const [register] = useForm({
 ## ModalForm
 
 `ModalForm`是`BasicForm`的封装，主要是为了方便在弹窗中使用。您可以直接传入`BasicForm`、[n-modal](https://ui.naiveadmin.com/zh-CN/os-theme/components/modal)、[dialog](https://ui.naiveadmin.com/zh-CN/os-theme/components/dialog)支持的`props`。`ModalForm`会在校验通过后出发`submit`事件，参数就是表单的值。点击`取消按钮`时还会触发`cancel`事件。
-
 
 ```vue
 <template>
@@ -826,10 +767,4 @@ function handleSubmit(values: Recordable) {
 </script>
 
 <style scoped></style>
-
 ```
-
-
-
-
-

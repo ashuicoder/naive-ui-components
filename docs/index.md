@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "naive-ui-components"
+  name: 'naive-ui-components'
   tagline: 基于naive-ui封装的一些组件
   actions:
     - theme: brand
@@ -34,4 +34,3 @@ features:
   - title: naive-ui-editor-view
     details: 富文本内容渲染组件，基于vue-dompurify-html
 ---
-

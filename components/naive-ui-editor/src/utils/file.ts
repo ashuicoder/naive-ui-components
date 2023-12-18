@@ -6,15 +6,15 @@ import type { HexSource } from '../types'
  * @returns
  */
 const base64ToArrayBuffer = (base64: string) => {
-  const binaryString = window.atob(base64);
-  const binaryLen = binaryString.length;
-  const bytes = new Uint8Array(binaryLen);
+  const binaryString = window.atob(base64)
+  const binaryLen = binaryString.length
+  const bytes = new Uint8Array(binaryLen)
   for (let i = 0; i < binaryLen; i++) {
-    const ascii = binaryString.charCodeAt(i);
-    bytes[i] = ascii;
+    const ascii = binaryString.charCodeAt(i)
+    bytes[i] = ascii
   }
-  return bytes;
-};
+  return bytes
+}
 
 /**
  * base64转file
@@ -22,14 +22,14 @@ const base64ToArrayBuffer = (base64: string) => {
  * @param byte byte[]字节码
  */
 const transAsB64ToFile = (base64: string, reportName: string, type = 'image/png') => {
-  const byte = base64ToArrayBuffer(base64);
-  const blob: any = new Blob([byte], { type });
-  const filename = reportName + type.replace(type.split('/')[0] + '/', '.');
-  blob.lastModifiedDate = new Date();
-  blob.name = filename;
-  blob.filename = filename;
-  return blob;
-};
+  const byte = base64ToArrayBuffer(base64)
+  const blob: any = new Blob([byte], { type })
+  const filename = reportName + type.replace(type.split('/')[0] + '/', '.')
+  blob.lastModifiedDate = new Date()
+  blob.name = filename
+  blob.filename = filename
+  return blob
+}
 
 /**
  * 从html代码中匹配返回图片标签img的属性src的值的集合
@@ -37,22 +37,22 @@ const transAsB64ToFile = (base64: string, reportName: string, type = 'image/png'
  * @return Array
  */
 export const findImgFromHtml = (htmlData: string) => {
-  const imgReg = /<img.*?(?:>|\/>)/gi; //匹配图片中的img标签
-  const srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i; // 匹配图片中的src
+  const imgReg = /<img.*?(?:>|\/>)/gi //匹配图片中的img标签
+  const srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i // 匹配图片中的src
 
-  const arr = htmlData.match(imgReg); //筛选出所有的img
+  const arr = htmlData.match(imgReg) //筛选出所有的img
   if (!arr || (Array.isArray(arr) && !arr.length)) {
-    return [];
+    return []
   }
 
-  const srcArr: string[] = [];
+  const srcArr: string[] = []
   for (let i = 0; i < arr.length; i++) {
-    const src: string[] | null = arr[i].match(srcReg);
+    const src: string[] | null = arr[i].match(srcReg)
     // 获取图片地址
-    src && srcArr.push(src[1]);
+    src && srcArr.push(src[1])
   }
 
-  return srcArr;
+  return srcArr
 }
 
 /**
@@ -62,39 +62,39 @@ export const findImgFromHtml = (htmlData: string) => {
  */
 export const extractImgFromRtf = (rtfData: string) => {
   if (!rtfData) {
-    return [];
+    return []
   }
 
-  const regexPictureHeader = /{\\pict[\s\S]+?({\\\*\\blipuid\s?[\da-fA-F]+)[\s}]*/;
+  const regexPictureHeader = /{\\pict[\s\S]+?({\\\*\\blipuid\s?[\da-fA-F]+)[\s}]*/
   const regexPicture = new RegExp(
     '(?:(' + regexPictureHeader.source + '))([\\da-fA-F\\s]+)\\}',
     'g'
-  );
-  const images = rtfData.match(regexPicture);
-  const result: any[] = [];
+  )
+  const images = rtfData.match(regexPicture)
+  const result: any[] = []
 
   if (images) {
     for (const i in images) {
-      const image = images[i];
-      const name = `${new Date().getTime()}${i}`;
-      let imageType = '';
+      const image = images[i]
+      const name = `${new Date().getTime()}${i}`
+      let imageType = ''
       if (image.includes('\\pngblip')) {
-        imageType = 'image/png';
+        imageType = 'image/png'
       } else if (image.includes('\\jpegblip')) {
-        imageType = 'image/jpeg';
+        imageType = 'image/jpeg'
       }
 
       if (imageType) {
         result.push({
           hex: image.replace(regexPictureHeader, '').replace(/[^\da-fA-F]/g, '') || '',
           type: imageType,
-          name,
-        });
+          name
+        })
       }
     }
   }
 
-  return result;
+  return result
 }
 
 /**
@@ -105,24 +105,28 @@ export const extractImgFromRtf = (rtfData: string) => {
  * @return File
  */
 
-export const transAsImgToFile = (imageSrcs: string[], imagesHexSources: HexSource[], isBase64Data = true) => {
-  const imgs: File[] = [];
+export const transAsImgToFile = (
+  imageSrcs: string[],
+  imagesHexSources: HexSource[],
+  isBase64Data = true
+) => {
+  const imgs: File[] = []
   if (imageSrcs.length === imagesHexSources.length) {
     for (let i = 0; i < imageSrcs.length; i++) {
-      const img = imagesHexSources[i];
-      const b64 = `${transAsHexToB64(img.hex)}`;
+      const img = imagesHexSources[i]
+      const b64 = `${transAsHexToB64(img.hex)}`
       const newSrc = isBase64Data
         ? new File(
             [transAsB64ToFile(b64, img.name, img.type)],
             img.name + img.type.replace('image/', '.'),
             { type: img.type }
           )
-        : img;
-      imgs.push(newSrc);
+        : img
+      imgs.push(newSrc)
     }
   }
 
-  return imgs;
+  return imgs
 }
 
 /**
@@ -131,14 +135,19 @@ export const transAsImgToFile = (imageSrcs: string[], imagesHexSources: HexSourc
  * @param imageSrcs html中img的属性src的值的集合
  * @return String
  */
-export const replaceAsUpdSrc = (htmlData: string, imageSrcs: string[], imagesHexSources: HexSource[], newImgs: string[]) => {
+export const replaceAsUpdSrc = (
+  htmlData: string,
+  imageSrcs: string[],
+  imagesHexSources: HexSource[],
+  newImgs: string[]
+) => {
   if (imageSrcs.length === imagesHexSources.length) {
     for (let i = 0; i < imageSrcs.length; i++) {
-      htmlData = htmlData.replace(imageSrcs[i], newImgs[i]);
+      htmlData = htmlData.replace(imageSrcs[i], newImgs[i])
     }
   }
 
-  return htmlData;
+  return htmlData
 }
 
 /**
@@ -146,6 +155,9 @@ export const replaceAsUpdSrc = (htmlData: string, imageSrcs: string[], imagesHex
  */
 const transAsHexToB64 = (hexStr) => {
   return window.btoa(
-    hexStr.match(/\w{2}/g).map((char) => String.fromCharCode(parseInt(char, 16)))?.join('') || []
-  );
+    hexStr
+      .match(/\w{2}/g)
+      .map((char) => String.fromCharCode(parseInt(char, 16)))
+      ?.join('') || []
+  )
 }

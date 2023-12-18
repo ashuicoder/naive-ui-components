@@ -20,7 +20,7 @@
   padding: 3px;
   border-radius: 3px;
 }
-.editor-content-view pre>code {
+.editor-content-view pre > code {
   display: block;
   padding: 10px;
 }
@@ -44,7 +44,7 @@
   list-style: disc;
 }
 
-.editor-content-view input[type="checkbox"] {
+.editor-content-view input[type='checkbox'] {
   margin-right: 5px;
 }
 
