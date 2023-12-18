@@ -285,7 +285,7 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
     //   componentProps: {
     //     listType: 'image-card'
     //   }
-    // },
+    // }
     // {
     //   field: 'content',
     //   type: 'editor',

@@ -62,22 +62,22 @@
     v-model:formatted-value="record[schema.field]"
   ></NTimePicker>
 
-  <template v-else-if="schema.type === 'upload'">
-    <NaiveUiUpload
-      list-type="image-card"
-      :style="schema?.style"
-      v-bind="schema.componentProps"
-      v-model:value="record[schema.field]"
-    ></NaiveUiUpload>
-  </template>
+  <component
+    is="naive-ui-upload"
+    v-else-if="schema.type === 'upload'"
+    list-type="image-card"
+    :style="schema?.style"
+    v-bind="schema.componentProps"
+    v-model:value="record[schema.field]"
+  ></component>
 
-  <template v-else-if="schema.type === 'editor'">
-    <NaiveUiEditor
-      :style="schema?.style"
-      v-bind="schema.componentProps"
-      v-model:value="record[schema.field]"
-    ></NaiveUiEditor>
-  </template>
+  <component
+    v-else-if="schema.type === 'editor'"
+    is="naive-ui-editor"
+    :style="schema?.style"
+    v-bind="schema.componentProps"
+    v-model:value="record[schema.field]"
+  ></component>
 
   <component
     v-else
@@ -118,35 +118,36 @@ import {
 
 import type { FormSchema, Recordable } from '../types'
 
-defineOptions({
-  components: {
-    NAutoComplete,
-    NCascader,
-    NCheckbox,
-    NCheckboxGroup,
-    NColorPicker,
-    NDatePicker,
-    NDynamicInput,
-    NDynamicTags,
-    NInput,
-    NInputNumber,
-    NMention,
-    NRadio,
-    NRadioGroup,
-    NRate,
-    NSelect,
-    NSlider,
-    NSwitch,
-    NTimePicker,
-    NTransfer,
-    NTreeSelect
-  }
-})
+// defineOptions({
+//   components: {
+//     NAutoComplete,
+//     NCascader,
+//     NCheckbox,
+//     NCheckboxGroup,
+//     NColorPicker,
+//     NDatePicker,
+//     NDynamicInput,
+//     NDynamicTags,
+//     NInput,
+//     NInputNumber,
+//     NMention,
+//     NRadio,
+//     NRadioGroup,
+//     NRate,
+//     NSelect,
+//     NSlider,
+//     NSwitch,
+//     NTimePicker,
+//     NTransfer,
+//     NTreeSelect
+//   }
+// })
 
 interface Props {
   schema: FormSchema
   record: Recordable
 }
+
 defineProps<Props>()
 </script>
 
