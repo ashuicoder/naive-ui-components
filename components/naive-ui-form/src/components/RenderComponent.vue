@@ -113,35 +113,32 @@ import {
   NTreeSelect
 } from 'naive-ui'
 
-// import { NaiveUiUpload } from 'naive-ui-upload'
-// import { NaiveUiEditor } from 'naive-ui-editor'
-
 import type { FormSchema, Recordable } from '../types'
 
-// defineOptions({
-//   components: {
-//     NAutoComplete,
-//     NCascader,
-//     NCheckbox,
-//     NCheckboxGroup,
-//     NColorPicker,
-//     NDatePicker,
-//     NDynamicInput,
-//     NDynamicTags,
-//     NInput,
-//     NInputNumber,
-//     NMention,
-//     NRadio,
-//     NRadioGroup,
-//     NRate,
-//     NSelect,
-//     NSlider,
-//     NSwitch,
-//     NTimePicker,
-//     NTransfer,
-//     NTreeSelect
-//   }
-// })
+defineOptions({
+  components: {
+    NAutoComplete,
+    NCascader,
+    NCheckbox,
+    NCheckboxGroup,
+    NColorPicker,
+    NDatePicker,
+    NDynamicInput,
+    NDynamicTags,
+    NInput,
+    NInputNumber,
+    NMention,
+    NRadio,
+    NRadioGroup,
+    NRate,
+    NSelect,
+    NSlider,
+    NSwitch,
+    NTimePicker,
+    NTransfer,
+    NTreeSelect
+  }
+})
 
 interface Props {
   schema: FormSchema
