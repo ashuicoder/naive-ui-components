@@ -110,10 +110,11 @@ import {
   NTreeSelect
 } from 'naive-ui'
 
-import { NaiveUiUpload } from 'naive-ui-upload'
-import { NaiveUiEditor } from 'naive-ui-editor'
+// import { NaiveUiUpload } from 'naive-ui-upload'
+// import { NaiveUiEditor } from 'naive-ui-editor'
 
 import type { FormSchema, Recordable } from '../types'
+import { defineAsyncComponent } from 'vue'
 
 defineOptions({
   components: {
@@ -145,6 +146,22 @@ interface Props {
   record: Recordable
 }
 defineProps<Props>()
+
+const NaiveUiUpload = defineAsyncComponent(() => {
+  return new Promise((resolve) => {
+    import('naive-ui-upload').then((module) => {
+      resolve(module.NaiveUiUpload as any)
+    })
+  })
+})
+
+const NaiveUiEditor = defineAsyncComponent(() => {
+  return new Promise((resolve) => {
+    import('naive-ui-editor').then((module) => {
+      resolve(module.NaiveUiEditor as any)
+    })
+  })
+})
 </script>
 
 <style scoped></style>
