@@ -57,7 +57,7 @@ const showModal = computed({
   }
 })
 
-const [register, { submit, reset }] = useForm()
+const [register, { submit, reset, getValue }] = useForm()
 async function handleConfirm() {
   const [err, res] = await to<Recordable>(submit())
   if (err) return false
@@ -72,6 +72,14 @@ function handleClose() {
 function handleCancel() {
   emit('cancel')
 }
+
+function getFormValue() {
+  return getValue()
+}
+
+defineExpose({
+  getValue: getFormValue
+})
 </script>
 
 <style scoped></style>
