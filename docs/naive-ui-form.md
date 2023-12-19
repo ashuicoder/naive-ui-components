@@ -180,17 +180,9 @@ import { NConfigProvider, zhCN, dateZhCN, NMessageProvider } from 'naive-ui'
 
 ::: tip 提示
 
-如果您在表单中使用了`type: 'upload'`，则需要安装`naive-ui-upload`
+- 如果表单中使用了`type: 'upload'`，则需要安装[naive-ui-upload](/naive-ui-upload)，并注册该组件。
+- 如果表单中使用了`type: 'editpr'`，则需要安装[naive-ui-editor](/naive-ui-editor)，并注册该组件。
 
-```shell
-pnpm add naive-ui-upload
-```
-
-如果您在表单中使用了`type: 'editpr'`，则需要安装`naive-ui-editor`
-
-```shell
-pnpm add naive-ui-editor
-```
 :::
 
 ## 基本使用
@@ -215,7 +207,7 @@ import NaiveUiForm from 'naive-ui-form'
 
 const app = createApp(App)
 
-app.use(NaiveUiForm, Option)
+app.use(NaiveUiForm)
 ```
 
 
@@ -767,4 +759,59 @@ function handleSubmit(values: Recordable) {
 </script>
 
 <style scoped></style>
+```
+有时候需要获取整个表单值去做一些额外的事情，如表单校验。`ModalForm`组件暴露了`getValue`方法：
+```vue
+
+<template>
+  <ModalForm
+    v-model:show="showModal"
+    title="新增"
+    ref="modalRef"
+    :schemas="schemas"
+    style="width: 800px"
+    @submit="handleModalSubmit"
+  ></ModalForm>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+import {
+  type FormSchema,
+  type ModalFormInstance
+} from 'naive-ui-form'
+
+const showModal = ref(true)
+const schemas: FormSchema[] = [
+  {
+    field: 'name',
+    type: 'input',
+    label: '姓名',
+    required: true,
+    labelPlacement: 'left',
+    defaultValue: '张三',
+    componentProps: {
+      onUpdateValue(value: string) {
+        console.log(value)
+      }
+    },
+    style: {
+      width: '200px'
+    }
+  },
+  
+]
+
+const modalRef = ref<ModalFormInstance | null>(null)
+setTimeout(() => {
+  console.log(modalRef.value?.getValue())
+}, 3000)
+
+
+
+</script>
+
+<style scoped></style>
+
 ```
