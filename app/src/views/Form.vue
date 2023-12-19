@@ -22,6 +22,7 @@
     <ModalForm
       v-model:show="showModal"
       title="新增"
+      ref="modalRef"
       :schemas="schemas"
       style="width: 800px"
       @submit="handleModalSubmit"
@@ -38,12 +39,11 @@ import {
   type Recordable,
   useForm,
   type FormInstance,
-  ModalForm
+  ModalForm,
+  type ModalFormInstance
 } from 'naive-ui-form'
 
-const showModal = ref(false)
-
-const formProps = {}
+const showModal = ref(true)
 
 const formRef = ref<FormInstance | null>(null)
 
@@ -152,6 +152,11 @@ const schemas: FormSchema[] = [
     ]
   }
 ]
+
+const modalRef = ref<ModalFormInstance | null>(null)
+setTimeout(() => {
+  console.log(modalRef.value?.getValue())
+}, 3000)
 
 const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
   size: 'large',
