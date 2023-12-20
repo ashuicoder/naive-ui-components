@@ -6,7 +6,7 @@
     negative-text="取消"
     :onPositiveClick="handleConfirm"
     :on-negative-click="handleCancel"
-    :onAfterLeave="handleClose"
+    @update:show="handleClose"
   >
     <BasicForm
       v-bind="getProps()"
@@ -65,8 +65,9 @@ async function handleConfirm() {
   return false
 }
 
-function handleClose() {
-  reset()
+function handleClose(value) {
+  console.log(value)
+  !value && reset()
 }
 
 function handleCancel() {

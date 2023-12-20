@@ -18,7 +18,9 @@
       <NButton type="primary" @click="getFormFieldValue">取单个值</NButton>
       <NButton type="primary" @click="handleSetProps">设置Props</NButton>
     </NSpace>
-
+    <div>
+      <n-button @click="showModal = true">显示</n-button>
+    </div>
     <ModalForm
       v-model:show="showModal"
       title="新增"
@@ -31,7 +33,7 @@
 </template>
 
 <script setup lang="tsx">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { NSpace, NButton } from 'naive-ui'
 import {
   BasicForm,
@@ -42,8 +44,9 @@ import {
   ModalForm,
   type ModalFormInstance
 } from 'naive-ui-form'
+import { useRouter } from 'vue-router'
 
-const showModal = ref(true)
+const showModal = ref(false)
 
 const formRef = ref<FormInstance | null>(null)
 
@@ -71,7 +74,6 @@ const schemas: FormSchema[] = [
     required: true,
 
     componentProps: {
-      disabled: true,
       options: [
         {
           label: '男',
@@ -325,7 +327,10 @@ function handleSubmitEmit(value: Recordable) {
   console.log('emit', value)
 }
 
+const router = useRouter()
 function handleModalSubmit(values) {
+  showModal.value = false
+  router.push('/upload')
   console.log(values, 2333)
 }
 
