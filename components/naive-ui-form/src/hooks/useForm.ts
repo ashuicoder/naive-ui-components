@@ -19,6 +19,7 @@ export function useForm(props?: Props): [(formIns: FormInstance) => void, FormIn
       return formInstance!.getValue() || {}
     },
     getFieldValue(field: string) {
+      handleNoInit()
       return formInstance!.getFieldValue(field)
     },
     setValue(value: Recordable) {
