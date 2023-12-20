@@ -552,6 +552,10 @@ const [register] = useForm({
 | slot            | string                           | 当[type](#type字段说明)字段为`slot`的时候必传，插槽名称                                                                                        | 否       |
 | dynamicOptions  | FormSchema[]                     | 动态表单的配置，当[type](#type字段说明)字段为`dynamic`的时候必传                                                                               | 否       |
 
+:::tip 提示
+`FormSchema`也接收[NFormItemGi](https://ui.naiveadmin.com/zh-CN/os-theme/components/form#FormItemGi-Props)的props。
+:::
+
 ### type字段说明
 
 `type`字段映射了`naive-ui`的表单组件，映射关系如下：
