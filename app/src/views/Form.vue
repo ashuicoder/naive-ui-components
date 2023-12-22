@@ -2,7 +2,6 @@
   <div>
     <BasicForm
       ref="formRef"
-      :schemas="schemas"
       style="width: 800px"
       size="small"
       @register="register"
@@ -162,7 +161,7 @@ setTimeout(() => {
 
 const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
   size: 'large',
-  showActionBtns: false,
+
   labelPlacement: 'left',
   schemas: [
     {
