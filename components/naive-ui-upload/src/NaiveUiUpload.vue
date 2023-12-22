@@ -1,43 +1,42 @@
 <template>
-  <div>
-    <NUpload
-      v-bind="getProps()"
-      v-model:file-list="fileList"
-      :on-before-upload="handleBeforeUpload"
-      :on-remove="handleRemove"
-      :custom-request="handleCustomRequest"
-    >
-      <slot></slot>
-    </NUpload>
+  <NUpload
+    style="width: 100%"
+    v-bind="getProps()"
+    v-model:file-list="fileList"
+    :on-before-upload="handleBeforeUpload"
+    :on-remove="handleRemove"
+    :custom-request="handleCustomRequest"
+  >
+    <slot></slot>
+  </NUpload>
 
-    <NModal
-      v-model:show="showCropper"
-      preset="dialog"
-      title="图片裁剪"
-      type="info"
-      positiveText="确定"
-      negativeText="取消"
-      style="width: 900px"
-      :loading="cropperLoading"
-      :onPositiveClick="handleConfirmCropper"
-      :onClose="handleCloseCropper"
-      :onNegativeClick="handleCloseCropper"
-    >
-      <div style="display: flex; align-items: center">
-        <div style="width: 400px; height: 400px">
-          <VueCropper
-            ref="cropperRef"
-            :img="cropperUrl"
-            v-bind="getCropperProps()"
-            @realTime="handlePreview"
-          ></VueCropper>
-        </div>
-        <div style="flex: 1; margin-left: 20px">
-          <img :src="previewUrl" style="width: 100%" />
-        </div>
+  <NModal
+    v-model:show="showCropper"
+    preset="dialog"
+    title="图片裁剪"
+    type="info"
+    positiveText="确定"
+    negativeText="取消"
+    style="width: 900px"
+    :loading="cropperLoading"
+    :onPositiveClick="handleConfirmCropper"
+    :onClose="handleCloseCropper"
+    :onNegativeClick="handleCloseCropper"
+  >
+    <div style="display: flex; align-items: center">
+      <div style="width: 400px; height: 400px">
+        <VueCropper
+          ref="cropperRef"
+          :img="cropperUrl"
+          v-bind="getCropperProps()"
+          @realTime="handlePreview"
+        ></VueCropper>
       </div>
-    </NModal>
-  </div>
+      <div style="flex: 1; margin-left: 20px">
+        <img :src="previewUrl" style="width: 100%" />
+      </div>
+    </div>
+  </NModal>
 </template>
 
 <script setup lang="ts">

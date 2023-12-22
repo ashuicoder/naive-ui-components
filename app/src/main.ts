@@ -1,20 +1,20 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import NaiveUiUpload from 'naive-ui-upload'
 import App from './App.vue'
 import router from './router'
 
 const app = createApp(App)
 
-// app.use(NaiveUiUpload, {
-//   requestFunc() {
-//     return new Promise((resolve) => {
-//       setTimeout(() => {
-//         resolve('https://picsum.photos/200/300')
-//       }, 1000)
-//     })
-//   }
-// })
+app.use(NaiveUiUpload, {
+  requestFunc() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve('https://picsum.photos/200/300')
+      }, 1000)
+    })
+  }
+})
 
 // app.use(NaiveuiEditor, {
 //   requestFunc() {

@@ -246,11 +246,6 @@ emit('register', formMethod)
 
 const isExpand = ref(commonProps.value.defaultExpand)
 
-function shouldRenderComponent(schema: FormSchema, record: Recordable) {
-  if (!schema.vif) return true
-  return schema.vif(record)
-}
-
 function setDefaultValue(schema: FormSchema) {
   if (schema.defaultValue) {
     formValue[schema.field] = schema.defaultValue
