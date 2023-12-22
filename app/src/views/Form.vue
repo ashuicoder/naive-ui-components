@@ -284,15 +284,15 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
           }
         }
       ]
+    },
+    {
+      field: 'photos',
+      type: 'upload',
+      label: '照片',
+      componentProps: {
+        listType: 'image-card'
+      }
     }
-    // {
-    //   field: 'photos',
-    //   type: 'upload',
-    //   label: '照片',
-    //   componentProps: {
-    //     listType: 'image-card'
-    //   }
-    // }
     // {
     //   field: 'content',
     //   type: 'editor',
