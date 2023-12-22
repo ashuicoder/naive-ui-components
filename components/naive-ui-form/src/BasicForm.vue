@@ -113,7 +113,12 @@
             commonProps.resetBtnText
           }}</NButton>
 
-          <NButton type="primary" text @click="isExpand = !isExpand">
+          <NButton
+            v-if="commonProps.showExpandBtn"
+            type="primary"
+            text
+            @click="isExpand = !isExpand"
+          >
             <template #icon>
               <NIcon>
                 <ChevronDown v-if="isExpand"></ChevronDown>
