@@ -1,25 +1,29 @@
 {
-  "name": "app",
-  "version": "0.0.0",
-  "private": true,
+  "name": "naive-ui-ai-editor",
+  "version": "0.0.1",
+  "private": false,
+  "main": "index.ts",
+  "type": "module",
+  "description": "一个基于aieditor和naive-ui封装的富文本编辑器",
+  "keywords": [
+    "naive-ui",
+    "vue3",
+    "editor",
+    "aieditor"
+  ],
+  "author": "ashuicoder",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p ../tsconfig.vitest.json --composite false"
+    "type-check": "vue-tsc --noEmit -p ../../tsconfig.vitest.json --composite false"
   },
   "dependencies": {
-    "naive-ui-ai-editor": "workspace:^",
-    "naive-ui-editor": "workspace:^",
-    "naive-ui-editor-view": "workspace:^",
-    "naive-ui-form": "workspace:^",
-    "naive-ui-table": "workspace:^",
-    "naive-ui-upload": "workspace:^",
-    "pinia": "^2.1.7",
-    "vue": "^3.3.4",
-    "vue-router": "^4.2.5"
+    "aieditor": "1.0.0-rc.6",
+    "vue": "^3.3.4"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",
@@ -35,5 +39,10 @@
     "vite": "^4.4.11",
     "vitest": "^0.34.6",
     "vue-tsc": "^1.8.19"
+  },
+  "peerDependencies": {
+    "@vicons/ionicons5": ">=0.12.0",
+    "naive-ui": ">=2.34.0",
+    "vue": ">=3.2.0"
   }
 }
