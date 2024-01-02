@@ -155,9 +155,7 @@ const schemas: FormSchema[] = [
 ]
 
 const modalRef = ref<ModalFormInstance | null>(null)
-setTimeout(() => {
-  console.log(modalRef.value?.getValue())
-}, 3000)
+
 
 const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
   size: 'large',
@@ -291,12 +289,12 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
       componentProps: {
         listType: 'image-card'
       }
+    },
+    {
+      field: 'content',
+      type: 'editor',
+      label: '内容'
     }
-    // {
-    //   field: 'content',
-    //   type: 'editor',
-    //   label: '内容'
-    // }
   ],
 
   grid: {
@@ -304,6 +302,7 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
     xGap: 14
   }
 })
+
 
 function getFormValue() {
   console.log(getValue())

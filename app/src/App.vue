@@ -4,6 +4,7 @@
       <router-view></router-view>
     </NMessageProvider>
   </NConfigProvider>
+
 </template>
 
 <script setup lang="ts">

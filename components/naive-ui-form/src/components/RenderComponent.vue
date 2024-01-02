@@ -73,9 +73,12 @@
 
   <component
     v-else-if="schema.type === 'editor'"
-    is="naive-ui-editor"
+    is="naive-ui-ai-editor"
+    style="height: 500px;"
     :style="schema?.style"
+    :hideToolbarKeys="['ai']"
     v-bind="schema.componentProps"
+
     v-model:value="record[schema.field]"
   ></component>
 

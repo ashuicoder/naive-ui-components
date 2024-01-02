@@ -264,6 +264,10 @@ function setDefaultValue(schema: FormSchema) {
   if (schema.type === 'upload') {
     formValue[schema.field] = []
   }
+
+  if (schema.type === 'editor') {
+    formValue[schema.field] = ''
+  }
 }
 
 function getFormRule(schema: FormSchema) {
