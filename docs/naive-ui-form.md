@@ -181,7 +181,7 @@ import { NConfigProvider, zhCN, dateZhCN, NMessageProvider } from 'naive-ui'
 ::: tip 提示
 
 - 如果表单中使用了`type: 'upload'`，则需要安装[naive-ui-upload](/naive-ui-upload)，并注册该组件。
-- 如果表单中使用了`type: 'editpr'`，则需要安装[naive-ui-editor](/naive-ui-editor)，并注册该组件。
+- 如果表单中使用了`type: 'editpr'`，则需要安装[naive-ui-ai-editor](/naive-ui-ai-editor)，并注册该组件。
 
 :::
 
@@ -584,6 +584,7 @@ const [register] = useForm({
 | slot          | 见[插槽](#插槽)                       |
 | dynamic       | 见[动态表单](#动态表单)               |
 | upload        | 见[naive-ui-upload](/naive-ui-upload) |
+| editor        | 见[naive-ui-ai-editor](/naive-ui-ai-editor) |
 
 ::: tip 提示
 
