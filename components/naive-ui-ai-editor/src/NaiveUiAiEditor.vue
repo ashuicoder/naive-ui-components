@@ -73,11 +73,11 @@ interface Props {
   placeholder?: string
   hideToolbarKeys?: string[]
   requestFunc?: RequestFun
-  theme?: AiEditorOptions['theme']
   link?: AiEditorOptions['link']
   fontFamily?: AiEditorOptions['fontFamily']
   fontSize?: AiEditorOptions['fontSize']
   ai?: AiEditorOptions['ai']
+  onMentionQuery?: AiEditorOptions['onMentionQuery']
 }
 
 interface Emits {
@@ -200,6 +200,9 @@ function initAiEdior() {
   }
   if (props.ai) {
     aieditorConfig.ai = props.ai
+  }
+  if (props.onMentionQuery) {
+    aieditorConfig.onMentionQuery = props.onMentionQuery
   }
 
   aiEditor = new AiEditor(aieditorConfig)

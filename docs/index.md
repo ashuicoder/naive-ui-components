@@ -21,6 +21,10 @@ hero:
     - theme: brand
       text: naive-ui-editor-view
       link: /naive-ui-editor-view
+    - theme: brand
+      text: naive-ui-ai-editor
+      link: /naive-ui-ai-editor
+    
 
 features:
   - title: naive-ui-form

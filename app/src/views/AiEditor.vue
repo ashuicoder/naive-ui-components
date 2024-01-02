@@ -8,6 +8,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { NaiveUiAiEditor } from 'naive-ui-ai-editor'
+import 'naive-ui-ai-editor/dist/style.css'
 
 const value = ref('')
 </script>
