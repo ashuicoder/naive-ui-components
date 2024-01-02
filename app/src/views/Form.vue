@@ -296,7 +296,7 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
       required: true,
       defaultValue: '<h1>23333333333</h1>',
       componentProps: {
-        readonly: false
+        readonly: true
       }
     }
   ],
