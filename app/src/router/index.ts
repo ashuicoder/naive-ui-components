@@ -29,6 +29,11 @@ const router = createRouter({
       component: () => import('app/views/Editor.vue')
     },
     {
+      path: '/ai-editor',
+      name: 'ai-editor',
+      component: () => import('app/views/AiEditor.vue')
+    },
+    {
       path: '/editor-view',
       name: 'editor-view',
       component: () => import('app/views/EditorView.vue')

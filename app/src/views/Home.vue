@@ -27,6 +27,10 @@ const menuList = [
     url: '/editor'
   },
   {
+    name: 'ai-editor',
+    url: '/ai-editor'
+  },
+  {
     name: '富文本内容展示',
     url: '/editor-view'
   }
