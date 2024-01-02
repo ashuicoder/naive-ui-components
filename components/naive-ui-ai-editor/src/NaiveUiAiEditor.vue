@@ -1,7 +1,11 @@
 <template>
   <div ref="editorRef">
-    <div class="aie-container" style="height: 100%; display: flex; flex-direction: column">
-      <div class="aie-container-header"></div>
+    <div
+      class="aie-container"
+      style="height: 100%; width: 100%; display: flex; flex-direction: column"
+      :style="readonly ? 'border: none' : ''"
+    >
+      <div v-show="!readonly" class="aie-container-header"></div>
       <div
         class="aie-container-main"
         style="flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column"
@@ -78,6 +82,7 @@ interface Props {
   fontSize?: AiEditorOptions['fontSize']
   ai?: AiEditorOptions['ai']
   onMentionQuery?: AiEditorOptions['onMentionQuery']
+  readonly?: boolean
 }
 
 interface Emits {
@@ -121,6 +126,7 @@ function initAiEdior() {
   const aieditorConfig: AiEditorOptions = {
     theme: theme.value === 'dark' ? 'dark' : 'light',
     element: editorRef.value as Element,
+    editable: !props.readonly,
     placeholder: props.placeholder,
     content: value.value,
     toolbarKeys: getToolbarKeys(),

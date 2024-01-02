@@ -1,6 +1,6 @@
 {
   "name": "naive-ui-ai-editor",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
   "main": "index.ts",
   "type": "module",
@@ -43,6 +43,7 @@
   "peerDependencies": {
     "@vicons/ionicons5": ">=0.12.0",
     "naive-ui": ">=2.34.0",
-    "vue": ">=3.2.0"
+    "vue": ">=3.2.0",
+    "aieditor": ">=1.0.0"
   }
 }

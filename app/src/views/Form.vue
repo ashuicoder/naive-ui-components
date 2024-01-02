@@ -156,7 +156,6 @@ const schemas: FormSchema[] = [
 
 const modalRef = ref<ModalFormInstance | null>(null)
 
-
 const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
   size: 'large',
 
@@ -295,6 +294,10 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
       type: 'editor',
       label: '内容',
       required: true,
+      defaultValue: '<h1>23333333333</h1>',
+      componentProps: {
+        readonly: false
+      }
     }
   ],
 
@@ -303,7 +306,6 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
     xGap: 14
   }
 })
-
 
 function getFormValue() {
   console.log(getValue())
