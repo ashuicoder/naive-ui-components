@@ -293,7 +293,8 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
     {
       field: 'content',
       type: 'editor',
-      label: '内容'
+      label: '内容',
+      required: true,
     }
   ],
 

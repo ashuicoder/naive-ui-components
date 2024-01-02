@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, inject, onUnmounted } from 'vue'
+import { onMounted, ref, inject, onUnmounted, computed, watch } from 'vue'
 import { AiEditor, type AiEditorOptions } from 'aieditor'
 import 'aieditor/dist/style.css'
 import { useMessage, useOsTheme } from 'naive-ui'
@@ -105,6 +105,16 @@ onUnmounted(() => {
   aiEditor?.destroy()
 })
 
+let shouldUpdateValue = true
+const value = computed({
+  get() {
+    return props.value
+  },
+  set(val) {
+    emits('update:value', val)
+  }
+})
+
 const message = useMessage()
 function initAiEdior() {
   const theme = useOsTheme()
@@ -112,10 +122,11 @@ function initAiEdior() {
     theme: theme.value === 'dark' ? 'dark' : 'light',
     element: editorRef.value as Element,
     placeholder: props.placeholder,
-    content: props.value || '',
+    content: value.value,
     toolbarKeys: getToolbarKeys(),
     onChange(_aiEditor) {
-      emits('update:value', _aiEditor.getHtml())
+      shouldUpdateValue = false
+      value.value = _aiEditor.isEmpty() ? '' : _aiEditor.getHtml()
     },
     image: {
       allowBase64: true,
@@ -212,6 +223,16 @@ function getToolbarKeys() {
   if (!Array.isArray(props.hideToolbarKeys)) return tookbarKeys
   return tookbarKeys.filter((key) => !props.hideToolbarKeys?.includes(key))
 }
+
+watch(value, (val) => {
+  if (!shouldUpdateValue) {
+    shouldUpdateValue = true
+    return
+  }
+  if (aiEditor) {
+    aiEditor.setContent(val)
+  }
+})
 </script>
 
 <style scoped></style>
