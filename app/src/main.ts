@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import NaiveUiUpload from 'naive-ui-upload'
 import NaiveuiEditor from 'naive-ui-editor'
-import NaiveUiAieditor from 'naive-ui-ai-editor'
+import NaiveUiAiEditor from 'naive-ui-ai-editor'
 import App from './App.vue'
 import router from './router'
 
@@ -28,7 +28,7 @@ app.use(NaiveuiEditor, {
   }
 })
 
-app.use(NaiveUiAieditor, {
+app.use(NaiveUiAiEditor, {
   requestFunc() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
