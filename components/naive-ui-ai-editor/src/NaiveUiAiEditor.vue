@@ -96,7 +96,7 @@ const emits = defineEmits<Emits>()
 
 const uploadApi = props.requestFunc ?? injectRequestFunc
 
-if (!uploadApi) {
+if (!uploadApi && !props.readonly) {
   throw new Error('requestFunc is required')
 }
 
