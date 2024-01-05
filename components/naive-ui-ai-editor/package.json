@@ -1,6 +1,6 @@
 {
   "name": "naive-ui-ai-editor",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -46,5 +46,8 @@
     "naive-ui": ">=2.34.0",
     "vue": ">=3.2.0",
     "aieditor": ">=1.0.0"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
