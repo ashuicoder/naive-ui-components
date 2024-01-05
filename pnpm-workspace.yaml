@@ -1,5 +1,4 @@
 packages:
   - 'components/*'
   - 'app'
-  - 'docs'
   - '!**/test/**'
