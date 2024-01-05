@@ -6,8 +6,10 @@
       :grid="{ cols: 4, xGap: 14 }"
       submitBtnText="查询"
       :defaultShowExpandRows="1"
+      labelPlacement="left"
       @submit="handleSearch"
       @reset="handleReset"
+      v-bind="searchProps"
     ></BasicForm>
 
     <div class="table-main">
@@ -110,7 +112,8 @@ const props = withDefaults(defineProps<Props>(), {
   requestAuto: true,
   pagination: true,
   resizeHeightOffset: 0,
-  toolButton: true
+  toolButton: true,
+  searchProps: () => ({})
 })
 
 const emit = defineEmits(['update:checked-row-keys'])
