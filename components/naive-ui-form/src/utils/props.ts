@@ -55,7 +55,7 @@ export const props = {
   },
   defaultShowExpandRows: {
     type: Number,
-    default: 2
+    default: 1
   },
   disabled: {
     type: Boolean,

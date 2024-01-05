@@ -134,7 +134,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, toRaw, watchEffect } from 'vue'
+import { ref, computed, reactive, toRaw, watchEffect, watch, nextTick } from 'vue'
 import {
   NForm,
   NGrid,
@@ -181,7 +181,7 @@ const props = withDefaults(defineProps<BasicProps>(), {
   expandBtnOffText: '展开',
   expandBtnOnText: '收起',
   defaultExpand: false,
-  defaultShowExpandRows: 2
+  defaultShowExpandRows: 1
 })
 const emit = defineEmits<{
   register: [formInsta: FormInstance]
@@ -189,9 +189,6 @@ const emit = defineEmits<{
   reset: []
 }>()
 
-const commonProps = computed(() => {
-  return Object.assign({}, props, hookProps.value)
-})
 const formValue = reactive<Recordable>({})
 const formRef = ref<FormInst | null>(null)
 const submitLoading = ref(false)
@@ -248,6 +245,10 @@ const formMethod: FormInstance = {
 defineExpose(formMethod)
 
 emit('register', formMethod)
+
+const commonProps = computed(() => {
+  return Object.assign({}, props, hookProps.value)
+})
 
 const isExpand = ref(commonProps.value.defaultExpand)
 
