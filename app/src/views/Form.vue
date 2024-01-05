@@ -158,7 +158,10 @@ const modalRef = ref<ModalFormInstance | null>(null)
 
 const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
   size: 'large',
-
+  grid: {
+    cols: 3
+  },
+  defaultShowExpandRows: 1,
   labelPlacement: 'left',
   schemas: [
     {
@@ -299,12 +302,7 @@ const [register, { getValue, getFieldValue, submit, setProps }] = useForm({
         readonly: true
       }
     }
-  ],
-
-  grid: {
-    cols: 1,
-    xGap: 14
-  }
+  ]
 })
 
 function getFormValue() {

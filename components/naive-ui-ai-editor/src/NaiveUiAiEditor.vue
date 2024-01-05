@@ -1,5 +1,5 @@
 <template>
-  <div ref="editorRef">
+  <div ref="editorRef" v-bind="$attrs">
     <div
       class="aie-container"
       style="height: 100%; width: 100%; display: flex; flex-direction: column"
@@ -13,6 +13,8 @@
       <div class="aie-container-footer" style="display: none"></div>
     </div>
   </div>
+
+  <button @click="dark">主题切换</button>
 </template>
 
 <script setup lang="ts">
@@ -23,6 +25,18 @@ import { useMessage, useOsTheme } from 'naive-ui'
 
 import { provideKey } from './const'
 import type { RequestFun } from './types'
+
+let isDark = false
+function dark() {
+  if (!isDark) {
+    editorRef.value?.classList.remove('aie-theme-light')
+    editorRef.value?.classList.add('aie-theme-dark')
+  } else {
+    editorRef.value?.classList.remove('aie-theme-dark')
+    editorRef.value?.classList.add('aie-theme-light')
+  }
+  isDark = !isDark
+}
 
 const injectRequestFunc = inject<RequestFun | undefined>(provideKey, undefined)
 

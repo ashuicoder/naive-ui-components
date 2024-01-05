@@ -1,90 +1,93 @@
 <template>
-  <BasicForm
-    v-if="search"
-    @register="register"
-    :grid="{ cols: 4, xGap: 14 }"
-    submitBtnText="查询"
-    @submit="handleSearch"
-    @reset="handleReset"
-  ></BasicForm>
+  <div>
+    <BasicForm
+      v-if="search"
+      @register="register"
+      :grid="{ cols: 4, xGap: 14 }"
+      submitBtnText="查询"
+      :defaultShowExpandRows="1"
+      @submit="handleSearch"
+      @reset="handleReset"
+    ></BasicForm>
 
-  <div class="table-main">
-    <!-- 表格头部，操作按钮 -->
-    <div class="table-header">
-      <div class="table-header-left">
-        <slot name="tableHeader"></slot>
-      </div>
-      <div class="table-header-right">
-        <slot name="toolButton"> </slot>
-        <template v-if="toolButton">
-          <!-- 刷新 -->
-          <n-tooltip v-if="showToolButton('refresh')">
-            <template #trigger>
-              <n-button circle @click="refresh">
-                <template #icon>
-                  <n-icon><SyncOutline /></n-icon>
-                </template>
-              </n-button>
-            </template>
-            <span>刷新</span>
-          </n-tooltip>
-
-          <!-- 密度 -->
-          <n-tooltip trigger="hover" v-if="showToolButton('size')">
-            <template #trigger>
-              <n-dropdown
-                trigger="click"
-                :options="densityOptions"
-                @select="(key) => (tableSize = key)"
-              >
-                <n-button circle>
+    <div class="table-main">
+      <!-- 表格头部，操作按钮 -->
+      <div class="table-header">
+        <div class="table-header-left">
+          <slot name="tableHeader"></slot>
+        </div>
+        <div class="table-header-right">
+          <slot name="toolButton"> </slot>
+          <template v-if="toolButton">
+            <!-- 刷新 -->
+            <n-tooltip v-if="showToolButton('refresh')">
+              <template #trigger>
+                <n-button circle @click="refresh">
                   <template #icon>
-                    <n-icon><BarbellOutline /></n-icon>
+                    <n-icon><SyncOutline /></n-icon>
                   </template>
                 </n-button>
-              </n-dropdown>
-            </template>
-            <span>密度</span>
-          </n-tooltip>
+              </template>
+              <span>刷新</span>
+            </n-tooltip>
 
-          <!-- 设置 -->
-          <n-tooltip v-if="showToolButton('setting')">
-            <template #trigger>
-              <n-button circle @click="openDrawer">
-                <template #icon>
-                  <n-icon><SettingsOutline /></n-icon>
-                </template>
-              </n-button>
-            </template>
-            <span>列设置</span>
-          </n-tooltip>
-        </template>
+            <!-- 密度 -->
+            <n-tooltip trigger="hover" v-if="showToolButton('size')">
+              <template #trigger>
+                <n-dropdown
+                  trigger="click"
+                  :options="densityOptions"
+                  @select="(key) => (tableSize = key)"
+                >
+                  <n-button circle>
+                    <template #icon>
+                      <n-icon><BarbellOutline /></n-icon>
+                    </template>
+                  </n-button>
+                </n-dropdown>
+              </template>
+              <span>密度</span>
+            </n-tooltip>
+
+            <!-- 设置 -->
+            <n-tooltip v-if="showToolButton('setting')">
+              <template #trigger>
+                <n-button circle @click="openDrawer">
+                  <template #icon>
+                    <n-icon><SettingsOutline /></n-icon>
+                  </template>
+                </n-button>
+              </template>
+              <span>列设置</span>
+            </n-tooltip>
+          </template>
+        </div>
       </div>
+
+      <!-- 表格主体 -->
+      <n-data-table
+        ref="tableRef"
+        :columns="tableColumns"
+        :data="state.tableData"
+        :loading="state.loading"
+        :pagination="newPagination"
+        :size="tableSize"
+        remote
+        :row-key="(row) => row.id"
+        v-model:checked-row-keys="checkedRowKeys"
+        @update:checked-row-keys="handleCheck"
+        :max-height="maxHeight"
+        :scroll-x="scrollWidth"
+        v-bind="$attrs"
+      />
+
+      <!-- 列设置 -->
+      <n-drawer v-model:show="active" :width="502" placement="right">
+        <n-drawer-content title="列设置" closable>
+          <ColumnSetting v-model:columns="initColumns" />
+        </n-drawer-content>
+      </n-drawer>
     </div>
-
-    <!-- 表格主体 -->
-    <n-data-table
-      ref="tableRef"
-      :columns="tableColumns"
-      :data="state.tableData"
-      :loading="state.loading"
-      :pagination="newPagination"
-      :size="tableSize"
-      remote
-      :row-key="(row) => row.id"
-      v-model:checked-row-keys="checkedRowKeys"
-      @update:checked-row-keys="handleCheck"
-      :max-height="maxHeight"
-      :scroll-x="scrollWidth"
-      v-bind="$attrs"
-    />
-
-    <!-- 列设置 -->
-    <n-drawer v-model:show="active" :width="502" placement="right">
-      <n-drawer-content title="列设置" closable>
-        <ColumnSetting v-model:columns="initColumns" />
-      </n-drawer-content>
-    </n-drawer>
   </div>
 </template>
 
