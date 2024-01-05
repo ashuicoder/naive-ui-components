@@ -210,8 +210,6 @@ const app = createApp(App)
 app.use(NaiveUiForm)
 ```
 
-
-
 ### props传值方式
 
 传递`props`有两种方法：
@@ -504,7 +502,7 @@ function handleReset() {
 | expandBtnOffText        | String       | ”折叠“状态时候的文字                                                                      | 否   | ”展开“ |
 | expandBtnOnText         | String       | ”展开“状态时候的文字                                                                      | 否   | ”收起“ |
 | defaultExpand           | Boolean      | 是否默认折叠                                                                              | 否   | false  |
-| defaultShowExpandColumn | Number       | 默认展开的行数                                                                            | 否   | 2      |
+| defaultShowExpandColumn | Number       | 默认展开的行数                                                                            | 否   | 1      |
 
 ::: tip 提示
 
@@ -560,30 +558,30 @@ const [register] = useForm({
 
 `type`字段映射了`naive-ui`的表单组件，映射关系如下：
 
-| 字段          | 映射的组件                            |
-| ------------- | ------------------------------------- |
-| auto-complete | NAutoComplete                         |
-| cascader      | NCascader                             |
-| color-picker  | NColorPicker                          |
-| checkbox      | NCheckboxGroup                        |
-| date-picker   | NDatePicker                           |
-| dynamic-input | NDynamicInput                         |
-| dynamic-tags  | NDynamicTags                          |
-| input         | NInput                                |
-| input-number  | NInputNumber                          |
-| mention       | NMention                              |
-| radio-single  | NRadio                                |
-| radio         | NRadioGroup                           |
-| rate          | NRate                                 |
-| select        | NSelect                               |
-| slider        | NSlider                               |
-| switch        | NSwitch                               |
-| time-picker   | NTimePicker                           |
-| transfer      | NTransfer                             |
-| tree-select   | NTreeSelect                           |
-| slot          | 见[插槽](#插槽)                       |
-| dynamic       | 见[动态表单](#动态表单)               |
-| upload        | 见[naive-ui-upload](/naive-ui-upload) |
+| 字段          | 映射的组件                                  |
+| ------------- | ------------------------------------------- |
+| auto-complete | NAutoComplete                               |
+| cascader      | NCascader                                   |
+| color-picker  | NColorPicker                                |
+| checkbox      | NCheckboxGroup                              |
+| date-picker   | NDatePicker                                 |
+| dynamic-input | NDynamicInput                               |
+| dynamic-tags  | NDynamicTags                                |
+| input         | NInput                                      |
+| input-number  | NInputNumber                                |
+| mention       | NMention                                    |
+| radio-single  | NRadio                                      |
+| radio         | NRadioGroup                                 |
+| rate          | NRate                                       |
+| select        | NSelect                                     |
+| slider        | NSlider                                     |
+| switch        | NSwitch                                     |
+| time-picker   | NTimePicker                                 |
+| transfer      | NTransfer                                   |
+| tree-select   | NTreeSelect                                 |
+| slot          | 见[插槽](#插槽)                             |
+| dynamic       | 见[动态表单](#动态表单)                     |
+| upload        | 见[naive-ui-upload](/naive-ui-upload)       |
 | editor        | 见[naive-ui-ai-editor](/naive-ui-ai-editor) |
 
 ::: tip 提示
@@ -765,9 +763,10 @@ function handleSubmit(values: Recordable) {
 
 <style scoped></style>
 ```
-有时候需要获取整个表单值去做一些额外的事情，如表单校验。`ModalForm`组件暴露了`getValue`方法：
-```vue
 
+有时候需要获取整个表单值去做一些额外的事情，如表单校验。`ModalForm`组件暴露了`getValue`方法：
+
+```vue
 <template>
   <ModalForm
     v-model:show="showModal"
@@ -782,10 +781,7 @@ function handleSubmit(values: Recordable) {
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import {
-  type FormSchema,
-  type ModalFormInstance
-} from 'naive-ui-form'
+import { type FormSchema, type ModalFormInstance } from 'naive-ui-form'
 
 const showModal = ref(true)
 const schemas: FormSchema[] = [
@@ -804,19 +800,14 @@ const schemas: FormSchema[] = [
     style: {
       width: '200px'
     }
-  },
-  
+  }
 ]
 
 const modalRef = ref<ModalFormInstance | null>(null)
 setTimeout(() => {
   console.log(modalRef.value?.getValue())
 }, 3000)
-
-
-
 </script>
 
 <style scoped></style>
-
 ```
