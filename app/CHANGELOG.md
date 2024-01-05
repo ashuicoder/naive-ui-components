@@ -1,5 +1,13 @@
 # app
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies
+  - naive-ui-form@2.0.15
+  - naive-ui-table@1.0.14
+
 ## 0.0.2
 
 ### Patch Changes
