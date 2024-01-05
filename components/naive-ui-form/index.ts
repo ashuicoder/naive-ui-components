@@ -5,7 +5,9 @@ export { useForm } from './src/hooks/useForm'
 
 export { BasicForm, ModalForm }
 
-export type * from './src/types'
+import type { FormSchema, Recordable, FormInstance, ModalFormInstance, Props } from './src/types'
+
+export type { FormSchema, Recordable, FormInstance, ModalFormInstance, Props }
 
 export default {
   install(app: App) {
