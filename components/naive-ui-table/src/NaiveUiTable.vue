@@ -1,7 +1,7 @@
 <template>
   <div>
     <BasicForm
-      v-if="search"
+      v-if="searchProps"
       @register="register"
       :grid="{ cols: 4, xGap: 14 }"
       submitBtnText="查询"
@@ -9,7 +9,6 @@
       labelPlacement="left"
       @submit="handleSearch"
       @reset="handleReset"
-      v-bind="searchProps"
     ></BasicForm>
 
     <div class="table-main">
@@ -119,7 +118,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(['update:checked-row-keys'])
 
 /* 搜索配置 */
-const [register, { setLoading }] = useForm(props.search)
+const [register, { setLoading, getValue, reset }] = useForm(props.searchProps)
 
 /* 控制 ToolButton 显示 */
 const showToolButton = (key: 'refresh' | 'size' | 'setting') => {
@@ -163,7 +162,8 @@ const { state, getTableList, handleSearch, handleReset, onUpdatePage, onUpdatePa
   props.pagination,
   props.dataCallback,
   props.requestError,
-  props.search,
+  getValue,
+  reset,
   setLoading
 )
 
