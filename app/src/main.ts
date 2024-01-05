@@ -7,8 +7,6 @@ import router from './router'
 
 const app = createApp(App)
 
-
-
 app.use(NaiveuiEditor, {
   requestFunc() {
     return new Promise((resolve) => {

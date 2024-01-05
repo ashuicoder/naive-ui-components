@@ -1,12 +1,12 @@
 import type { DataTableColumns } from 'naive-ui'
-import { type FormSchema } from 'naive-ui-form'
+import { type FormSchema, type Props as FormProps } from 'naive-ui-form'
 
 export type Recordable<T = any> = Record<string, T>
 
 export interface Props {
   columns: DataTableColumns<Recordable> // 列配置项  ==> 必传
   search?: { schemas: FormSchema[] } // 列配置项
-  searchProps?: Recordable // 传给BasicForm的属性
+  searchProps?: FormProps // 传给BasicForm的属性
   requestApi?: (params: any) => Promise<any> // 请求表格数据的 api ==> 非必传
   requestAuto?: boolean // 是否自动执行请求 api ==> 非必传（默认为true）
   pagination?: boolean // 是否需要分页组件 ==> 非必传（默认为true）

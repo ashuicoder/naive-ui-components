@@ -1,9 +1,11 @@
 # naive-ui-ai-editor文档
 
 ## 介绍
+
 `naive-ui-ai-editor`是基于[naive-ui](https://ui.naiveadmin.com/zh-CN/os-theme)、[aieditor](https://aieditor.dev/)封装的富文本组件。
 
 ## 安装
+
 ```bash
 npm i naive-ui-ai-editor
 ```
@@ -13,24 +15,22 @@ npm i naive-ui-ai-editor
 ### 全局导入
 
 ```ts
-
 import { createApp } from 'vue'
 import App from './App.vue'
 import NaiveUiAiEditor from 'naive-ui-ai-editor'
 import 'naive-ui-ai-editor/dist/index.css'
 
 const app = createApp(App)
-app.use(NaiveUiAiEditor, {/* options */})
-
+app.use(NaiveUiAiEditor, {
+  /* options */
+})
 ```
+
 ### 局部导入
 
 ```vue
 <template>
-  <NaiveUiAiEditor
-    v-model:value="value"
-    style="height: 600px"
-  ></NaiveUiAiEditor>
+  <NaiveUiAiEditor v-model:value="value" style="height: 600px"></NaiveUiAiEditor>
 </template>
 
 <script setup lang="ts">
@@ -42,7 +42,6 @@ const value = ref('')
 </script>
 
 <style scoped></style>
-
 ```
 
 ## props
@@ -60,6 +59,7 @@ interface Props {
   onMentionQuery?: AiEditorOptions['onMentionQuery'] // https://aieditor.dev/zh/config/mention.html
 }
 ```
+
 `requestFunc`字段定义类型如下：
 
 ```ts
