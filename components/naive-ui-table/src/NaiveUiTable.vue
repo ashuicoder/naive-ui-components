@@ -74,6 +74,7 @@
         :pagination="newPagination"
         :size="tableSize"
         remote
+        :single-line="false"
         :row-key="(row) => row.id"
         v-model:checked-row-keys="checkedRowKeys"
         @update:checked-row-keys="handleCheck"
