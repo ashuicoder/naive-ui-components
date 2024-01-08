@@ -118,7 +118,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(['update:checked-row-keys'])
 
 /* 搜索配置 */
-const [register, { setLoading, getValue, reset }] = useForm(props.searchProps)
+const [register, { setLoading, getValue }] = useForm(props.searchProps)
 
 /* 控制 ToolButton 显示 */
 const showToolButton = (key: 'refresh' | 'size' | 'setting') => {
@@ -163,7 +163,6 @@ const { state, getTableList, handleSearch, handleReset, onUpdatePage, onUpdatePa
   props.dataCallback,
   props.requestError,
   getValue,
-  reset,
   setLoading
 )
 

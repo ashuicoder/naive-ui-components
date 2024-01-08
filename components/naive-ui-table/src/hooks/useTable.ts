@@ -9,7 +9,6 @@ export function useTable(
   dataCallBack?: Props['dataCallback'],
   requestError?: Props['requestError'],
   getValue?: () => void,
-  reset?: () => void,
   setLoading?: (load: boolean) => void
 ) {
   const state = reactive({
@@ -59,15 +58,14 @@ export function useTable(
   }
 
   // 查询
-  function handleSearch(param) {
+  function handleSearch() {
     state.pageAble.current = 1
     getTableList()
   }
 
   // 重置
-  function handleReset(param) {
+  function handleReset() {
     state.pageAble.current = 1
-    reset && reset()
     getTableList()
   }
 
