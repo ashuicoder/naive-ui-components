@@ -8,7 +8,8 @@ export function useTable(
   isPage?: Props['pagination'],
   dataCallBack?: Props['dataCallback'],
   requestError?: Props['requestError'],
-  search?: Props['search'],
+  getValue?: () => void,
+  reset?: () => void,
   setLoading?: (load: boolean) => void
 ) {
   const state = reactive({
@@ -19,19 +20,8 @@ export function useTable(
       current: 1,
       size: DefaultPageSize,
       total: 0
-    },
-    searchParam: {} // 查询参数（只包括查询）
-  })
-
-  init()
-  async function init() {
-    state.searchParam = {}
-    if (search?.schemas?.length) {
-      search.schemas.forEach((item) => {
-        state.searchParam[item.field] = item.defaultValue
-      })
     }
-  }
+  })
 
   // 获取表格数据
   async function getTableList() {
@@ -46,8 +36,11 @@ export function useTable(
           }
         : {}
 
+      // 查询参数
+      const searchParam = (getValue && getValue()) || {}
+
       // 总参数
-      const totalParam = { ...initParams, ...pageParam, ...state.searchParam }
+      const totalParam = { ...initParams, ...pageParam, ...searchParam }
       let res = await api(totalParam)
       dataCallBack && (res = dataCallBack(res))
       state.tableData = isPage ? res[ListField] : res
@@ -67,7 +60,6 @@ export function useTable(
 
   // 查询
   function handleSearch(param) {
-    state.searchParam = param
     state.pageAble.current = 1
     getTableList()
   }
@@ -75,7 +67,7 @@ export function useTable(
   // 重置
   function handleReset(param) {
     state.pageAble.current = 1
-    init()
+    reset && reset()
     getTableList()
   }
 

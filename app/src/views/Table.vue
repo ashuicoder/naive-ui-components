@@ -2,7 +2,7 @@
   <NaiveUiTable
     :columns="columns"
     :requestApi="getTableList"
-    :search="search"
+    :search-props="search"
     @update:checked-row-keys="handleCheck"
   >
     <!-- 表格header按钮 -->
