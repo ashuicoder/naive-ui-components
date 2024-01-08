@@ -1,5 +1,11 @@
 # naive-ui-table
 
+## 1.0.15
+
+### Patch Changes
+
+- fix:form
+
 ## 1.0.14
 
 ### Patch Changes
