@@ -1,15 +1,14 @@
-import { reactive } from 'vue'
+import { reactive, type Ref } from 'vue'
 import { PageField, SizeField, ListField, TotalField, DefaultPageSize } from '../const'
-import type { Props } from '../types'
+import type { Props, FormInstance } from '../types'
 
 export function useTable(
-  api?: Props['requestApi'],
-  initParams?: Props['initParams'],
-  isPage?: Props['pagination'],
-  dataCallBack?: Props['dataCallback'],
-  requestError?: Props['requestError'],
-  getValue?: () => void,
-  setLoading?: (load: boolean) => void
+  api: Props['requestApi'],
+  initParams: Props['initParams'],
+  isPage: Props['pagination'],
+  dataCallBack: Props['dataCallback'],
+  requestError: Props['requestError'],
+  basicForm: Ref<FormInstance | null>
 ) {
   const state = reactive({
     tableData: [], // 表格数据
@@ -36,7 +35,7 @@ export function useTable(
         : {}
 
       // 查询参数
-      const searchParam = (getValue && getValue()) || {}
+      const searchParam = basicForm.value?.getValue() || {}
 
       // 总参数
       const totalParam = { ...initParams, ...pageParam, ...searchParam }
@@ -54,7 +53,7 @@ export function useTable(
       requestError && requestError(err)
     }
     state.loading = false
-    setLoading && setLoading(false)
+    basicForm.value?.setLoading(false)
   }
 
   // 查询

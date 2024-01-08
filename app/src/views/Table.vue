@@ -116,19 +116,16 @@ const columns: DataTableColumns = [
   {
     title: '年龄',
     key: 'age',
-    width: 400,
     align: 'center'
   },
   {
     title: '性别',
     key: 'sex',
-    width: 400,
     align: 'center'
   },
   {
     title: '身份证号',
     key: 'idCode',
-    width: 400,
     align: 'center'
   },
   {

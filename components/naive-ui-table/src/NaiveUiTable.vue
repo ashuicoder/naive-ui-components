@@ -2,6 +2,7 @@
   <div>
     <BasicForm
       v-if="searchProps"
+      ref="basicForm"
       @register="register"
       :grid="{ cols: 4, xGap: 14 }"
       submitBtnText="查询"
@@ -99,7 +100,7 @@ import type { DataTableRowKey } from 'naive-ui'
 import { ref, computed, onMounted, useSlots } from 'vue'
 import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
 import _ from 'lodash-es'
-import { BasicForm, useForm } from 'naive-ui-form'
+import { BasicForm, useForm, type FormInstance } from 'naive-ui-form'
 import { useTable } from './hooks/useTable'
 import ColumnSetting from './ColumnSetting.vue'
 import { isFunction } from './utils'
@@ -112,14 +113,14 @@ const props = withDefaults(defineProps<Props>(), {
   requestAuto: true,
   pagination: true,
   resizeHeightOffset: 0,
-  toolButton: true,
-  searchProps: () => ({})
+  toolButton: true
 })
 
 const emit = defineEmits(['update:checked-row-keys'])
 
 /* 搜索配置 */
-const [register, { setLoading, getValue }] = useForm(props.searchProps)
+const basicForm = ref<FormInstance | null>(null)
+const [register] = useForm(props.searchProps)
 
 /* 控制 ToolButton 显示 */
 const showToolButton = (key: 'refresh' | 'size' | 'setting') => {
@@ -163,8 +164,7 @@ const { state, getTableList, handleSearch, handleReset, onUpdatePage, onUpdatePa
   props.pagination,
   props.dataCallback,
   props.requestError,
-  getValue,
-  setLoading
+  basicForm
 )
 
 /* 初始化表格 */
