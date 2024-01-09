@@ -1,5 +1,12 @@
 # app
 
+## 0.0.5
+
+### Patch Changes
+
+- Updated dependencies
+  - naive-ui-table@1.0.16
+
 ## 0.0.4
 
 ### Patch Changes
