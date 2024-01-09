@@ -1,34 +1,36 @@
 <template>
-  <NaiveUiTable
-    :columns="columns"
-    :requestApi="getTableList"
-    :search-props="search"
-    @update:checked-row-keys="handleCheck"
-  >
-    <!-- 表格header按钮 -->
-    <template #tableHeader>
-      <n-button type="primary"> 新增 </n-button>
-      <n-button type="info"> 导入 </n-button>
-      <n-button type="success"> 导出 </n-button>
-      <n-button type="warning"> 导出 </n-button>
-      <n-button type="error"> 删除 </n-button>
-    </template>
+  <div style="padding: 10px">
+    <NaiveUiTable
+      :columns="columns"
+      :requestApi="getTableList"
+      :search-props="search"
+      @update:checked-row-keys="handleCheck"
+    >
+      <!-- 表格header按钮 -->
+      <template #tableHeader>
+        <n-button type="primary"> 新增 </n-button>
+        <n-button type="info"> 导入 </n-button>
+        <n-button type="success"> 导出 </n-button>
+        <n-button type="warning"> 导出 </n-button>
+        <n-button type="error"> 删除 </n-button>
+      </template>
 
-    <!-- 表格单元格 -->
-    <template #address="row">
-      <n-button type="primary">
-        {{ row.address }}
-      </n-button>
-    </template>
+      <!-- 表格单元格 -->
+      <template #address="row">
+        <n-button type="primary">
+          {{ row.address }}
+        </n-button>
+      </template>
 
-    <!-- 表格操作 -->
-    <template #operation="row">
-      <n-button type="primary" ghost @click="fun('查看', row)">查看</n-button>
-      <n-button type="primary" ghost @click="fun('编辑', row)">编辑</n-button>
-      <n-button type="primary" ghost @click="fun('重置密码', row)">重置密码</n-button>
-      <n-button type="error" ghost @click="fun('删除', row)">删除</n-button>
-    </template>
-  </NaiveUiTable>
+      <!-- 表格操作 -->
+      <template #operation="row">
+        <n-button type="primary" ghost @click="fun('查看', row)">查看</n-button>
+        <n-button type="primary" ghost @click="fun('编辑', row)">编辑</n-button>
+        <n-button type="primary" ghost @click="fun('重置密码', row)">重置密码</n-button>
+        <n-button type="error" ghost @click="fun('删除', row)">删除</n-button>
+      </template>
+    </NaiveUiTable>
+  </div>
 </template>
 
 <script setup lang="tsx">
@@ -114,19 +116,16 @@ const columns: DataTableColumns = [
   {
     title: '年龄',
     key: 'age',
-    width: 400,
     align: 'center'
   },
   {
     title: '性别',
     key: 'sex',
-    width: 400,
     align: 'center'
   },
   {
     title: '身份证号',
     key: 'idCode',
-    width: 400,
     align: 'center'
   },
   {

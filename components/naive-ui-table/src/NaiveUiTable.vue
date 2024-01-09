@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="table">
     <BasicForm
       v-if="searchProps"
+      ref="basicForm"
       @register="register"
       :grid="{ cols: 4, xGap: 14 }"
       submitBtnText="查询"
@@ -17,7 +18,7 @@
         <div class="table-header-left">
           <slot name="tableHeader"></slot>
         </div>
-        <div class="table-header-right">
+        <n-space class="table-header-right">
           <slot name="toolButton"> </slot>
           <template v-if="toolButton">
             <!-- 刷新 -->
@@ -35,17 +36,20 @@
             <!-- 密度 -->
             <n-tooltip trigger="hover" v-if="showToolButton('size')">
               <template #trigger>
-                <n-dropdown
-                  trigger="click"
-                  :options="densityOptions"
-                  @select="(key) => (tableSize = key)"
-                >
-                  <n-button circle>
-                    <template #icon>
-                      <n-icon><BarbellOutline /></n-icon>
-                    </template>
-                  </n-button>
-                </n-dropdown>
+                <div>
+                  <n-dropdown
+                    trigger="click"
+                    :options="densityOptions"
+                    :value="tableSize"
+                    @select="(key) => (tableSize = key)"
+                  >
+                    <n-button circle>
+                      <template #icon>
+                        <n-icon><BarbellOutline /></n-icon>
+                      </template>
+                    </n-button>
+                  </n-dropdown>
+                </div>
               </template>
               <span>密度</span>
             </n-tooltip>
@@ -62,7 +66,7 @@
               <span>列设置</span>
             </n-tooltip>
           </template>
-        </div>
+        </n-space>
       </div>
 
       <!-- 表格主体 -->
@@ -74,6 +78,7 @@
         :pagination="newPagination"
         :size="tableSize"
         remote
+        :single-line="false"
         :row-key="(row) => row.id"
         v-model:checked-row-keys="checkedRowKeys"
         @update:checked-row-keys="handleCheck"
@@ -93,12 +98,21 @@
 </template>
 
 <script setup lang="ts">
-import { NButton, NDataTable, NDropdown, NDrawer, NDrawerContent, NTooltip, NIcon } from 'naive-ui'
+import {
+  NButton,
+  NDataTable,
+  NDropdown,
+  NDrawer,
+  NDrawerContent,
+  NTooltip,
+  NIcon,
+  NSpace
+} from 'naive-ui'
 import type { DataTableRowKey } from 'naive-ui'
 import { ref, computed, onMounted, useSlots } from 'vue'
 import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
 import _ from 'lodash-es'
-import { BasicForm, useForm } from 'naive-ui-form'
+import { BasicForm, useForm, type FormInstance } from 'naive-ui-form'
 import { useTable } from './hooks/useTable'
 import ColumnSetting from './ColumnSetting.vue'
 import { isFunction } from './utils'
@@ -110,15 +124,15 @@ const props = withDefaults(defineProps<Props>(), {
   columns: () => [],
   requestAuto: true,
   pagination: true,
-  resizeHeightOffset: 0,
-  toolButton: true,
-  searchProps: () => ({})
+  resizeHeightOffset: 25,
+  toolButton: true
 })
 
 const emit = defineEmits(['update:checked-row-keys'])
 
 /* 搜索配置 */
-const [register, { setLoading, getValue, reset }] = useForm(props.searchProps)
+const basicForm = ref<FormInstance | null>(null)
+const [register] = useForm(props.searchProps)
 
 /* 控制 ToolButton 显示 */
 const showToolButton = (key: 'refresh' | 'size' | 'setting') => {
@@ -162,9 +176,7 @@ const { state, getTableList, handleSearch, handleReset, onUpdatePage, onUpdatePa
   props.pagination,
   props.dataCallback,
   props.requestError,
-  getValue,
-  reset,
-  setLoading
+  basicForm
 )
 
 /* 初始化表格 */
@@ -242,7 +254,10 @@ defineExpose({
     margin-bottom: 16px;
   }
 }
-:deep(.n-button + .n-button) {
+.table :deep(.n-data-table-thead .n-data-table-th) {
+  font-weight: 700;
+}
+.table :deep(.n-button + .n-button) {
   margin-left: 12px;
 }
 </style>

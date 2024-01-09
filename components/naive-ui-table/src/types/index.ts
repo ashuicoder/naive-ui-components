@@ -1,8 +1,9 @@
 import type { DataTableColumns } from 'naive-ui'
-import { type Props as FormProps } from 'naive-ui-form'
+import type { Props as FormProps, FormInstance } from 'naive-ui-form'
 
 export type Recordable<T = any> = Record<string, T>
 
+export type { FormInstance }
 export interface Props {
   columns: DataTableColumns<Recordable> // 列配置项  ==> 必传
   searchProps?: FormProps // 传给BasicForm的属性
