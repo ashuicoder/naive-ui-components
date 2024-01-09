@@ -1,5 +1,5 @@
 <template>
-  <NForm v-bind="commonProps" ref="formRef" :model="formValue">
+  <NForm label-width="auto" v-bind="commonProps" ref="formRef" :model="formValue">
     <NGrid
       v-bind="commonProps.grid"
       :collapsed="isExpand"
