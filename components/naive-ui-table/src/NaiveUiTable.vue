@@ -112,7 +112,7 @@ const props = withDefaults(defineProps<Props>(), {
   columns: () => [],
   requestAuto: true,
   pagination: true,
-  resizeHeightOffset: 0,
+  resizeHeightOffset: 25,
   toolButton: true
 })
 
