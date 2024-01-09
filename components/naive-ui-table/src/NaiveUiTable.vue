@@ -120,6 +120,10 @@ import { PageSizes } from './const'
 import { useTableSize } from './hooks/useTableSize'
 import type { Props } from './types'
 
+defineOptions({
+  inheritAttrs: false
+})
+
 const props = withDefaults(defineProps<Props>(), {
   columns: () => [],
   requestAuto: true,
