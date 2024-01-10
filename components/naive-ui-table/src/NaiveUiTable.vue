@@ -226,7 +226,7 @@ function handleCheck(rowKeys: DataTableRowKey[], rows, meta) {
 const tableRef = ref() // table 实例
 const { tableMaxHeight } = useTableSize(tableRef, props.resizeHeightOffset)
 const maxHeight = computed(() => {
-  return props.maxHeight || tableMaxHeight
+  return props.maxHeight || tableMaxHeight.value
 })
 
 /* 表格宽度 */
