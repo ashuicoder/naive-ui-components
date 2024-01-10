@@ -3,13 +3,13 @@
     <BasicForm
       v-if="searchProps"
       ref="basicForm"
-      @register="register"
       :grid="{ cols: 4, xGap: 14 }"
       submitBtnText="查询"
       :defaultShowExpandRows="1"
       labelPlacement="left"
       @submit="handleSearch"
       @reset="handleReset"
+      v-bind="searchProps"
     ></BasicForm>
 
     <div class="table-main">
@@ -112,13 +112,17 @@ import type { DataTableRowKey } from 'naive-ui'
 import { ref, computed, onMounted, useSlots } from 'vue'
 import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
 import _ from 'lodash-es'
-import { BasicForm, useForm, type FormInstance } from 'naive-ui-form'
+import { BasicForm, type FormInstance } from 'naive-ui-form'
 import { useTable } from './hooks/useTable'
 import ColumnSetting from './ColumnSetting.vue'
 import { isFunction } from './utils'
 import { PageSizes } from './const'
 import { useTableSize } from './hooks/useTableSize'
 import type { Props } from './types'
+
+defineOptions({
+  inheritAttrs: false
+})
 
 const props = withDefaults(defineProps<Props>(), {
   columns: () => [],
@@ -130,9 +134,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(['update:checked-row-keys'])
 
-/* 搜索配置 */
+/* 搜索表单ref */
 const basicForm = ref<FormInstance | null>(null)
-const [register] = useForm(props.searchProps)
 
 /* 控制 ToolButton 显示 */
 const showToolButton = (key: 'refresh' | 'size' | 'setting') => {
@@ -223,7 +226,7 @@ function handleCheck(rowKeys: DataTableRowKey[], rows, meta) {
 const tableRef = ref() // table 实例
 const { tableMaxHeight } = useTableSize(tableRef, props.resizeHeightOffset)
 const maxHeight = computed(() => {
-  return props.maxHeight || tableMaxHeight
+  return props.maxHeight || tableMaxHeight.value
 })
 
 /* 表格宽度 */

@@ -3,7 +3,7 @@
     <NaiveUiTable
       :columns="columns"
       :requestApi="getTableList"
-      :search-props="search"
+      :search-props="searchProps"
       @update:checked-row-keys="handleCheck"
     >
       <!-- 表格header按钮 -->
@@ -37,7 +37,7 @@
 import { NaiveUiTable } from 'naive-ui-table'
 import { NButton, NDataTable, NDrawer, NDrawerContent, NTooltip, useMessage } from 'naive-ui'
 import type { DataTableColumns } from 'naive-ui'
-import { type FormSchema } from 'naive-ui-form'
+import type { Props } from 'naive-ui-form'
 
 const message = useMessage()
 
@@ -47,7 +47,12 @@ function handleCheck(param) {
 }
 
 // 搜索栏配置
-const search: { schemas: FormSchema[] } = {
+const searchProps: Props = {
+  showExpandBtn: true,
+  grid: {
+    cols: 3,
+    xGap: 16
+  },
   schemas: [
     {
       label: '姓名',
