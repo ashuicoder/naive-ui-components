@@ -1,5 +1,11 @@
 # naive-ui-table
 
+## 1.0.17
+
+### Patch Changes
+
+- fix: warning
+
 ## 1.0.16
 
 ### Patch Changes
