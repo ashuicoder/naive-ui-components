@@ -5,8 +5,8 @@ import type { Props, FormInstance } from '../types'
 export function useTable(
   api: Props['requestApi'],
   initParams: Props['initParams'],
-  isPage: Props['pagination'],
-  dataCallBack: Props['dataCallback'],
+  isPageApi: Props['isPageApi'],
+  dataCallback: Props['dataCallback'],
   requestError: Props['requestError'],
   basicForm: Ref<FormInstance | null>
 ) {
@@ -27,7 +27,7 @@ export function useTable(
     state.loading = true
     try {
       // 分页参数
-      const pageParam = isPage
+      const pageParam = isPageApi
         ? {
             [PageField]: state.pageAble.current,
             [SizeField]: state.pageAble.size
@@ -39,19 +39,28 @@ export function useTable(
 
       // 总参数
       const totalParam = { ...initParams, ...pageParam, ...searchParam }
-      let res = await api(totalParam)
-      dataCallBack && (res = dataCallBack(res))
-      state.tableData = isPage ? res[ListField] : res
-      if (isPage) {
+      const filterParam = Object.fromEntries(
+        Object.entries(totalParam).filter(([_, v]) => v != null)
+      )
+      let res = await api(filterParam)
+      dataCallback && (res = dataCallback(res))
+      state.tableData = isPageApi ? res[ListField] : res
+      if (isPageApi) {
         Object.assign(state.pageAble, {
           current: res[PageField],
           size: res[SizeField],
           total: res[TotalField]
         })
       }
-    } catch (err) {
-      requestError && requestError(err)
+    } catch (err: any) {
+      closeLoading()
+      if (requestError) return requestError(err)
+      else throw new Error(err || '请求失败！')
     }
+    closeLoading()
+  }
+
+  function closeLoading() {
     state.loading = false
     basicForm.value?.setLoading(false)
   }
@@ -76,6 +85,7 @@ export function useTable(
   // 每条页数改变
   function onUpdatePageSize(pageSize: number) {
     state.pageAble.size = pageSize
+    state.pageAble.current = 1
     getTableList()
   }
 

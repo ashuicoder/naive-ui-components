@@ -57,7 +57,7 @@
             <!-- 设置 -->
             <n-tooltip v-if="showToolButton('setting')">
               <template #trigger>
-                <n-button circle @click="openDrawer">
+                <n-button circle @click="openDrawer(true)">
                   <template #icon>
                     <n-icon><SettingsOutline /></n-icon>
                   </template>
@@ -77,12 +77,12 @@
         :loading="state.loading"
         :pagination="newPagination"
         :size="tableSize"
-        remote
+        :remote="tableRemote"
         :single-line="false"
         :row-key="(row) => row.id"
         v-model:checked-row-keys="checkedRowKeys"
         @update:checked-row-keys="handleCheck"
-        :max-height="maxHeight"
+        :max-height="height"
         :scroll-x="scrollWidth"
         v-bind="$attrs"
       />
@@ -127,9 +127,11 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   columns: () => [],
   requestAuto: true,
+  isPageApi: true,
   pagination: true,
   resizeHeightOffset: 25,
-  toolButton: true
+  toolButton: true,
+  remote: undefined
 })
 
 const emit = defineEmits(['update:checked-row-keys'])
@@ -137,7 +139,7 @@ const emit = defineEmits(['update:checked-row-keys'])
 /* 搜索表单ref */
 const basicForm = ref<FormInstance | null>(null)
 
-/* 控制 ToolButton 显示 */
+/* 工具栏显隐 */
 const showToolButton = (key: 'refresh' | 'size' | 'setting') => {
   return Array.isArray(props.toolButton) ? props.toolButton.includes(key) : props.toolButton
 }
@@ -157,7 +159,7 @@ const initColumns = ref(
     item._show = true
     if (item.render) return item
     if (slot[item.key] && isFunction(slot[item.key])) {
-      item.render = (row) => (<Function>slot[item.key])(row)
+      item.render = slot[item.key]
     }
     return item
   })
@@ -176,7 +178,7 @@ const tableColumns = computed(() => {
 const { state, getTableList, handleSearch, handleReset, onUpdatePage, onUpdatePageSize } = useTable(
   props.requestApi,
   props.initParams,
-  props.pagination,
+  props.isPageApi,
   props.dataCallback,
   props.requestError,
   basicForm
@@ -196,23 +198,47 @@ function refresh() {
 /* 分页 */
 const newPagination = computed(() => {
   if (!props.pagination) return false
-  return {
-    page: state.pageAble.current,
-    pageSize: state.pageAble.size,
-    itemCount: state.pageAble.total,
-    pageSizes: PageSizes,
-    showSizePicker: true,
-    showQuickJumper: true,
-    prefix: (info) => `每页${info.pageSize}条，共${info.itemCount}条`,
-    onUpdatePage,
-    onUpdatePageSize
+  if (typeof props.pagination === 'object') return props.pagination
+  if (props.isPageApi) {
+    return {
+      page: state.pageAble.current,
+      pageSize: state.pageAble.size,
+      itemCount: state.pageAble.total,
+      pageSizes: PageSizes,
+      showSizePicker: true,
+      showQuickJumper: true,
+      prefix: (info) => `每页${info.pageSize}条，共${info.itemCount}条`,
+      onUpdatePage,
+      onUpdatePageSize
+    }
+  } else {
+    return {
+      page: state.pageAble.current,
+      pageSize: state.pageAble.size,
+      pageSizes: PageSizes,
+      showSizePicker: true,
+      prefix: (info) => `每页${info.pageSize}条，共${info.itemCount}条`,
+      onUpdatePage: (page: number) => {
+        state.pageAble.current = page
+      },
+      onUpdatePageSize: (pageSize: number) => {
+        state.pageAble.size = pageSize
+        state.pageAble.current = 1
+      }
+    }
   }
+})
+
+/* 分页异步 */
+const tableRemote = computed(() => {
+  if (typeof props.remote === 'boolean') return props.remote
+  return props.isPageApi
 })
 
 /* 打开列设置抽屉 */
 const active = ref(false)
-function openDrawer() {
-  active.value = true
+function openDrawer(bool: boolean) {
+  active.value = bool
 }
 
 /* 勾选 */
@@ -225,7 +251,7 @@ function handleCheck(rowKeys: DataTableRowKey[], rows, meta) {
 /* 表格高度 */
 const tableRef = ref() // table 实例
 const { tableMaxHeight } = useTableSize(tableRef, props.resizeHeightOffset)
-const maxHeight = computed(() => {
+const height = computed(() => {
   return props.maxHeight || tableMaxHeight.value
 })
 
@@ -244,7 +270,7 @@ defineExpose({
   state,
   tableColumns,
   tableRef,
-  maxHeight,
+  height,
   scrollWidth
 })
 </script>
