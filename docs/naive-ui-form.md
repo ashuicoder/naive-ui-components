@@ -549,6 +549,7 @@ const [register] = useForm({
 | vif             | (value:Recordable) => boolean    | 动态显示该表单，需要返回一个布尔值，`value`是表单的值                                                                                          | 否       |
 | slot            | string                           | 当[type](#type字段说明)字段为`slot`的时候必传，插槽名称                                                                                        | 否       |
 | dynamicOptions  | FormSchema[]                     | 动态表单的配置，当[type](#type字段说明)字段为`dynamic`的时候必传                                                                               | 否       |
+| groupName       | string                           | 表单分组标识，该选项设置会了该表单项前面添加一个分组标识                                                                                       | 否       |
 
 :::tip 提示
 `FormSchema`也接收[NFormItemGi](https://ui.naiveadmin.com/zh-CN/os-theme/components/form#FormItemGi-Props)的props。
