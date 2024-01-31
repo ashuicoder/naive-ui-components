@@ -21,6 +21,7 @@ export interface FormSchema extends Omit<FormItemGiProps, 'labelProps'> {
   vif?: (value: Recordable) => boolean
   slot?: string
   dynamicOptions?: FormSchema[]
+  groupName?: string
 }
 
 export interface BasicProps {

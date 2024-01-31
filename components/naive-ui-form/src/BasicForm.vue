@@ -7,6 +7,11 @@
     >
       <template v-for="schema in commonProps.schemas">
         <template v-if="schema.type !== 'dynamic'">
+          <NGridItem v-if="schema.groupName" :span="commonProps?.grid?.cols">
+            <NDivider title-placement="left">
+              <div style="font-size: 16px">{{ schema.groupName }}</div>
+            </NDivider>
+          </NGridItem>
           <NFormItemGi
             v-show="typeof schema.vif === 'function' ? schema.vif(formValue) : true"
             v-bind="schema"
@@ -134,7 +139,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, toRaw, watchEffect, watch, nextTick } from 'vue'
+import { ref, computed, reactive, toRaw, watchEffect } from 'vue'
 import {
   NForm,
   NGrid,
@@ -144,7 +149,9 @@ import {
   NButton,
   NIcon,
   NPopover,
-  NText
+  NText,
+  NDivider,
+  NH6
 } from 'naive-ui'
 
 import to from 'await-to-js'

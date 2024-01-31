@@ -84,8 +84,10 @@
   <component
     v-else
     :is="`n-${schema.type}`"
-    :style="schema?.style"
-    v-bind="schema.componentProps"
+    v-bind="{
+      ...schema.componentProps,
+      ...schema?.style
+    }"
     v-model:value="record[schema.field]"
   ></component>
 </template>
