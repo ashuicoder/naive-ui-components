@@ -214,7 +214,7 @@ app.use(NaiveUiForm)
 
 传递`props`有两种方法：
 
-1. 受用经典传值方式:
+1. 使用经典传值方式:
 
    ```vue
    <template>
@@ -587,7 +587,7 @@ const [register] = useForm({
 
 ::: tip 提示
 
-一些特`type`的说明:
+一些特殊的`type`说明:
 
 - `radio`： 需要在`componentProps`传入`options`字段，如果是异步数据可以定义为`ref`响应数据。
 
@@ -633,7 +633,7 @@ const [register] = useForm({
 
 ### 插槽
 
-除了[](#自定义组件)外，你也可以使用插槽。`type`设置为`slot`， 再加一个`slot`名称，示例如下：
+如果内置的type不满足时，可以使用插槽。`type`设置为`slot`， 再加一个`slot`名称，示例如下：
 <SlotForm></SlotForm>
 
 ```vue{3-10,21,24}
