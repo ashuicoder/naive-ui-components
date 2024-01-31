@@ -4,6 +4,7 @@
       :columns="columns"
       :requestApi="getTableList"
       :search-props="searchProps"
+      :pagination="false"
       @update:checked-row-keys="handleCheck"
     >
       <!-- 表格header按钮 -->
@@ -16,10 +17,10 @@
       </template>
 
       <!-- 表格单元格 -->
-      <template #address="row">
-        <n-button type="primary">
-          {{ row.address }}
-        </n-button>
+      <template #address="row, index">
+        <n-tag type="primary">
+          {{ row.address + index }}
+        </n-tag>
       </template>
 
       <!-- 表格操作 -->
@@ -35,9 +36,9 @@
 
 <script setup lang="tsx">
 import { NaiveUiTable } from 'naive-ui-table'
-import { NButton, NDataTable, NDrawer, NDrawerContent, NTooltip, useMessage } from 'naive-ui'
+import { NButton, NTag, NDrawer, NDrawerContent, NTooltip, useMessage } from 'naive-ui'
 import type { DataTableColumns } from 'naive-ui'
-import type { Props } from 'naive-ui-form'
+import type { Props as FormProps } from 'naive-ui-form'
 
 const message = useMessage()
 
@@ -47,12 +48,7 @@ function handleCheck(param) {
 }
 
 // 搜索栏配置
-const searchProps: Props = {
-  showExpandBtn: true,
-  grid: {
-    cols: 3,
-    xGap: 16
-  },
+const searchProps: FormProps = {
   schemas: [
     {
       label: '姓名',
@@ -111,11 +107,7 @@ const columns: DataTableColumns = [
     key: 'name',
     align: 'center',
     render(row) {
-      return (
-        <NButton type="primary" onClick={() => console.log('我是通过 tsx 语法渲染的内容')}>
-          {row.name}
-        </NButton>
-      )
+      return <NTag type="warning">{row.name}</NTag>
     }
   },
   {
@@ -142,15 +134,15 @@ const columns: DataTableColumns = [
   { title: '操作', key: 'operation', fixed: 'right', width: 330 }
 ]
 
-// 如果你想在请求之前对当前请求参数做一些操作，可以自定义如下函数：params 为当前所有的请求参数（包括分页），最后返回请求列表接口
-// 默认不做操作就直接在 ProTable 组件上绑定	:requestApi="getUserList"
 async function getTableList(params: any) {
   console.log('params: ', params)
+  // return Promise.reject('错误')
   return await api(params)
 }
 
 function fun(type, row) {
-  message.info(type, row)
+  message.info(type)
+  console.log('row: ', row)
 }
 
 // 模拟接口请求
@@ -177,6 +169,9 @@ function api(params) {
       params.current * params.size
     )
     setTimeout(() => {
+      // 不分页
+      // resolve(data)
+      // 分页
       resolve({
         current: params.current,
         size: params.size,
@@ -184,7 +179,7 @@ function api(params) {
         records,
         total: allRecords.length
       })
-    }, 1000)
+    }, 500)
   })
 }
 </script>

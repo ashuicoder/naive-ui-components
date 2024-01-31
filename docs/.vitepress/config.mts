@@ -27,9 +27,15 @@ export default defineConfig({
       { text: 'naive-ui-editor', link: '/naive-ui-editor' },
       { text: 'naive-ui-table', link: '/naive-ui-table' },
       { text: 'naive-ui-editor-view', link: '/naive-ui-editor-view' },
-      { text: 'naive-ui-ai-editor', link: '/naive-ui-ai-editor' }
+      { text: 'naive-ui-ai-editor', link: '/naive-ui-ai-editor' },
+      { text: '模板公共组件', items: [
+        { text: 'Buttons', link: '/Buttons' },
+      ] }
     ],
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/ashuicoder/naive-ui-components' }]
+    socialLinks: [{ icon: 'github', link: 'https://github.com/ashuicoder/naive-ui-components' }],
+  },
+  markdown:{
+    lineNumbers: true
   }
 })

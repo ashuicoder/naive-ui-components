@@ -5,16 +5,18 @@ export type Recordable<T = any> = Record<string, T>
 
 export type { FormInstance }
 export interface Props {
-  columns: DataTableColumns<Recordable> // 列配置项  ==> 必传
+  columns: DataTableColumns<Recordable> // 列配置项
   searchProps?: FormProps // 传给BasicForm的属性
-  requestApi?: (params: any) => Promise<any> // 请求表格数据的 api ==> 非必传
-  requestAuto?: boolean // 是否自动执行请求 api ==> 非必传（默认为true）
-  pagination?: boolean // 是否需要分页组件 ==> 非必传（默认为true）
-  maxHeight?: number | string // 表格最大高度 ==> 非必传
-  scrollX?: number // 表格横向宽度
-  resizeHeightOffset?: number // 表格底下留白距离 ==> 非必传（默认为0）
-  toolButton?: ('refresh' | 'size' | 'setting')[] | boolean // 是否显示表格功能按钮 ==> 非必传
+  requestApi?: (params: any) => Promise<any> // 请求表格数据的 api
+  requestAuto?: boolean // 是否自动执行请求 api（默认为true）
+  pagination?: boolean | object // 表格分页配置
+  isPageApi?: boolean // 接口是否为分页接口 （默认为true）
+  remote?: boolean // 是否异步
+  maxHeight?: number | string // 表格最大高度
+  scrollX?: number | string // 表格横向宽度
+  resizeHeightOffset?: number // 表格底下留白距离 （默认为0）
+  toolButton?: ('refresh' | 'size' | 'setting')[] | boolean // 是否显示表格功能按钮
   initParams?: Recordable // 初始化请求参数 ==> 非必传（默认为{}）
-  dataCallback?: (data: Recordable) => Recordable // 返回数据的回调函数，可以对数据进行处理 ==> 非必传
-  requestError?: (params: any) => void // 表格 api 请求错误监听 ==> 非必传
+  dataCallback?: (data: Recordable) => Recordable // 返回数据的回调函数，可以对数据进行处理
+  requestError?: (params: any) => void // 表格 api 请求错误监听
 }
