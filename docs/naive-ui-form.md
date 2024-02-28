@@ -181,7 +181,7 @@ import { NConfigProvider, zhCN, dateZhCN, NMessageProvider } from 'naive-ui'
 ::: tip 提示
 
 - 如果表单中使用了`type: 'upload'`，则需要安装[naive-ui-upload](/naive-ui-upload)，并注册该组件。
-- 如果表单中使用了`type: 'editpr'`，则需要安装[naive-ui-ai-editor](/naive-ui-ai-editor)，并注册该组件。
+- 如果表单中使用了`type: 'editor'`，则需要安装[naive-ui-editor](/naive-ui-editor)，并注册该组件。
 
 :::
 
@@ -559,31 +559,31 @@ const [register] = useForm({
 
 `type`字段映射了`naive-ui`的表单组件，映射关系如下：
 
-| 字段          | 映射的组件                                  |
-| ------------- | ------------------------------------------- |
-| auto-complete | NAutoComplete                               |
-| cascader      | NCascader                                   |
-| color-picker  | NColorPicker                                |
-| checkbox      | NCheckboxGroup                              |
-| date-picker   | NDatePicker                                 |
-| dynamic-input | NDynamicInput                               |
-| dynamic-tags  | NDynamicTags                                |
-| input         | NInput                                      |
-| input-number  | NInputNumber                                |
-| mention       | NMention                                    |
-| radio-single  | NRadio                                      |
-| radio         | NRadioGroup                                 |
-| rate          | NRate                                       |
-| select        | NSelect                                     |
-| slider        | NSlider                                     |
-| switch        | NSwitch                                     |
-| time-picker   | NTimePicker                                 |
-| transfer      | NTransfer                                   |
-| tree-select   | NTreeSelect                                 |
-| slot          | 见[插槽](#插槽)                             |
-| dynamic       | 见[动态表单](#动态表单)                     |
-| upload        | 见[naive-ui-upload](/naive-ui-upload)       |
-| editor        | 见[naive-ui-ai-editor](/naive-ui-ai-editor) |
+| 字段          | 映射的组件                            |
+| ------------- | ------------------------------------- |
+| auto-complete | NAutoComplete                         |
+| cascader      | NCascader                             |
+| color-picker  | NColorPicker                          |
+| checkbox      | NCheckboxGroup                        |
+| date-picker   | NDatePicker                           |
+| dynamic-input | NDynamicInput                         |
+| dynamic-tags  | NDynamicTags                          |
+| input         | NInput                                |
+| input-number  | NInputNumber                          |
+| mention       | NMention                              |
+| radio-single  | NRadio                                |
+| radio         | NRadioGroup                           |
+| rate          | NRate                                 |
+| select        | NSelect                               |
+| slider        | NSlider                               |
+| switch        | NSwitch                               |
+| time-picker   | NTimePicker                           |
+| transfer      | NTransfer                             |
+| tree-select   | NTreeSelect                           |
+| slot          | 见[插槽](#插槽)                       |
+| dynamic       | 见[动态表单](#动态表单)               |
+| upload        | 见[naive-ui-upload](/naive-ui-upload) |
+| editor        | 见[naive-ui-editor](/naive-ui-editor) |
 
 ::: tip 提示
 

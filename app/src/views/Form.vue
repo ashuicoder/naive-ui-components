@@ -23,6 +23,12 @@ const [register] = useForm({
       field: 'age',
       type: 'input-number',
       groupName: '分组2'
+    },
+    {
+      label: '信息',
+      field: 'info',
+      type: 'text',
+      defaultValue: '信息展示'
     }
   ]
 })
