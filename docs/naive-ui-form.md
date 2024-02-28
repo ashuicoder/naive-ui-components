@@ -584,6 +584,7 @@ const [register] = useForm({
 | dynamic       | 见[动态表单](#动态表单)               |
 | upload        | 见[naive-ui-upload](/naive-ui-upload) |
 | editor        | 见[naive-ui-editor](/naive-ui-editor) |
+| text          | NText,用于数据展示                    |
 
 ::: tip 提示
 
