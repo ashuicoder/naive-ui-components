@@ -1,4 +1,7 @@
 export const componentMapInfo = {
+  text: {
+    outputStr: '输入'
+  },
   'auto-complete': {
     outputStr: '输入'
   },

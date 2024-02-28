@@ -62,6 +62,10 @@
     v-model:formatted-value="record[schema.field]"
   ></NTimePicker>
 
+  <NText v-else-if="schema.type === 'text'" :style="schema?.style" v-bind="schema.componentProps">{{
+    record[schema.field]
+  }}</NText>
+
   <component
     is="naive-ui-upload"
     v-else-if="schema.type === 'upload'"
@@ -73,7 +77,7 @@
 
   <component
     v-else-if="schema.type === 'editor'"
-    is="naive-ui-ai-editor"
+    is="naive-ui-editor"
     style="height: 600px; width: 100%"
     :style="schema?.style"
     :hideToolbarKeys="['ai']"
@@ -114,7 +118,8 @@ import {
   NSwitch,
   NTimePicker,
   NTransfer,
-  NTreeSelect
+  NTreeSelect,
+  NText
 } from 'naive-ui'
 
 import type { FormSchema, Recordable } from '../types'

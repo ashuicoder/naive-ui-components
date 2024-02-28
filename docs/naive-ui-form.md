@@ -181,7 +181,7 @@ import { NConfigProvider, zhCN, dateZhCN, NMessageProvider } from 'naive-ui'
 ::: tip 提示
 
 - 如果表单中使用了`type: 'upload'`，则需要安装[naive-ui-upload](/naive-ui-upload)，并注册该组件。
-- 如果表单中使用了`type: 'editpr'`，则需要安装[naive-ui-ai-editor](/naive-ui-ai-editor)，并注册该组件。
+- 如果表单中使用了`type: 'editor'`，则需要安装[naive-ui-editor](/naive-ui-editor)，并注册该组件。
 
 :::
 
@@ -214,7 +214,7 @@ app.use(NaiveUiForm)
 
 传递`props`有两种方法：
 
-1. 受用经典传值方式:
+1. 使用经典传值方式:
 
    ```vue
    <template>
@@ -549,6 +549,7 @@ const [register] = useForm({
 | vif             | (value:Recordable) => boolean    | 动态显示该表单，需要返回一个布尔值，`value`是表单的值                                                                                          | 否       |
 | slot            | string                           | 当[type](#type字段说明)字段为`slot`的时候必传，插槽名称                                                                                        | 否       |
 | dynamicOptions  | FormSchema[]                     | 动态表单的配置，当[type](#type字段说明)字段为`dynamic`的时候必传                                                                               | 否       |
+| groupName       | string                           | 表单分组标识，该选项设置会了该表单项前面添加一个分组标识                                                                                       | 否       |
 
 :::tip 提示
 `FormSchema`也接收[NFormItemGi](https://ui.naiveadmin.com/zh-CN/os-theme/components/form#FormItemGi-Props)的props。
@@ -558,35 +559,36 @@ const [register] = useForm({
 
 `type`字段映射了`naive-ui`的表单组件，映射关系如下：
 
-| 字段          | 映射的组件                                  |
-| ------------- | ------------------------------------------- |
-| auto-complete | NAutoComplete                               |
-| cascader      | NCascader                                   |
-| color-picker  | NColorPicker                                |
-| checkbox      | NCheckboxGroup                              |
-| date-picker   | NDatePicker                                 |
-| dynamic-input | NDynamicInput                               |
-| dynamic-tags  | NDynamicTags                                |
-| input         | NInput                                      |
-| input-number  | NInputNumber                                |
-| mention       | NMention                                    |
-| radio-single  | NRadio                                      |
-| radio         | NRadioGroup                                 |
-| rate          | NRate                                       |
-| select        | NSelect                                     |
-| slider        | NSlider                                     |
-| switch        | NSwitch                                     |
-| time-picker   | NTimePicker                                 |
-| transfer      | NTransfer                                   |
-| tree-select   | NTreeSelect                                 |
-| slot          | 见[插槽](#插槽)                             |
-| dynamic       | 见[动态表单](#动态表单)                     |
-| upload        | 见[naive-ui-upload](/naive-ui-upload)       |
-| editor        | 见[naive-ui-ai-editor](/naive-ui-ai-editor) |
+| 字段          | 映射的组件                            |
+| ------------- | ------------------------------------- |
+| auto-complete | NAutoComplete                         |
+| cascader      | NCascader                             |
+| color-picker  | NColorPicker                          |
+| checkbox      | NCheckboxGroup                        |
+| date-picker   | NDatePicker                           |
+| dynamic-input | NDynamicInput                         |
+| dynamic-tags  | NDynamicTags                          |
+| input         | NInput                                |
+| input-number  | NInputNumber                          |
+| mention       | NMention                              |
+| radio-single  | NRadio                                |
+| radio         | NRadioGroup                           |
+| rate          | NRate                                 |
+| select        | NSelect                               |
+| slider        | NSlider                               |
+| switch        | NSwitch                               |
+| time-picker   | NTimePicker                           |
+| transfer      | NTransfer                             |
+| tree-select   | NTreeSelect                           |
+| slot          | 见[插槽](#插槽)                       |
+| dynamic       | 见[动态表单](#动态表单)               |
+| upload        | 见[naive-ui-upload](/naive-ui-upload) |
+| editor        | 见[naive-ui-editor](/naive-ui-editor) |
+| text          | NText,用于数据展示                    |
 
 ::: tip 提示
 
-一些特`type`的说明:
+一些特殊的`type`说明:
 
 - `radio`： 需要在`componentProps`传入`options`字段，如果是异步数据可以定义为`ref`响应数据。
 
@@ -632,7 +634,7 @@ const [register] = useForm({
 
 ### 插槽
 
-除了[](#自定义组件)外，你也可以使用插槽。`type`设置为`slot`， 再加一个`slot`名称，示例如下：
+如果内置的type不满足时，可以使用插槽。`type`设置为`slot`， 再加一个`slot`名称，示例如下：
 <SlotForm></SlotForm>
 
 ```vue{3-10,21,24}

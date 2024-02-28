@@ -11,7 +11,6 @@
     "type-check": "vue-tsc --noEmit -p ../tsconfig.vitest.json --composite false"
   },
   "dependencies": {
-    "naive-ui-ai-editor": "workspace:^",
     "naive-ui-editor": "workspace:^",
     "naive-ui-editor-view": "workspace:^",
     "naive-ui-form": "workspace:^",
