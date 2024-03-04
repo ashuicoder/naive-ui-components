@@ -1,11 +1,16 @@
-import type { DataTableColumns } from 'naive-ui'
+import type { DataTableColumn } from 'naive-ui'
 import type { Props as FormProps, FormInstance } from 'naive-ui-form'
+
+export type { FormProps, FormInstance }
 
 export type Recordable<T = any> = Record<string, T>
 
-export type { FormInstance }
-export interface Props {
-  columns: DataTableColumns<Recordable> // 列配置项
+export type Columns = { vif?: boolean | ((column: Columns) => boolean) } & DataTableColumn
+
+export type TableColumns = Columns[]
+
+export interface TableProps {
+  columns: TableColumns // 列配置项
   searchProps?: FormProps // 传给BasicForm的属性
   requestApi?: (params: any) => Promise<any> // 请求表格数据的 api
   requestAuto?: boolean // 是否自动执行请求 api（默认为true）

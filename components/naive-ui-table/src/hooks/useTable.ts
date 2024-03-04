@@ -1,18 +1,18 @@
 import { reactive, type Ref } from 'vue'
 import { PageField, SizeField, ListField, TotalField, DefaultPageSize } from '../const'
-import type { Props, FormInstance } from '../types'
+import type { TableProps, FormInstance } from '../types'
 
 export function useTable(
-  api: Props['requestApi'],
-  initParams: Props['initParams'],
-  isPageApi: Props['isPageApi'],
-  dataCallback: Props['dataCallback'],
-  requestError: Props['requestError'],
+  api: TableProps['requestApi'],
+  initParams: TableProps['initParams'],
+  isPageApi: TableProps['isPageApi'],
+  dataCallback: TableProps['dataCallback'],
+  requestError: TableProps['requestError'],
   basicForm: Ref<FormInstance | null>
 ) {
   const state = reactive({
     tableData: [], // 表格数据
-    loading: true,
+    loading: api ? true : false,
     // 分页数据
     pageAble: {
       current: 1,
