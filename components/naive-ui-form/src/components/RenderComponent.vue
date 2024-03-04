@@ -1,6 +1,7 @@
 <template>
   <NCheckbox
     v-if="schema.type === 'checkbox-single'"
+    style="width: 100%"
     :style="schema?.style"
     v-bind="schema.componentProps"
     v-model:checked="record[schema.field]"
@@ -8,6 +9,7 @@
   >
   <NCheckboxGroup
     v-else-if="schema.type === 'checkbox'"
+    style="width: 100%"
     :style="schema?.style"
     v-bind="schema.componentProps"
     v-model:value="record[schema.field]"
@@ -24,6 +26,7 @@
 
   <NDatePicker
     v-else-if="schema.type === 'date-picker'"
+    style="width: 100%"
     :style="schema?.style"
     v-bind="schema.componentProps"
     v-model:formatted-value="record[schema.field]"
@@ -31,6 +34,7 @@
   ></NDatePicker>
   <NRate
     v-else-if="schema.type === 'radio-single'"
+    style="width: 100%"
     :style="schema?.style"
     v-bind="schema.componentProps"
     v-model:value="record[schema.field]"
@@ -39,6 +43,7 @@
 
   <NRadioGroup
     v-else-if="schema.type === 'radio'"
+    style="width: 100%"
     :style="schema?.style"
     v-bind="schema.componentProps"
     v-model:value="record[schema.field]"
@@ -56,15 +61,20 @@
 
   <NTimePicker
     v-else-if="schema.type === 'time-picker'"
+    style="width: 100%"
     :style="schema?.style"
     v-bind="schema.componentProps"
     :valueFormat="schema.componentProps?.valueFormat || 'HH:mm:ss'"
     v-model:formatted-value="record[schema.field]"
   ></NTimePicker>
 
-  <NText v-else-if="schema.type === 'text'" :style="schema?.style" v-bind="schema.componentProps">{{
-    record[schema.field]
-  }}</NText>
+  <NText
+    v-else-if="schema.type === 'text'"
+    style="width: 100%"
+    :style="schema?.style"
+    v-bind="schema.componentProps"
+    >{{ record[schema.field] }}</NText
+  >
 
   <component
     is="naive-ui-upload"
@@ -78,9 +88,9 @@
   <component
     v-else-if="schema.type === 'editor'"
     is="naive-ui-editor"
+    disabled
     style="height: 600px; width: 100%"
     :style="schema?.style"
-    :hideToolbarKeys="['ai']"
     v-bind="schema.componentProps"
     v-model:value="record[schema.field]"
   ></component>
@@ -88,9 +98,10 @@
   <component
     v-else
     :is="`n-${schema.type}`"
+    style="width: 100%"
+    :style="schema?.style"
     v-bind="{
-      ...schema.componentProps,
-      ...schema?.style
+      ...schema.componentProps
     }"
     v-model:value="record[schema.field]"
   ></component>

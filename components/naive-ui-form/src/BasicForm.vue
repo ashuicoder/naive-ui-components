@@ -1,5 +1,11 @@
 <template>
-  <NForm label-width="auto" v-bind="commonProps" ref="formRef" :model="formValue">
+  <NForm
+    label-width="auto"
+    label-placement="left"
+    v-bind="commonProps"
+    ref="formRef"
+    :model="formValue"
+  >
     <NGrid
       v-bind="commonProps.grid"
       :collapsed="isExpand"
@@ -104,8 +110,8 @@
         </template>
       </template>
 
-      <NFormItemGi v-if="commonProps.showActionBtns" suffix>
-        <NSpace>
+      <NFormItemGi v-if="commonProps.showActionBtns" label=" " suffix>
+        <NSpace style="width: 100%" :justify="commonProps.grid.cols === 1 ? 'start' : 'end'">
           <NButton
             v-if="commonProps.showSubmitBtn"
             type="primary"
