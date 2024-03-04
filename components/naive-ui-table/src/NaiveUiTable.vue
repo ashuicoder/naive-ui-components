@@ -118,13 +118,13 @@ import ColumnSetting from './ColumnSetting.vue'
 import { isFunction } from './utils'
 import { PageSizes } from './const'
 import { useTableSize } from './hooks/useTableSize'
-import type { Props } from './types'
+import type { TableProps, Columns } from './types'
 
 defineOptions({
   inheritAttrs: false
 })
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<TableProps>(), {
   columns: () => [],
   requestAuto: true,
   isPageApi: true,
@@ -152,10 +152,16 @@ const densityOptions = [
   { label: '宽松', key: 'large' }
 ]
 
+function checkIfShow(action: Columns): boolean {
+  if (typeof action.vif === 'boolean') return action.vif
+  if (typeof action.vif === 'function') return action.vif(action)
+  return true
+}
+
 /* 初始化列 */
 const slot = useSlots()
 const initColumns = ref(
-  props.columns?.map((item: any) => {
+  props.columns?.filter(checkIfShow).map((item: any) => {
     item._show = true
     if (item.render) return item
     if (slot[item.key] && isFunction(slot[item.key])) {
@@ -199,7 +205,7 @@ function refresh() {
 const newPagination = computed(() => {
   if (!props.pagination) return false
   if (typeof props.pagination === 'object') return props.pagination
-  if (props.isPageApi) {
+  if (props.requestApi && props.isPageApi) {
     return {
       page: state.pageAble.current,
       pageSize: state.pageAble.size,
@@ -232,6 +238,7 @@ const newPagination = computed(() => {
 /* 分页异步 */
 const tableRemote = computed(() => {
   if (typeof props.remote === 'boolean') return props.remote
+  if (!props.requestApi) return false
   return props.isPageApi
 })
 
