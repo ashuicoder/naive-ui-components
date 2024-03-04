@@ -83,8 +83,8 @@ async function getTableList(params: any) {
 ::: info 是否分页：
 
 - 默认接口是分页接口（`isPageApi: true`），即：
-  * 接口参数包含`current,size`
-  * 接口返回数据格式为`{ current: 1, size: 10, total: 100, records: [...] }`；
+  - 接口参数包含`current,size`
+  - 接口返回数据格式为`{ current: 1, size: 10, total: 100, records: [...] }`；
 - **若接口不分页，需将`isPageApi`设为`false`**
 
 :::
@@ -591,7 +591,7 @@ async function getTableList(params: any) {
 
 | 属性               | 类型                                              | 描述                                                                               | 必传 | 默认值 |
 | ------------------ | ------------------------------------------------- | ---------------------------------------------------------------------------------- | ---- | ------ |
-| columns            | `DataTableColumns`                                | 表格列配置，除`vif`外，与naive-ui的完全一致                                                   | 是   | -      |
+| columns            | `DataTableColumns`                                | 表格列配置，除`vif`外，与naive-ui的完全一致                                        | 是   | -      |
 | requestApi         | `(params: any) => Promise<any>`                   | 请求接口，返回Promise                                                              | 否   | -      |
 | search-props       | `FormProps`                                       | 顶部查询表单配置                                                                   | 否   | -      |
 | requestAuto        | `boolean`                                         | 是否初始化自动请求接口                                                             | 否   | true   |

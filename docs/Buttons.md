@@ -14,7 +14,7 @@ Buttons是基于naive-ui的按钮组件封装的组件，主要区别是使用*�
 
 属性说明：
 
-Buttons有`config`、`btnType`、`param`三个自定义属性，同时可传入`naive-ui`的button的所有属性
+Buttons有`config`、`btnType`、`param`、`spaceProps`四个自定义属性，同时可传入`naive-ui`的button的所有属性
 
 - **config**：按钮配置，必传（`BtnItem[]`），`BtnItem`里有以下六个自定义属性，同时可配置`naive-ui`的button的所有属性：
   - label：按钮文字（`string`）
@@ -25,6 +25,7 @@ Buttons有`config`、`btnType`、`param`三个自定义属性，同时可传入`
   - btnType：按钮类型（`'tableBtn' | 'other'`）
 - **btnType**：按钮类型（`'tableBtn' | 'other'`）
 - **param**：vif函数和点击事件的参数
+- **spaceProps**：`n-space`组件的属性
 
 ## 基础使用
 
@@ -59,7 +60,7 @@ function add() {
 
 ## 图标`icon`
 
-config中属性`icon`，用于设置按钮图标，直接传入**图标组件**即可。
+`config.icon`，设置按钮图标，直接传入**图标组件**即可。
 
 ```vue{13,19,25}
 <template>
@@ -97,7 +98,7 @@ const config: BtnItem[] = [
 
 ### 方式一：`onClick`
 
-通过`@click`绑定，配置里格式为`onClick`
+通过`@click`绑定，配置格式为`onClick: Function`
 
 ```vue{12,17,22}
 <template>
@@ -130,7 +131,7 @@ const config: BtnItem[] = [
 
 ### 方式二：`eventName`
 
-将事件通过`v-on`传递给`Buttons`，配置里使用`eventName`指定自定义事件的名称。
+自定义事件：将事件通过`v-on`传递给组件，在配置里用`eventName`指定自定义事件的名称。
 
 > 组件内部将`eventName`指定的事件绑定到对应按钮的点击事件上。
 
@@ -199,10 +200,10 @@ function handleDelete() {
 - 该`param`就为点击事件的第一参数，`$event`为第二参数；**（注意：两种点击事件都有效）**
 - `vif`为`Function`时，该`param`为参数。
 
-|         | 不传`param`                 | 传递`param`                             |
-| ------- | --------------------------- | --------------------------------------- |
+|          | 不传`param`                 | 传递`param`                             |
+| -------- | --------------------------- | --------------------------------------- |
 | 点击事件 | `onClick: (e: Event) => {}` | `onClick: (param: any, e: Event) => {}` |
-| vif  | `vif: () => {}`          | `vif: (param: any) => {}`            |
+| vif      | `vif: () => {}`             | `vif: (param: any) => {}`               |
 
 完整例子：
 
@@ -244,9 +245,9 @@ function edit(param: any) {
 
 ## 按钮显隐`vif`
 
-config里的属性`vif`（`boolean | (param?:object)=>boolean`），用于设置按钮是否显示，不传表示显示。
+`config.vif`：（`boolean | (param?:object)=>boolean`），按钮是否显示，不传表示显示。
 
-若传递了`param`，`vif`为`function`时，`param`可作为`function`的参数。
+> 若组件上传递了`param`，`vif`为函数时，`param`可作为函数的参数。
 
 ```vue{12,18}
 <template>
@@ -280,7 +281,7 @@ const config: BtnItem[] = [
 
 ## 按钮权限`auth`
 
-config里的属性`auth`（`string[]`），用于设置按钮权限。不传，表示显示按钮。
+`config.auth`：（`string[]`），设置按钮权限。不传，表示显示按钮。
 
 ```vue{17,23}
 <template>
@@ -331,7 +332,7 @@ function handleDelete() {
 
 ### 单独配置每个按钮
 
-**`config`配置里支持`naive-ui`的`n-button`所有的props**，例如：
+**`config`配置支持`naive-ui`的`n-button`所有的props**，例如：
 
 ```vue{11,12,16,17,18,22,23}
 <template>
@@ -364,9 +365,9 @@ const config: BtnItem[] = [
 
 ### 统一配置所有按钮
 
-**`Buttons`组件也支持`naive-ui`的`n-button`所有的props。**
+**组件上也支持`naive-ui`的`n-button`所有的props。**
 
-如果所有按钮的配置是一样的，还可以统一在`Buttons`组件上配置，例如：
+如果所有按钮的配置是一样的，就可以统一在组件上配置，例如：
 
 ```vue{4-6}
 <template>
@@ -398,7 +399,7 @@ const config: BtnItem[] = [
 
 ::: tip
 
-- Buttons组件会把除`config`、`btnType`、`param`、`@xxx`以外的 **props**，都合并到 config 每一个按钮配置上；
+- Buttons组件会把除`config`、`btnType`、`param`、`spaceProps`、`@xxx`以外的 **props**，都合并到 config 每一个按钮配置上；
 - 若有同名属性，**以`config`里的为主**。
 
 上述例子，等同于以下配置：
@@ -502,9 +503,51 @@ const config: BtnItem[] = [
 </script>
 ```
 
+后续根据项目UI可在组件内添加其他的风格
+
+## 按钮间距
+
+组件内部使用`n-space`包裹所有按钮，可通过属性`spaceProps`设置`n-space`的属性。
+
+```vue{5}
+<template>
+  <Buttons
+    type="primary"
+    :config="config"
+    :spaceProps="{ vertical: true, size: 30, class: 'bg-red-200' }"
+  ></Buttons>
+</template>
+
+<script setup lang="tsx">
+import { Buttons, type BtnItem } from 'comp/Buttons'
+
+const config: BtnItem[] = [
+  {
+    label: '详情'
+  },
+  { label: '编辑' },
+  { label: '删除', type: 'error' }
+]
+</script>
+```
+
+::: info
+
+组件内部：
+
+```vue{2}
+<template>
+	<n-space v-bind="spaceProps">
+		<n-button v-for="item in btnList" ...> ... </n-button>
+	</n-space>
+</template>
+```
+
+:::
+
 ## 在`naive-ui-table`中使用
 
-```vue{6,11-19,30,35-44,46-68,77-88}
+```vue{6,11-18,33-41,43-64,73-84}
 <template>
   <n-card>
     <NaiveUiTable :columns="columns" :requestApi="getTableList">
@@ -518,7 +561,6 @@ const config: BtnItem[] = [
         <Buttons
           :config="operationBtn"
           btnType="tableBtn"
-          size="small"
           :param="row"
           @details="details"
           @edit="edit"
@@ -531,8 +573,7 @@ const config: BtnItem[] = [
 
 <script setup lang="tsx">
 import { CashOutline } from '@vicons/ionicons5'
-import type { DataTableColumns } from 'naive-ui'
-import { NaiveUiTable } from 'naive-ui-table'
+import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 import 'naive-ui-table/dist/style.css'
 import { Buttons, type BtnItem } from 'comp/Buttons'
 import { list } from 'api/user'
@@ -543,7 +584,6 @@ const headerBtn: BtnItem[] = [
   {
     label: '新增',
     type: 'primary',
-    btnType: 'tableBtn',
     icon: CashOutline,
     auth: ['BTN00458'],
     eventName: 'add'
@@ -554,7 +594,6 @@ const operationBtn: BtnItem[] = [
   {
     label: '详情',
     type: 'primary',
-    btnType: 'other',
     icon: CashOutline,
     vif: (row) => row.age > 20,
     auth: ['BTN00459'],
@@ -574,7 +613,7 @@ const operationBtn: BtnItem[] = [
   }
 ]
 
-const columns: DataTableColumns<Item> = [
+const columns: TableColumns = [
   { title: '姓名', key: 'name' },
   { title: '年龄', key: 'age' },
   { title: '地址', key: 'address' },
@@ -615,6 +654,9 @@ async function getTableList(params: object) {
 	</tr>
 	<tr>
 		<td>param</td><td class="td">any</td><td>否</td><td>vif函数和点击事件参数</td>
+	</tr>
+	<tr>
+		<td>spaceProps</td><td class="td">SpaceProps</td><td>否</td><td>n-space组件的属性</td>
 	</tr>
 	<tr>
 		<td>@xxx</td><td class="td">Function</td><td>否</td><td>按钮点击事件，需与 eventName 配合使用</td>
