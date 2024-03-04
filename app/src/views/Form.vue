@@ -8,7 +8,6 @@
 import { BasicForm, useForm } from 'naive-ui-form'
 
 const [register] = useForm({
-  disabled: true,
   grid: {
     cols: 1,
     xGap: 14

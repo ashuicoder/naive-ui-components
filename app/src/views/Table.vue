@@ -4,7 +4,6 @@
       :columns="columns"
       :requestApi="getTableList"
       :search-props="searchProps"
-      :pagination="false"
       @update:checked-row-keys="handleCheck"
     >
       <!-- 表格header按钮 -->
@@ -36,9 +35,9 @@
 
 <script setup lang="tsx">
 import { NaiveUiTable } from 'naive-ui-table'
+import type { TableColumns, FormProps } from 'naive-ui-table'
 import { NButton, NTag, NDrawer, NDrawerContent, NTooltip, useMessage } from 'naive-ui'
 import type { DataTableColumns } from 'naive-ui'
-import type { Props as FormProps } from 'naive-ui-form'
 
 const message = useMessage()
 
@@ -97,7 +96,7 @@ const searchProps: FormProps = {
 }
 
 // 表格配置项
-const columns: DataTableColumns = [
+const columns: TableColumns = [
   {
     type: 'selection',
     multiple: true
@@ -108,7 +107,8 @@ const columns: DataTableColumns = [
     align: 'center',
     render(row) {
       return <NTag type="warning">{row.name}</NTag>
-    }
+    },
+    vif: () => true
   },
   {
     title: '年龄',

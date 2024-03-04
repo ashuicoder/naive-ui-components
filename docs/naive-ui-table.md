@@ -6,7 +6,7 @@
 
 功能如下：
 
-- 表格列`columns`配置与`naive-ui`完全一致，且自定义列增加了插槽配置；
+- 表格列`columns`配置与`naive-ui`一致（增加了`vif`），且自定义列增加了插槽配置；
 - 自带分页：若接口可以分页查询，则分页配置与接口相结合；若接口不分页，则由表格自动分页。
 - 自带搜索：只需要传入`search-props`配置，即可实现搜索功能；
 - 自带列设置：可设置列显隐、列固定，可拖拽排序列顺序；
@@ -62,10 +62,9 @@ import 'naive-ui-table/dist/style.css'
 </template>
 
 <script setup lang="tsx">
-import { NaiveUiTable } from 'naive-ui-table'
-import type { DataTableColumns } from 'naive-ui'
+import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
-const columns: DataTableColumns = [
+const columns: TableColumns = [
   { title: '姓名', key: 'name' },
   { title: '年龄', key: 'age' }
 ]
@@ -78,8 +77,49 @@ async function getTableList(params: any) {
 ```
 
 ::: tip 注意
-该 columns 配置与`naive-ui`的`data-table`的`columns`完全一致。具体属性参考[naive-ui的columns](https://www.naiveui.com/zh-CN/light/components/data-table#DataTable-Props)
+该 columns 配置除`vif`外，与`naive-ui`的`data-table`的`columns`完全一致。具体属性参考[naive-ui的columns](https://www.naiveui.com/zh-CN/light/components/data-table#DataTable-Props)
 :::
+
+::: info 是否分页：
+
+- 默认接口是分页接口（`isPageApi: true`），即：
+  * 接口参数包含`current,size`
+  * 接口返回数据格式为`{ current: 1, size: 10, total: 100, records: [...] }`；
+- **若接口不分页，需将`isPageApi`设为`false`**
+
+:::
+
+## 表格列权限`vif`
+
+- `columns.vif`：（`boolean | ((column?: Columns) => boolean`）动态显示该列。
+- 类型为返回布尔值的表达式或函数。不传默认显示。
+
+```vue{12,17}
+<template>
+  <NaiveUiTable :columns="columns" :requestApi="getTableList"></NaiveUiTable>
+</template>
+
+<script setup lang="tsx">
+import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
+
+const columns: TableColumns = [
+  {
+    title: '姓名',
+    key: 'name',
+    vif: true
+  },
+  {
+    title: '年龄',
+    key: 'age',
+    vif: () => true
+  }
+]
+
+async function getTableList(params: any) {
+  return await api(params)
+}
+</script>
+```
 
 ## 表格左上角-自定义按钮
 
@@ -96,10 +136,9 @@ async function getTableList(params: any) {
 </template>
 
 <script setup lang="tsx">
-import { NaiveUiTable } from 'naive-ui-table'
-import type { DataTableColumns } from 'naive-ui'
+import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
-const columns: DataTableColumns = [
+const columns: TableColumns = [
   { title: '姓名', key: 'name' },
   { title: '年龄', key: 'age' }
 ]
@@ -176,16 +215,15 @@ toolButton?: ('refresh' | 'size' | 'setting')[] | boolean
 
 按原来的属性，在`columns`里用`render`函数自定义一列的内容。
 
-```vue{13}
+```vue{12}
 <template>
   <NaiveUiTable :columns="columns" :requestApi="getTableList"></NaiveUiTable>
 </template>
 
 <script setup lang="tsx">
-import { NaiveUiTable } from 'naive-ui-table'
-import type { DataTableColumns } from 'naive-ui'
+import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
-const columns: DataTableColumns = [
+const columns: TableColumns = [
   {
     title: '姓名',
     key: 'name',
@@ -215,10 +253,9 @@ async function getTableList(params: any) {
 </template>
 
 <script setup lang="tsx">
-import { NaiveUiTable } from 'naive-ui-table'
-import type { DataTableColumns } from 'naive-ui'
+import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
-const columns: DataTableColumns = [
+const columns: TableColumns = [
   { title: '姓名', key: 'name' },
   { title: '年龄', key: 'age' },
   { title: '地址', key: 'address' }
@@ -238,16 +275,15 @@ async function getTableList(params: any) {
 
 可在 columns 的`operation`列配置里，用`render`函数自定义列。
 
-```vue{18-26}
+```vue{17-25}
 <template>
   <NaiveUiTable :columns="columns" :requestApi="getTableList"></NaiveUiTable>
 </template>
 
 <script setup lang="tsx">
-import { NaiveUiTable } from 'naive-ui-table'
-import type { DataTableColumns } from 'naive-ui'
+import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
-const columns: DataTableColumns = [
+const columns: TableColumns = [
   { title: '姓名', key: 'name' },
   { title: '年龄', key: 'age' },
   { title: '地址', key: 'address' },
@@ -282,7 +318,7 @@ async function getTableList(params: any) {
 
 也可用插槽`operation`自定义列，接收`row`为每一行的数据，`index`为索引值。
 
-```vue{4-8,20}
+```vue{4-8,19}
 <template>
   <NaiveUiTable :columns="columns" :requestApi="getTableList">
     <!-- 表格操作列 -->
@@ -295,10 +331,9 @@ async function getTableList(params: any) {
 </template>
 
 <script setup lang="tsx">
-import { NaiveUiTable } from 'naive-ui-table'
-import type { DataTableColumns } from 'naive-ui'
+import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
-const columns: DataTableColumns = [
+const columns: TableColumns = [
   { title: '姓名', key: 'name'},
   { title: '年龄', key: 'age' },
   { title: '地址', key: 'address' },
@@ -332,10 +367,9 @@ async function getTableList(params: any) {
 
 <script setup lang="ts">
 import { NaiveUiTable } from 'naive-ui-table'
-import type { DataTableColumns } from 'naive-ui'
-import { type Props as FormProps } from 'naive-ui-form'
+import type { TableColumns, FormProps } from 'naive-ui-table'
 
-const columns: DataTableColumns = [
+const columns: TableColumns = [
   { title: '姓名', key: 'name' },
   { title: '年龄', key: 'age' },
   { title: '地址', key: 'address' }
@@ -375,7 +409,7 @@ async function getTableList(params: any) {
 
 :::
 
-```vue{5,15,21-24}
+```vue{5,14,20-23}
 <template>
   <NaiveUiTable
     :columns="columns"
@@ -386,10 +420,9 @@ async function getTableList(params: any) {
 </template>
 
 <script setup lang="tsx">
-import { NaiveUiTable } from 'naive-ui-table'
-import type { DataTableColumns } from 'naive-ui'
+import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
-const columns: DataTableColumns = [
+const columns: TableColumns = [
   { type: 'selection', multiple: true }, // 勾选列
   { title: '姓名', key: 'name' },
   { title: '年龄', key: 'age' },
@@ -450,7 +483,7 @@ resizeHeightOffset?: number
 
 - 要额外增加接口请求的参数，可传入`initParams`对象，该对象将会与接口请求的参数合并。
 
-```vue{5-8,24}
+```vue{5-8,23}
 <template>
   <NaiveUiTable
     :columns="columns"
@@ -464,10 +497,9 @@ resizeHeightOffset?: number
 </template>
 
 <script setup lang="tsx">
-import { NaiveUiTable } from 'naive-ui-table'
-import type { DataTableColumns } from 'naive-ui'
+import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
-const columns: DataTableColumns = [
+const columns: TableColumns = [
   { title: '姓名', key: 'name' },
   { title: '年龄', key: 'age' },
   { title: '地址', key: 'address' }
@@ -484,16 +516,15 @@ async function getTableList(params: any) {
 
 - 在`requestApi`接口请求之前，可在`params`对象上增加额外的参数。
 
-```vue{16-17}
+```vue{15-16}
 <template>
   <NaiveUiTable :columns="columns" :requestApi="getTableList"> </NaiveUiTable>
 </template>
 
 <script setup lang="tsx">
-import { NaiveUiTable } from 'naive-ui-table'
-import type { DataTableColumns } from 'naive-ui'
+import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
-const columns: DataTableColumns = [
+const columns: TableColumns = [
   { title: '姓名', key: 'name' },
   { title: '年龄', key: 'age' },
   { title: '地址', key: 'address' }
@@ -512,7 +543,7 @@ async function getTableList(params: any) {
 
 该函数**接收接口返回的原始数据，返回目标表格数据**。数据格式不符合要求时使用。因此可在该函数中处理数据，或增加其他的逻辑。
 
-```vue{5,20-27}
+```vue{5,19-26}
 <template>
   <NaiveUiTable
     :columns="columns"
@@ -523,10 +554,9 @@ async function getTableList(params: any) {
 </template>
 
 <script setup lang="tsx">
-import { NaiveUiTable } from 'naive-ui-table'
-import type { DataTableColumns } from 'naive-ui'
+import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
-const columns: DataTableColumns = [
+const columns: TableColumns = [
   { title: '姓名', key: 'name' },
   { title: '年龄', key: 'age' },
   { title: '地址', key: 'address' }
@@ -556,12 +586,12 @@ async function getTableList(params: any) {
 
 ## Props
 
-- 必传项只有`columns`，与naive-ui的`columns`完全一致，具体配置参考[naive-ui的table组件](https://www.naiveui.com/zh-CN/light/components/data-table)
+- 必传项只有`columns`，除`vif`外，与naive-ui的`columns`完全一致，具体配置参考[naive-ui的table组件](https://www.naiveui.com/zh-CN/light/components/data-table)
 - 自定义属性如下：
 
 | 属性               | 类型                                              | 描述                                                                               | 必传 | 默认值 |
 | ------------------ | ------------------------------------------------- | ---------------------------------------------------------------------------------- | ---- | ------ |
-| columns            | `DataTableColumns`                                | 表格列配置，与naive-ui的完全一致                                                   | 是   | -      |
+| columns            | `DataTableColumns`                                | 表格列配置，除`vif`外，与naive-ui的完全一致                                                   | 是   | -      |
 | requestApi         | `(params: any) => Promise<any>`                   | 请求接口，返回Promise                                                              | 否   | -      |
 | search-props       | `FormProps`                                       | 顶部查询表单配置                                                                   | 否   | -      |
 | requestAuto        | `boolean`                                         | 是否初始化自动请求接口                                                             | 否   | true   |

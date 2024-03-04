@@ -19,12 +19,12 @@ Buttons有`config`、`btnType`、`param`三个自定义属性，同时可传入`
 - **config**：按钮配置，必传（`BtnItem[]`），`BtnItem`里有以下六个自定义属性，同时可配置`naive-ui`的button的所有属性：
   - label：按钮文字（`string`）
   - icon：图标（`Component`）
-  - ifShow：是否显示（`boolean | ((param?: any) => boolean）`）
+  - vif：是否显示（`boolean | ((param?: any) => boolean）`）
   - auth：权限（`string[]`）
   - eventName：点击事件名称（`string`）
   - btnType：按钮类型（`'tableBtn' | 'other'`）
 - **btnType**：按钮类型（`'tableBtn' | 'other'`）
-- **param**：ifShow函数和点击事件的参数
+- **param**：vif函数和点击事件的参数
 
 ## 基础使用
 
@@ -197,12 +197,12 @@ function handleDelete() {
 如果给Buttons组件传递了`param`属性：
 
 - 该`param`就为点击事件的第一参数，`$event`为第二参数；**（注意：两种点击事件都有效）**
-- `ifShow`为`Function`时，该`param`为参数。
+- `vif`为`Function`时，该`param`为参数。
 
 |         | 不传`param`                 | 传递`param`                             |
 | ------- | --------------------------- | --------------------------------------- |
 | 点击事件 | `onClick: (e: Event) => {}` | `onClick: (param: any, e: Event) => {}` |
-| ifShow  | `ifShow: () => {}`          | `ifShow: (param: any) => {}`            |
+| vif  | `vif: () => {}`          | `vif: (param: any) => {}`            |
 
 完整例子：
 
@@ -222,7 +222,7 @@ const config: BtnItem[] = [
 	{
 		label: '详情',
 		type: 'primary',
-		ifShow: (param: any) => param.name === '企安',
+		vif: (param: any) => param.name === '企安',
 		onClick: (param: any) => {
 			console.log(param) // {name: '企安'}
 		}
@@ -240,13 +240,13 @@ function edit(param: any) {
 </script>
 ```
 
-> 该`param`在表格操作列里使用，效果尤为显著。让按钮配置可以不用写在render函数里，ifShow 和点击事件里也仍然能获取到需要的参数。
+> 该`param`在表格操作列里使用，效果尤为显著。让按钮配置可以不用写在render函数里，vif 和点击事件里也仍然能获取到需要的参数。
 
-## 按钮显隐`ifShow`
+## 按钮显隐`vif`
 
-config里的属性`ifShow`（`boolean | (param?:object)=>boolean`），用于设置按钮是否显示，不传表示显示。
+config里的属性`vif`（`boolean | (param?:object)=>boolean`），用于设置按钮是否显示，不传表示显示。
 
-若传递了`param`，`ifShow`为`function`时，`param`可作为`function`的参数。
+若传递了`param`，`vif`为`function`时，`param`可作为`function`的参数。
 
 ```vue{12,18}
 <template>
@@ -260,13 +260,13 @@ const config: BtnItem[] = [
 	{
 		label: '详情',
 		type: 'primary',
-		ifShow: false,
+		vif: false,
 		onClick: () => console.log('详情')
 	},
 	{
 		label: '编辑',
 		type: 'primary',
-		ifShow: (param: any) => param.name === '企安',
+		vif: (param: any) => param.name === '企安',
 		onClick: () => console.log('编辑')
 	},
 	{
@@ -556,7 +556,7 @@ const operationBtn: BtnItem[] = [
     type: 'primary',
     btnType: 'other',
     icon: CashOutline,
-    ifShow: (row) => row.age > 20,
+    vif: (row) => row.age > 20,
     auth: ['BTN00459'],
     eventName: 'details'
   },
@@ -614,7 +614,7 @@ async function getTableList(params: object) {
 		<td>btnType</td><td class="td">'tableBtn' | 'other'</td><td>否</td><td>按钮类型 （不传默认other，表示为空）</td>
 	</tr>
 	<tr>
-		<td>param</td><td class="td">any</td><td>否</td><td>ifShow函数和点击事件参数</td>
+		<td>param</td><td class="td">any</td><td>否</td><td>vif函数和点击事件参数</td>
 	</tr>
 	<tr>
 		<td>@xxx</td><td class="td">Function</td><td>否</td><td>按钮点击事件，需与 eventName 配合使用</td>
@@ -635,7 +635,7 @@ async function getTableList(params: object) {
 		<td>icon</td><td class="td">Component</td><td>否</td><td>图标组件</td>
 	</tr>
 	<tr>
-		<td>ifShow</td><td class="td">boolean | (param?:any)=>boolean</td><td>否</td><td>按钮是否回显（不传表示回显）</td>
+		<td>vif</td><td class="td">boolean | (param?:any)=>boolean</td><td>否</td><td>按钮是否回显（不传表示回显）</td>
 	</tr>
 	<tr>
 		<td>auth</td><td class="td">string[]</td><td>否</td><td>按钮权限（不传表示回显）</td>
