@@ -73,7 +73,7 @@ app.use(NaiveUiEditor, {
 | ------------- | -------------------- | ------------------------ | ---- | ------- |
 | mode          | string               | 富文本模式               | 否   | default |
 | height        | number               | 富文本高度               | 否   | 500     |
-| disabled      | boolean              | 是否禁用(首先判断该字段，再判断injectForm?.props?.disabled) | 否   | -       |
+| disabled      | boolean              | 富文本是否禁用逻辑：先判断该字段，再判断injectForm?.props?.disabled | 否   | -       |
 | requestFunc   | Function，见下方说明 | 上传文件的函数           | 否   | -       |
 | v-model:value | string               | 富文本内容，需要双向绑定 | 是   |         |
 | toolbarConfig | Object，见下方说明   | 菜单栏配置               | 否   |         |
@@ -86,7 +86,7 @@ type RequestFun = (file: File) => Promise<string>
 ```
 
 `toolbarConfig`和`editorConfig`字段定义类型如下：<br/>
-具体见[wangEditor](https://github.com/wangeditor-team/wangEditor/blob/master/packages/core/src/config/interface.ts
+具体见[wangEditor](https://www.wangeditor.com/v5/editor-config.html#placeholder)
 
 `editorConfig`字段默认值如下：
 
