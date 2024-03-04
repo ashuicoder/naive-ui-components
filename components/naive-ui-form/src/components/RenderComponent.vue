@@ -88,7 +88,6 @@
   <component
     v-else-if="schema.type === 'editor'"
     is="naive-ui-editor"
-    disabled
     style="height: 600px; width: 100%"
     :style="schema?.style"
     v-bind="schema.componentProps"
