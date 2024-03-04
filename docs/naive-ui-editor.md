@@ -73,6 +73,7 @@ app.use(NaiveUiEditor, {
 | ------------- | -------------------- | ------------------------ | ---- | ------- |
 | mode          | string               | 富文本模式               | 否   | default |
 | height        | number               | 富文本高度               | 否   | 500     |
+| disabled      | boolean              | 是否禁用(首先判断props.disabled，再判断injectForm?.props?.disabled) | 否   | -       |
 | requestFunc   | Function，见下方说明 | 上传文件的函数           | 否   | -       |
 | v-model:value | string               | 富文本内容，需要双向绑定 | 是   |         |
 | toolbarConfig | Object，见下方说明   | 菜单栏配置               | 否   |         |
