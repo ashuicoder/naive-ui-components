@@ -1,10 +1,12 @@
 import type { Ref } from 'vue'
 import type { IEditorConfig, IToolbarConfig, IDomEditor } from '@wangeditor/editor'
+import type { FormProps } from 'naive-ui'
 
 export interface Props {
   value?: string | null
   mode?: 'default' | 'simple'
   height?: number
+  disabled?: boolean
   editorConfig?: Partial<IEditorConfig>
   toolbarConfig?: Partial<IToolbarConfig>
   requestFunc?: RequestFun
@@ -13,6 +15,10 @@ export interface Props {
 export type Emits = {
   (e: 'update:value', value: string): void
 }
+
+export interface InjectForm {
+  props: FormProps
+} 
 
 export type RequestFun = (
   file: File,

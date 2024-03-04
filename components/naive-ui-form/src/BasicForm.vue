@@ -1,5 +1,11 @@
 <template>
-  <NForm label-width="auto" v-bind="commonProps" ref="formRef" :model="formValue">
+  <NForm
+    label-width="auto"
+    label-placement="left"
+    v-bind="commonProps"
+    ref="formRef"
+    :model="formValue"
+  >
     <NGrid
       v-bind="commonProps.grid"
       :collapsed="isExpand"
@@ -7,6 +13,11 @@
     >
       <template v-for="schema in commonProps.schemas">
         <template v-if="schema.type !== 'dynamic'">
+          <NGridItem v-if="schema.groupName" :span="commonProps?.grid?.cols">
+            <NDivider title-placement="left">
+              <div style="font-size: 16px">{{ schema.groupName }}</div>
+            </NDivider>
+          </NGridItem>
           <NFormItemGi
             v-show="typeof schema.vif === 'function' ? schema.vif(formValue) : true"
             v-bind="schema"
@@ -99,8 +110,8 @@
         </template>
       </template>
 
-      <NFormItemGi v-if="commonProps.showActionBtns" suffix>
-        <NSpace>
+      <NFormItemGi v-if="commonProps.showActionBtns" label=" " suffix>
+        <NSpace style="width: 100%" :justify="commonProps.grid.cols === 1 ? 'start' : 'end'">
           <NButton
             v-if="commonProps.showSubmitBtn"
             type="primary"
@@ -134,7 +145,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, toRaw, watchEffect, watch, nextTick } from 'vue'
+import { ref, computed, reactive, toRaw, watchEffect } from 'vue'
 import {
   NForm,
   NGrid,
@@ -144,7 +155,9 @@ import {
   NButton,
   NIcon,
   NPopover,
-  NText
+  NText,
+  NDivider,
+  NH6
 } from 'naive-ui'
 
 import to from 'await-to-js'
