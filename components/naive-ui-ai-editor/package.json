@@ -2,7 +2,8 @@
   "name": "naive-ui-ai-editor",
   "version": "0.0.10",
   "private": false,
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "description": "一个基于aieditor和naive-ui封装的富文本编辑器",
   "keywords": [
