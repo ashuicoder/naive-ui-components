@@ -16,6 +16,9 @@ hero:
       text: naive-ui-editor
       link: /naive-ui-editor
     - theme: brand
+      text: naive-ui-ai-editor
+      link: /naive-ui-ai-editor
+    - theme: brand
       text: naive-ui-table
       link: /naive-ui-table
     - theme: brand
