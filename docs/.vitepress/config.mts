@@ -25,6 +25,7 @@ export default defineConfig({
       { text: 'naive-ui-form', link: '/naive-ui-form' },
       { text: 'naive-ui-upload', link: '/naive-ui-upload' },
       { text: 'naive-ui-editor', link: '/naive-ui-editor' },
+      { text: 'naive-ui-ai-editor', link: '/naive-ui-ai-editor' },
       { text: 'naive-ui-table', link: '/naive-ui-table' },
       { text: 'naive-ui-editor-view', link: '/naive-ui-editor-view' },
       { text: '模板公共组件', items: [{ text: 'Buttons', link: '/Buttons' }] }

@@ -181,7 +181,7 @@ import { NConfigProvider, zhCN, dateZhCN, NMessageProvider } from 'naive-ui'
 ::: tip 提示
 
 - 如果表单中使用了`type: 'upload'`，则需要安装[naive-ui-upload](/naive-ui-upload)，并注册该组件。
-- 如果表单中使用了`type: 'editor'`，则需要安装[naive-ui-editor](/naive-ui-editor)，并注册该组件。
+- 如果表单中使用了`type: 'editor'`，则需要安装[naive-ui-ai-editor](/naive-ui-ai-editor)，并注册该组件。
 
 :::
 

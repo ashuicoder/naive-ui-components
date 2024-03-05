@@ -14,7 +14,7 @@ export const useEditor = ({ props, emits }: { props: Props; emits: Emits }) => {
   const isDisabled = props.disabled || injectForm?.props?.disabled
 
   if (!requestFunc) {
-    throw new Error('requestFunc is required')
+    throw new Error('requestFunc is not required')
   }
 
   const { getElementLen, formatConfig, customPaste } = useFile({ loading, requestFunc })

@@ -37,7 +37,6 @@
 import { NaiveUiTable } from 'naive-ui-table'
 import type { TableColumns, FormProps } from 'naive-ui-table'
 import { NButton, NTag, NDrawer, NDrawerContent, NTooltip, useMessage } from 'naive-ui'
-import type { DataTableColumns } from 'naive-ui'
 
 const message = useMessage()
 

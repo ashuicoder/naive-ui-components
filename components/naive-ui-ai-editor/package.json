@@ -1,17 +1,15 @@
 {
-  "name": "naive-ui-form",
-  "version": "3.0.3",
+  "name": "naive-ui-ai-editor",
+  "version": "0.0.8",
   "private": false,
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.ts",
   "type": "module",
-  "description": "一个基于naive-ui封装的表单组件，一个配置，生成一个表单",
+  "description": "一个基于aieditor和naive-ui封装的富文本编辑器",
   "keywords": [
     "naive-ui",
     "vue3",
-    "form",
-    "表单",
-    "动态表单"
+    "editor",
+    "aieditor"
   ],
   "author": "ashuicoder",
   "license": "MIT",
@@ -21,9 +19,10 @@
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p  ../../tsconfig.vitest.json --composite false"
+    "type-check": "vue-tsc --noEmit -p ../../tsconfig.vitest.json --composite false"
   },
   "dependencies": {
+    "aieditor": "1.0.0-rc.6",
     "vue": "^3.3.4"
   },
   "devDependencies": {
@@ -44,7 +43,8 @@
   "peerDependencies": {
     "@vicons/ionicons5": ">=0.12.0",
     "naive-ui": ">=2.34.0",
-    "vue": ">=3.2.0"
+    "vue": ">=3.2.0",
+    "aieditor": ">=1.0.0"
   },
   "files": [
     "dist"
