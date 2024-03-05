@@ -1,6 +1,6 @@
 {
   "name": "naive-ui-ai-editor",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": false,
   "main": "index.ts",
   "type": "module",
