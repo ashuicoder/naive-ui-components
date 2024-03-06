@@ -32,6 +32,24 @@ const [register] = useForm({
       defaultValue: '信息展示'
     },
     {
+      type: 'radio',
+      field: 'sex',
+      label: '姓别',
+      componentProps: {
+        options: [
+          {
+            label: '男',
+            value: 0
+          },
+          {
+            label: '女',
+            value: 1
+          }
+        ]
+      },
+      defaultValue: 0
+    },
+    {
       label: '上传',
       field: 'avatar',
       type: 'upload'
