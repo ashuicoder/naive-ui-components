@@ -19,7 +19,7 @@
             </NDivider>
           </NGridItem>
           <NFormItemGi
-            v-show="typeof schema.vif === 'function' ? schema.vif(formValue) : true"
+            v-if="typeof schema.vif === 'function' ? schema.vif(formValue) : true"
             v-bind="schema"
             :path="schema.field"
             :rule="getFormRule(schema)"
