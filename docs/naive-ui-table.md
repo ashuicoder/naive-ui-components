@@ -399,6 +399,24 @@ async function getTableList(params: any) {
 </script>
 ```
 
+::: info 组件内部
+
+```vue
+<BasicForm
+  v-if="searchProps"
+  ref="basicForm"
+  :grid="{ cols: 4, xGap: 14 }"
+  submitBtnText="查询"
+  :defaultShowExpandRows="1"
+  labelPlacement="left"
+  @submit="handleSearch"
+  @reset="handleReset"
+  v-bind="searchProps"
+></BasicForm>
+```
+
+:::
+
 ## 可勾选
 
 只需传入`@update:checked-row-keys`回调函数，就可获取到已勾选的`keys`

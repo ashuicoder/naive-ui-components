@@ -4,6 +4,7 @@ import type { TableProps, FormInstance } from '../types'
 
 export function useTable(
   api: TableProps['requestApi'],
+  requestAuto: TableProps['requestAuto'],
   initParams: TableProps['initParams'],
   isPageApi: TableProps['isPageApi'],
   dataCallback: TableProps['dataCallback'],
@@ -12,7 +13,7 @@ export function useTable(
 ) {
   const state = reactive({
     tableData: [], // 表格数据
-    loading: api ? true : false,
+    loading: api && requestAuto ? true : false,
     // 分页数据
     pageAble: {
       current: 1,

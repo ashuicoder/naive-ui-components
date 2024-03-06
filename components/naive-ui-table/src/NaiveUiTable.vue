@@ -183,6 +183,7 @@ const tableColumns = computed(() => {
 
 const { state, getTableList, handleSearch, handleReset, onUpdatePage, onUpdatePageSize } = useTable(
   props.requestApi,
+  props.requestAuto,
   props.initParams,
   props.isPageApi,
   props.dataCallback,
