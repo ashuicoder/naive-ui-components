@@ -56,4 +56,6 @@ export interface FormInstance {
 
 export interface ModalFormInstance {
   getValue(): Recordable
+  getFieldValue(field: string): any
+  setValue(value: Recordable): void
 }
