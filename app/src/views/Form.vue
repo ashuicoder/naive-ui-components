@@ -52,7 +52,10 @@ const [register] = useForm({
     {
       label: '上传',
       field: 'avatar',
-      type: 'upload'
+      type: 'upload',
+      componentProps: {
+        'list-type': 'text'
+      }
     },
     {
       label: '内容',

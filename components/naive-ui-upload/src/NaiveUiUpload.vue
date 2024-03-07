@@ -7,7 +7,11 @@
     :on-remove="handleRemove"
     :custom-request="handleCustomRequest"
   >
-    <slot></slot>
+    <slot>
+      <NButton v-if="getProps()['list-type'] === 'text' || getProps()['listType'] === 'text'"
+        >上传文件</NButton
+      >
+    </slot>
   </NUpload>
 
   <NModal
@@ -40,8 +44,8 @@
 </template>
 
 <script setup lang="ts">
-import { useAttrs, nextTick, inject, ref, defineAsyncComponent, watch } from 'vue'
-import { NUpload, useMessage, NModal } from 'naive-ui'
+import { useAttrs, nextTick, inject, ref, watch } from 'vue'
+import { NUpload, useMessage, NModal, NButton } from 'naive-ui'
 import to from 'await-to-js'
 import 'vue-cropper/dist/index.css'
 import { VueCropper } from 'Vue-Cropper'
