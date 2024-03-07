@@ -714,7 +714,7 @@ const [register] = useForm({
 
 ## ModalForm
 
-`ModalForm`是`BasicForm`的封装，主要是为了方便在弹窗中使用。您可以直接传入`BasicForm`、[n-modal](https://ui.naiveadmin.com/zh-CN/os-theme/components/modal)、[dialog](https://ui.naiveadmin.com/zh-CN/os-theme/components/dialog)支持的`props`。`ModalForm`会在校验通过后出发`submit`事件，参数就是表单的值。点击`取消按钮`时还会触发`cancel`事件。
+`ModalForm`是`BasicForm`的封装，主要是为了方便在弹窗中使用。可以直接传入`BasicForm`、[n-modal](https://ui.naiveadmin.com/zh-CN/os-theme/components/modal)、[dialog](https://ui.naiveadmin.com/zh-CN/os-theme/components/dialog)支持的`props`。`ModalForm`会在校验通过后出发`submit`事件，参数就是表单的值。点击`取消按钮`时还会触发`cancel`事件。
 
 ```vue
 <template>
@@ -766,7 +766,7 @@ function handleSubmit(values: Recordable) {
 <style scoped></style>
 ```
 
-有时候需要获取整个表单值去做一些额外的事情，如表单校验。`ModalForm`组件暴露了`getValue`方法：
+有时候需要获取整个表单值去做一些额外的事情，如表单校验。`ModalForm`组件暴露了`getValue`、`setValue`、`getFieldValue`方法：
 
 ```vue
 <template>
