@@ -1,7 +1,7 @@
 <template>
   <div>
     <BasicForm @register="register"></BasicForm>
-    <ModalForm v-model:show="showModal" :schemas="schemas" disabled title="2333"></ModalForm>
+    <ModalForm v-model:show="showModal" :schemas="schemas" title="2333"></ModalForm>
   </div>
 </template>
 
@@ -66,7 +66,8 @@ const schemas: FormSchema[] = [
     label: '内容',
     field: 'content',
     type: 'editor',
-    defaultValue: '信息展示'
+    defaultValue: '信息展示',
+    componentProps: {}
   }
 ]
 
