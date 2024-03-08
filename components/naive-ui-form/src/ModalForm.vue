@@ -9,7 +9,6 @@
     @update:show="handleClose"
   >
     <BasicForm
-      v-bind="getProps()"
       :show-action-btns="false"
       style="width: 100%; margin: 40px 0"
       @register="register"
@@ -41,13 +40,6 @@ const attrs = useAttrs()
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-function getProps() {
-  return {
-    ...attrs,
-    ...props
-  }
-}
-
 const showModal = computed({
   get() {
     return props.show
@@ -57,7 +49,7 @@ const showModal = computed({
   }
 })
 
-const [register, { submit, reset, getValue, setValue, getFieldValue }] = useForm()
+const [register, { submit, reset, getValue, setValue, getFieldValue }] = useForm(attrs)
 async function handleConfirm() {
   const [err, res] = await to<Recordable>(submit())
   if (err) return false
@@ -66,7 +58,6 @@ async function handleConfirm() {
 }
 
 function handleClose(value) {
-  console.log(value)
   !value && reset()
 }
 
