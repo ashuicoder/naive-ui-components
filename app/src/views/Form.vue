@@ -63,6 +63,39 @@ const schemas: FormSchema[] = [
     }
   },
   {
+    label: '参考教程',
+    type: 'dynamic',
+    field: 'teachingMaterials',
+    // labelPlacement: 'top',
+    dynamicOptions: [
+      {
+        label: '教程封面',
+        field: 'cover',
+        type: 'upload',
+        required: true,
+        requiredType: 'array',
+        // labelPlacement: 'top',
+        componentProps: {
+          max: 1
+        }
+      },
+      {
+        label: '教程名称',
+        type: 'input',
+        field: 'name',
+        required: true
+        // labelPlacement: 'top'
+      },
+      {
+        label: '出版社',
+        type: 'input',
+        field: 'publisher',
+        required: true
+        // labelPlacement: 'top'
+      }
+    ]
+  },
+  {
     label: '内容',
     field: 'content',
     type: 'editor',
@@ -71,7 +104,7 @@ const schemas: FormSchema[] = [
   }
 ]
 
-const showModal = ref(true)
+const showModal = ref(false)
 const [register] = useForm({
   grid: {
     cols: 1,

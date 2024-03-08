@@ -45,7 +45,10 @@
         </template>
 
         <template v-else>
-          <NGridItem v-show="typeof schema.vif === 'function' ? schema.vif(formValue) : true">
+          <NFormItemGi
+            v-if="typeof schema.vif === 'function' ? schema.vif(formValue) : true"
+            v-bind="schema"
+          >
             <NGrid
               v-for="(item, index) in formValue[schema.field]"
               :cols="schema.dynamicOptions!.length + 1"
@@ -86,27 +89,29 @@
                   ></slot>
                 </NFormItemGi>
               </template>
-              <NFormItemGi>
-                <NSpace>
-                  <NButton
-                    :disabled="formValue[schema.field].length === 1"
-                    text
-                    @click="handleRemoveDynamicItem(schema, index)"
-                  >
-                    <NIcon :size="24">
-                      <RemoveCircleOutline />
-                    </NIcon>
-                  </NButton>
+              <NGridItem>
+                <div style="height: 100%; display: flex; align-items: center">
+                  <NSpace>
+                    <NButton
+                      :disabled="formValue[schema.field].length === 1"
+                      text
+                      @click="handleRemoveDynamicItem(schema, index)"
+                    >
+                      <NIcon :size="24">
+                        <RemoveCircleOutline />
+                      </NIcon>
+                    </NButton>
 
-                  <NButton text @click="handleAddDynamicItem(schema)">
-                    <NIcon :size="24">
-                      <AddCircleOutline />
-                    </NIcon>
-                  </NButton>
-                </NSpace>
-              </NFormItemGi>
+                    <NButton text @click="handleAddDynamicItem(schema)">
+                      <NIcon :size="24">
+                        <AddCircleOutline />
+                      </NIcon>
+                    </NButton>
+                  </NSpace>
+                </div>
+              </NGridItem>
             </NGrid>
-          </NGridItem>
+          </NFormItemGi>
         </template>
       </template>
 
@@ -156,8 +161,7 @@ import {
   NIcon,
   NPopover,
   NText,
-  NDivider,
-  NH6
+  NDivider
 } from 'naive-ui'
 
 import to from 'await-to-js'
@@ -265,22 +269,25 @@ const commonProps = computed(() => {
 
 const isExpand = ref(commonProps.value.defaultExpand)
 
-function setDefaultValue(schema: FormSchema) {
+function setDefaultValue(schema: FormSchema, record = formValue) {
   if (Reflect.has(schema, 'defaultValue')) {
-    formValue[schema.field] = schema.defaultValue
+    record[schema.field] = schema.defaultValue
     return
   }
 
   if (schema.type === 'dynamic') {
-    formValue[schema.field] = [getDynamicValue(schema)]
+    record[schema.field] = [getDynamicValue(schema)]
+    schema.dynamicOptions?.forEach((item) => {
+      setDefaultValue(item, formValue[schema.field][0])
+    })
   }
 
   if (schema.type === 'upload') {
-    formValue[schema.field] = []
+    record[schema.field] = []
   }
 
   if (schema.type === 'editor') {
-    formValue[schema.field] = ''
+    record[schema.field] = ''
   }
 }
 
@@ -309,7 +316,7 @@ function getFormRule(schema: FormSchema) {
 function getDynamicValue(schema: FormSchema) {
   const value: Recordable = {}
   schema.dynamicOptions?.forEach((item) => {
-    value[item.field] = null
+    value[item.field] = item.type !== 'upload' ? null : []
   })
   return value
 }
