@@ -3,9 +3,9 @@
     <div
       class="aie-container"
       style="height: 100%; width: 100%; display: flex; flex-direction: column"
-      :style="readonly ? 'border: none' : ''"
+      :style="disabled ? 'border: none' : 'border-color: rgb(239,239,245)'"
     >
-      <div v-show="!readonly" class="aie-container-header"></div>
+      <div v-if="!disabled" class="aie-container-header"></div>
       <div
         class="aie-container-main"
         style="flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column"
@@ -37,7 +37,7 @@ import type { RequestFun } from './types'
 // }
 
 const injectRequestFunc = inject<RequestFun | undefined>(provideKey, undefined)
-
+const injectNForm = inject<Record<string, any>>('n-form', {})
 const tookbarKeys = [
   'undo',
   'redo',
@@ -106,6 +106,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emits = defineEmits<Emits>()
 
 const uploadApi = props.requestFunc ?? injectRequestFunc
+const disabled = props.readonly || injectNForm?.props.disabled
 
 if (!uploadApi && !props.readonly) {
   throw new Error('requestFunc is required')
@@ -137,7 +138,7 @@ function initAiEdior() {
   const aieditorConfig: AiEditorOptions = {
     theme: theme.value === 'dark' ? 'dark' : 'light',
     element: editorRef.value as Element,
-    editable: !props.readonly,
+    editable: !disabled,
     placeholder: props.placeholder,
     content: value.value,
     toolbarKeys: getToolbarKeys(),
