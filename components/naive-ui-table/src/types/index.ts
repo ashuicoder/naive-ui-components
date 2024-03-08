@@ -5,7 +5,9 @@ export type { FormProps, FormInstance }
 
 export type Recordable<T = any> = Record<string, T>
 
-export type Columns = { vif?: boolean | ((column?: Columns) => boolean) } & DataTableColumn
+type InternalRowData = Record<string, unknown>
+
+export type Columns<T = InternalRowData> = { vif?: boolean | ((column?: Columns) => boolean) } & DataTableColumn<T>
 
 export type TableColumns = Columns[]
 
