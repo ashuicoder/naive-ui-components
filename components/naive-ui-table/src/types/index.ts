@@ -9,7 +9,7 @@ type InternalRowData = Record<string, unknown>
 
 export type Columns<T = InternalRowData> = { vif?: boolean | ((column?: Columns) => boolean) } & DataTableColumn<T>
 
-export type TableColumns = Columns[]
+export type TableColumns<T = InternalRowData> = Columns<T>[]
 
 export interface TableProps {
   columns: TableColumns // 列配置项
