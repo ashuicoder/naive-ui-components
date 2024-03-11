@@ -112,6 +112,7 @@ import type { DataTableRowKey } from 'naive-ui'
 import { ref, computed, onMounted, useSlots } from 'vue'
 import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
 import { BasicForm, type FormInstance } from 'naive-ui-form'
+import _ from 'lodash-es'
 import { useTable } from './hooks/useTable'
 import ColumnSetting from './ColumnSetting.vue'
 import { isFunction } from './utils'
@@ -160,7 +161,7 @@ function checkIfShow(action: Columns): boolean {
 /* 初始化列 */
 const slot = useSlots()
 const initColumns = ref(
-  props.columns?.filter(checkIfShow).map((item: any) => {
+  _.cloneDeep(props.columns)?.filter(checkIfShow).map((item: any) => {
     item._show = true
     if (item.render) return item
     if (slot[item.key] && isFunction(slot[item.key])) {
