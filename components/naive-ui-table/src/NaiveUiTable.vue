@@ -111,7 +111,6 @@ import {
 import type { DataTableRowKey } from 'naive-ui'
 import { ref, computed, onMounted, useSlots } from 'vue'
 import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
-import _ from 'lodash-es'
 import { BasicForm, type FormInstance } from 'naive-ui-form'
 import { useTable } from './hooks/useTable'
 import ColumnSetting from './ColumnSetting.vue'
@@ -173,12 +172,8 @@ const initColumns = ref(
 
 /* 表格列 */
 const tableColumns = computed(() => {
-  return _.cloneDeep(initColumns.value)
-    .filter((item: any) => item._show)
-    .map((item: any) => {
-      delete item._show
-      return item
-    })
+  return initColumns.value.filter((item: any) => item._show)
+
 })
 
 const { state, getTableList, handleSearch, handleReset, onUpdatePage, onUpdatePageSize } = useTable(
