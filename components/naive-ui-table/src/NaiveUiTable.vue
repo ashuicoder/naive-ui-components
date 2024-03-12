@@ -1,5 +1,5 @@
 <template>
-  <div class="table">
+  <div class="naive-ui-table">
     <BasicForm
       v-if="searchProps"
       ref="basicForm"
@@ -289,10 +289,10 @@ defineExpose({
     margin-bottom: 16px;
   }
 }
-.table :deep(.n-data-table-thead .n-data-table-th) {
+.naive-ui-table :deep(.n-data-table-thead .n-data-table-th) {
   font-weight: 700;
 }
-.table :deep(.n-button + .n-button) {
+.naive-ui-table :deep(.n-button + .n-button) {
   margin-left: 12px;
 }
 </style>
