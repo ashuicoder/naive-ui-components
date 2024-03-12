@@ -112,7 +112,7 @@ import type { DataTableRowKey } from 'naive-ui'
 import { ref, computed, onMounted, useSlots } from 'vue'
 import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
 import { BasicForm, type FormInstance } from 'naive-ui-form'
-import _ from 'lodash-es'
+import { cloneDeep } from 'lodash-es'
 import { useTable } from './hooks/useTable'
 import ColumnSetting from './ColumnSetting.vue'
 import { isFunction } from './utils'
@@ -161,20 +161,21 @@ function checkIfShow(action: Columns): boolean {
 /* 初始化列 */
 const slot = useSlots()
 const initColumns = ref(
-  _.cloneDeep(props.columns)?.filter(checkIfShow).map((item: any) => {
-    item._show = true
-    if (item.render) return item
-    if (slot[item.key] && isFunction(slot[item.key])) {
-      item.render = slot[item.key]
-    }
-    return item
-  })
+  cloneDeep(props.columns)
+    ?.filter(checkIfShow)
+    .map((item: any) => {
+      item._show = true
+      if (item.render) return item
+      if (slot[item.key] && isFunction(slot[item.key])) {
+        item.render = slot[item.key]
+      }
+      return item
+    })
 )
 
 /* 表格列 */
 const tableColumns = computed(() => {
   return initColumns.value.filter((item: any) => item._show)
-
 })
 
 const { state, getTableList, handleSearch, handleReset, onUpdatePage, onUpdatePageSize } = useTable(
