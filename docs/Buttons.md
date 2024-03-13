@@ -28,34 +28,44 @@ Buttons有`config`、`btnType`、`param`、`spaceProps`四个自定义属性，�
 - **spaceProps**：`n-space`组件的属性
 
 ## 基础使用
-
+项目里该组件已全局注册，可直接使用。
 ```vue
 <template>
-  <Buttons :config="config" @add="add"></Buttons>
+	<Buttons
+		:config="config"
+		:param="row"
+		btnType="tableBtn"
+		@edit="edit"
+		@delete="del"
+	></Buttons>
 </template>
 
 <script setup lang="tsx">
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 
 const config: BtnItem[] = [
-  { label: '新增', eventName: 'add' },
-  {
-    label: '导入',
-    type: 'primary',
-    auth: ['BTN00459'],
-    onClick: () => console.log('导入')
-  },
-  {
-    label: '删除',
-    type: 'error',
-    onClick: () => console.log('删除')
-  }
+	{
+		label: '编辑',
+		type: 'primary',
+		auth: ['BTN00460'],
+		eventName: 'edit'
+	},
+	{
+		label: '删除',
+		type: 'error',
+		auth: ['BTN00459'],
+		eventName: 'delete'
+	}
 ]
 
-function add() {
-  console.log('新增')
+function edit(row: any) {
+	console.log('编辑')
+}
+function del(row: any) {
+	console.log('删除')
 }
 </script>
+
 ```
 
 ## 图标`icon`
@@ -68,7 +78,7 @@ function add() {
 </template>
 
 <script setup lang="tsx">
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 import { CashOutline, AddCircle, CloseCircle } from '@vicons/ionicons5'
 
 const config: BtnItem[] = [
@@ -106,7 +116,7 @@ const config: BtnItem[] = [
 </template>
 
 <script setup lang="tsx">
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 
 const config: BtnItem[] = [
 	{
@@ -148,7 +158,7 @@ const config: BtnItem[] = [
 </template>
 
 <script setup lang="tsx">
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 
 const config: BtnItem[] = [
 	{
@@ -217,7 +227,7 @@ function handleDelete() {
 </template>
 
 <script setup lang="tsx">
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 
 const config: BtnItem[] = [
 	{
@@ -255,7 +265,7 @@ function edit(param: any) {
 </template>
 
 <script setup lang="tsx">
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 
 const config: BtnItem[] = [
 	{
@@ -294,7 +304,7 @@ const config: BtnItem[] = [
 </template>
 
 <script setup lang="tsx">
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 
 const config: BtnItem[] = [
 	{
@@ -340,7 +350,7 @@ function handleDelete() {
 </template>
 
 <script setup lang="tsx">
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 
 const config: BtnItem[] = [
 	{
@@ -380,7 +390,7 @@ const config: BtnItem[] = [
 </template>
 
 <script setup lang="tsx">
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 
 const config: BtnItem[] = [
 	{
@@ -410,7 +420,7 @@ const config: BtnItem[] = [
 </template>
 
 <script setup lang="tsx">
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 
 const config: BtnItem[] = [
 	{
@@ -449,7 +459,7 @@ const config: BtnItem[] = [
 </template>
 
 <script setup lang="tsx">
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 
 const config: BtnItem[] = [
 	{
@@ -479,7 +489,7 @@ const config: BtnItem[] = [
 </template>
 
 <script setup lang="tsx">
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 
 const config: BtnItem[] = [
 	{
@@ -519,12 +529,10 @@ const config: BtnItem[] = [
 </template>
 
 <script setup lang="tsx">
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 
 const config: BtnItem[] = [
-  {
-    label: '详情'
-  },
+  { label: '详情' },
   { label: '编辑' },
   { label: '删除', type: 'error' }
 ]
@@ -575,7 +583,7 @@ const config: BtnItem[] = [
 import { CashOutline } from '@vicons/ionicons5'
 import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 import 'naive-ui-table/dist/style.css'
-import { Buttons, type BtnItem } from 'comp/Buttons'
+import type { BtnItem } from 'comp/Buttons'
 import { list } from 'api/user'
 
 type Item = Recordable
@@ -613,7 +621,7 @@ const operationBtn: BtnItem[] = [
   }
 ]
 
-const columns: TableColumns = [
+const columns: TableColumns<Item> = [
   { title: '姓名', key: 'name' },
   { title: '年龄', key: 'age' },
   { title: '地址', key: 'address' },
