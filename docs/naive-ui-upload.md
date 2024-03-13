@@ -34,6 +34,7 @@ pnpm add naive-ui-upload
 import { NConfigProvider, zhCN, dateZhCN, NMessageProvider } from 'naive-ui'
 import { NaiveUiUpload } from 'naive-ui-upload'
 import { ref } from 'vue'
+import type { UploadFileInfo } from 'naive-ui'
 
 const fileList = ref<string[]>([])
 function handleUpload() {
