@@ -1,51 +1,60 @@
 <template>
-  <NUpload
-    style="width: 100%"
-    v-bind="getProps()"
-    v-model:file-list="fileList"
-    :on-before-upload="handleBeforeUpload"
-    :on-remove="handleRemove"
-    :custom-request="handleCustomRequest"
-  >
-    <slot>
-      <NButton v-if="getProps()['list-type'] === 'text' || getProps()['listType'] === 'text'"
-        >上传文件</NButton
+  <div>
+    <NUpload
+      style="width: 100%"
+      v-bind="getProps()"
+      v-model:file-list="fileList"
+      :on-before-upload="handleBeforeUpload"
+      :custom-request="handleCustomRequest"
+    >
+      <slot>
+        <NButton v-if="getProps()['list-type'] === 'text' || getProps()['listType'] === 'text'">{{
+          uploadText
+        }}</NButton>
+      </slot>
+    </NUpload>
+    <div v-if="accept || size" style="margin-top: 8px">
+      <template v-if="accept"
+        >支持<NText type="info">{{ accept }}</NText
+        >格式，</template
       >
-    </slot>
-  </NUpload>
-
-  <NModal
-    v-model:show="showCropper"
-    preset="dialog"
-    title="图片裁剪"
-    type="info"
-    positiveText="确定"
-    negativeText="取消"
-    style="width: 900px"
-    :loading="cropperLoading"
-    :onPositiveClick="handleConfirmCropper"
-    :onClose="handleCloseCropper"
-    :onNegativeClick="handleCloseCropper"
-  >
-    <div style="display: flex; align-items: center">
-      <div style="width: 400px; height: 400px">
-        <VueCropper
-          ref="cropperRef"
-          :img="cropperUrl"
-          v-bind="getCropperProps()"
-          @realTime="handlePreview"
-        ></VueCropper>
-      </div>
-      <div style="flex: 1; margin-left: 20px">
-        <img :src="previewUrl" style="width: 100%" />
-      </div>
+      <template v-if="size"
+        >单个文件不超过<NText type="info">{{ size }}M</NText></template
+      >
     </div>
-  </NModal>
+    <NModal
+      v-model:show="showCropper"
+      preset="dialog"
+      title="图片裁剪"
+      type="info"
+      positiveText="确定"
+      negativeText="取消"
+      style="width: 900px"
+      :loading="cropperLoading"
+      :onPositiveClick="handleConfirmCropper"
+      :onClose="handleCloseCropper"
+      :onNegativeClick="handleCloseCropper"
+    >
+      <div style="display: flex; align-items: center">
+        <div style="width: 400px; height: 400px">
+          <VueCropper
+            ref="cropperRef"
+            :img="cropperUrl"
+            v-bind="getCropperProps()"
+            @realTime="handlePreview"
+          ></VueCropper>
+        </div>
+        <div style="flex: 1; margin-left: 20px">
+          <img :src="previewUrl" style="width: 100%" />
+        </div>
+      </div>
+    </NModal>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { useAttrs, nextTick, inject, ref, watch } from 'vue'
-import { NUpload, useMessage, NModal, NButton } from 'naive-ui'
+import { useAttrs, nextTick, inject, ref, computed } from 'vue'
+import { NUpload, useMessage, NModal, NButton, NText } from 'naive-ui'
 import to from 'await-to-js'
 import 'vue-cropper/dist/index.css'
 import { VueCropper } from 'Vue-Cropper'
@@ -59,11 +68,16 @@ const message = useMessage()
 
 interface Props {
   requestFunc?: RequestFun
-  value: string[]
+  value: UploadFileInfo[]
   size?: number
   cropper?: boolean | Record<string, any>
+  showInfo?: boolean
+  uploadText?: string
 }
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  showInfo: true,
+  uploadText: '上传文件'
+})
 
 function getProps() {
   return { ...attrs, ...props }
@@ -75,9 +89,17 @@ function getCropperProps() {
 }
 
 const emits = defineEmits<{
-  'update:value': [value: string[]]
+  'update:value': [value: UploadFileInfo[]]
 }>()
-const fileList = ref<UploadFileInfo[]>([])
+
+const fileList = computed({
+  get() {
+    return props.value
+  },
+  set(val) {
+    emits('update:value', val)
+  }
+})
 
 const injectRequestFunc = inject<RequestFun | undefined>(provideKey, undefined)
 const uploadApi = props.requestFunc ?? injectRequestFunc
@@ -94,34 +116,27 @@ function verifySize(file: File) {
   return true
 }
 
-let isChangeFromProps = true
-watch(
-  () => props.value,
-  (val) => {
-    if (!isChangeFromProps) return
-    fileList.value = val.map((item) => {
-      return {
-        id: window.crypto?.randomUUID() || Math.random().toString(36).substring(2, 9),
-        url: item,
-        name: item,
-        status: 'finished'
-      }
-    })
-    isChangeFromProps = true
-  },
-  {
-    immediate: true,
-    deep: true
+const accept = attrs.accept ? (attrs.accept as string).replace(/\s/g, '').toLowerCase() : undefined
+
+function verifyType(file: File) {
+  if (!accept) return true
+  const ext = file.name.substring(file.name.lastIndexOf('.'))
+  if (!accept.includes(ext)) {
+    message.error(`“${file.name}”格式不正确`)
+    return false
   }
-)
+  return true
+}
 
 function handleBeforeUpload({ file }: { file: UploadFileInfo }) {
   if (!file.file) return false
+  if (!verifyType(file.file)) return false
+  if (!verifySize(file.file)) return false
   if (props.cropper) {
     handleCropperInit(file)
     return false
   }
-  if (!verifySize(file.file)) return false
+
   return true
 }
 
@@ -160,11 +175,12 @@ async function handleConfirmCropper() {
   if (err) {
     return false
   }
+  currentCropperFile.value.id =
+    window.crypto?.randomUUID() || Math.random().toString(36).substring(2, 9)
   currentCropperFile.value.file = file
   currentCropperFile.value.url = res
   currentCropperFile.value.status = 'finished'
   fileList.value.push(currentCropperFile.value)
-  nextTick(() => handleFileListChange())
 }
 
 function handleCloseCropper() {
@@ -193,25 +209,7 @@ async function handleCustomRequest({
   nextTick(() => {
     const index = fileList.value.findIndex((item) => item.id === file.id)
     fileList.value[index].url = res
-    handleFileListChange()
   })
-}
-
-function handleRemove({ file }: { file: UploadFileInfo }) {
-  const fileLIst = fileList.value
-    .filter((item) => item.id !== file.id && item.status === 'finished')
-    .map((item) => item.url) as string[]
-  isChangeFromProps = false
-  emits('update:value', fileLIst)
-  return true
-}
-
-function handleFileListChange() {
-  const uploadFileList = fileList.value
-    .filter((item) => item.status === 'finished')
-    .map((item) => item.url) as string[]
-  isChangeFromProps = false
-  emits('update:value', uploadFileList)
 }
 </script>
 
