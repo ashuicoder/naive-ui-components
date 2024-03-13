@@ -3,7 +3,7 @@
     <BasicForm
       v-if="searchProps"
       ref="basicForm"
-      :grid="{ cols: 4, xGap: 14 }"
+      :grid="{ cols: '1 s:1 m:2 l:3 xl:4 xxl:5', xGap: 20, responsive: 'screen' }"
       submitBtnText="查询"
       :defaultShowExpandRows="1"
       labelPlacement="left"
