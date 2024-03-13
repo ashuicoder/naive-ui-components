@@ -20,15 +20,15 @@
 
 ## 安装、使用
 
-### 安装
-
 ```bash
+# 安装
 pnpm add naive-ui-table
+
+# 更新
+pnpm update naive-ui-table
 ```
 
-> 也可以使用`npm`、`yarn`等安装。
-
-### 全局导入
+全局注册
 
 ```ts
 import { createApp } from 'vue'
@@ -39,7 +39,7 @@ const app = createApp(App)
 app.use(NaiveUiTable)
 ```
 
-### 局部导入
+局部引入
 
 ```vue
 <template>
@@ -76,16 +76,18 @@ async function getTableList(params: any) {
 </script>
 ```
 
-::: tip 注意
+::: info 注意
 该 columns 配置除`vif`外，与`naive-ui`的`data-table`的`columns`完全一致。具体属性参考[naive-ui的columns](https://www.naiveui.com/zh-CN/light/components/data-table#DataTable-Props)
 :::
 
-::: info 是否分页：
+::: tip 是否分页：
 
 - 默认接口是分页接口（`isPageApi: true`），即：
   - 接口参数包含`current,size`
   - 接口返回数据格式为`{ current: 1, size: 10, total: 100, records: [...] }`；
-- **若接口不分页，需将`isPageApi`设为`false`**
+- **若接口不分页，需将`isPageApi`设为`false`**，即：
+  - 接口参数里没有`current,size`
+  - 接口返回数据格式为`{ [...] }`；
 
 :::
 
@@ -213,7 +215,7 @@ toolButton?: ('refresh' | 'size' | 'setting')[] | boolean
 
 ### 方式一：用`render`函数
 
-按原来的属性，在`columns`里用`render`函数自定义一列的内容。
+按原来的属性，在`columns`里用`render`函数自定义列的内容。
 
 ```vue{12}
 <template>
@@ -382,13 +384,14 @@ const search: FormProps = {
       label: '姓名',
       field: 'name',
       type: 'input',
-      labelPlacement: 'left'
+      required: true,
     },
     {
       label: '年龄',
       field: 'age',
       type: 'input-number',
-      labelPlacement: 'left'
+      required: true,
+      requiredType: 'number'
     }
   ]
 }
@@ -559,7 +562,10 @@ async function getTableList(params: any) {
 
 ## 数据处理回调`dataCallback`
 
-该函数**接收接口返回的原始数据，返回目标表格数据**。数据格式不符合要求时使用。因此可在该函数中处理数据，或增加其他的逻辑。
+- 该函数**接收接口返回的原始数据，返回目标表格数据**。
+- 如果数据格式不符合要求、接口请求后立马需要执行某些逻辑，有两种解决方式：
+  - 方式一：在`dataCallback`回调函数里处理；
+  - 方式二：在`requestApi`接口请求里处理。
 
 ```vue{5,19-26}
 <template>
@@ -580,7 +586,7 @@ const columns: TableColumns = [
   { title: '地址', key: 'address' }
 ]
 
-// 数据处理
+// 方式一：dataCallback。返回正确的表格数据，或增加其他逻辑
 function dataCallback(data) {
   data.records = data.records.map((item, index) => {
     item.name = item.name + index
@@ -589,16 +595,17 @@ function dataCallback(data) {
   return data
 }
 
+// 方式二：接口请求里。返回正确的表格数据，或增加其他逻辑
 async function getTableList(params: any) {
   return await api(params)
 }
 </script>
 ```
 
-::: tip dataCallback返回数据：
+::: tip 返回正确的数据格式：
 
-- 若接口为分页接口，则需要返回`{ current: 1, size: 10, total: 100, records: [] }`格式的数据；
-- 若接口为非分页接口，则直接返回`[]`表格数据。
+- 若接口为分页接口，则需要返回`{ current: 1, size: 10, total: 100, records: [...] }`格式的数据；
+- 若接口为非分页接口，则直接返回`[...]`表格数据。
 
 :::
 
@@ -650,6 +657,7 @@ async function getTableList(params: any) {
 
 | 名称         | 类型               | 说明                                                             |
 | ------------ | ------------------ | ---------------------------------------------------------------- |
+| basicForm    | `FormInstance`     | 搜索表单组件的ref实例                                            |
 | state        | `object`           | 状态数据，包含：表格数据，分页数据等                             |
 | tableColumns | `DataTableColumns` | 最终传入n-data-table组件的columns属性                            |
 | tableRef     | `DataTableInst`    | n-data-table组件的ref，可通过这个ref调用n-data-table组件里的方法 |
