@@ -1,7 +1,14 @@
 <template>
   <div>
     <BasicForm @register="register"></BasicForm>
-    <ModalForm v-model:show="showModal" :schemas="schemas" title="2333"></ModalForm>
+    <ModalForm v-model:show="showModal" :schemas="schemas" title="2333" style="width: 800px">
+      <template #name="{ field, formValue }">
+        <input v-model="formValue[field]" type="text" />
+      </template>
+      <template #age>
+        <input type="text" />
+      </template>
+    </ModalForm>
   </div>
 </template>
 
@@ -13,13 +20,16 @@ const schemas: FormSchema[] = [
   {
     label: '姓名',
     field: 'name',
-    type: 'input'
+    type: 'slot',
+    slot: 'name',
+    required: true
     // groupName: '分组1'
   },
   {
     label: '年龄',
     field: 'age',
-    type: 'input-number'
+    type: 'slot',
+    slot: 'age'
     // groupName: '分组2'
   },
   {
@@ -63,39 +73,6 @@ const schemas: FormSchema[] = [
     }
   },
   {
-    label: '参考教程',
-    type: 'dynamic',
-    field: 'teachingMaterials',
-    // labelPlacement: 'top',
-    dynamicOptions: [
-      {
-        label: '教程封面',
-        field: 'cover',
-        type: 'upload',
-        required: true,
-        requiredType: 'array',
-        // labelPlacement: 'top',
-        componentProps: {
-          max: 1
-        }
-      },
-      {
-        label: '教程名称',
-        type: 'input',
-        field: 'name',
-        required: true
-        // labelPlacement: 'top'
-      },
-      {
-        label: '出版社',
-        type: 'input',
-        field: 'publisher',
-        required: true
-        // labelPlacement: 'top'
-      }
-    ]
-  },
-  {
     label: '内容',
     field: 'content',
     type: 'editor',
@@ -104,7 +81,7 @@ const schemas: FormSchema[] = [
   }
 ]
 
-const showModal = ref(false)
+const showModal = ref(true)
 const [register] = useForm({
   grid: {
     cols: 1,

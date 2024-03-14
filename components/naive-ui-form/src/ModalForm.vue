@@ -8,17 +8,17 @@
     :on-negative-click="handleCancel"
     @update:show="handleClose"
   >
-    <BasicForm
-      :show-action-btns="false"
-      style="width: 100%; margin: 40px 0"
-      @register="register"
-    ></BasicForm>
+    <BasicForm :show-action-btns="false" style="width: 100%; margin: 40px 0" @register="register">
+      <template v-for="(_, slotName) in $slots" :key="slotName" #[slotName]="scoped">
+        <slot :name="slotName" :formValue="scoped.formValue" :field="scoped.field"></slot>
+      </template>
+    </BasicForm>
   </NModal>
 </template>
 
 <script setup lang="ts">
 import { NModal } from 'naive-ui'
-import { computed, useAttrs } from 'vue'
+import { computed, useAttrs, useSlots } from 'vue'
 import to from 'await-to-js'
 
 import BasicForm from './BasicForm.vue'
@@ -35,10 +35,16 @@ interface Emits {
   (e: 'submit', val: Recordable): void
   (e: 'cancel'): void
 }
-
+const slots = useSlots()
+console.log(slots)
 const attrs = useAttrs()
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
+
+const slotSchemas = computed(() => {
+  if (!Array.isArray(attrs.schemas)) return []
+  return attrs.schemas.filter((item) => item.type === 'slot')
+})
 
 const showModal = computed({
   get() {
