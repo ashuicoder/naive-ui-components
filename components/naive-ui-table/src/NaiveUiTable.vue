@@ -277,7 +277,8 @@ defineExpose({
   tableRef,
   height,
   scrollWidth,
-  basicForm
+  basicForm,
+  tableSize
 })
 </script>
 
