@@ -1,9 +1,9 @@
 import NaiveUiUpload from './src/NaiveUiUpload.vue'
 
 import type { App } from 'vue'
-import type { Option, RequestFun } from './src/types/index'
+import type { Option, RequestFun, FileInfo } from './src/types/index'
 
-export type { RequestFun }
+export type { RequestFun, FileInfo }
 export { NaiveUiUpload }
 
 import { provideKey } from './src/const'

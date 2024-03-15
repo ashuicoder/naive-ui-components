@@ -6,3 +6,10 @@ export type RequestFun = (
 export interface Option {
   requestFunc?: RequestFun
 }
+
+export interface FileInfo {
+  name: string
+  url: string
+  status?: string
+  id: string
+}

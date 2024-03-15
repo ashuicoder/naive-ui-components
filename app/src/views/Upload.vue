@@ -14,12 +14,10 @@
 
 <script setup lang="ts">
 import to from 'await-to-js'
-import { NaiveUiUpload } from 'naive-ui-upload'
+import { NaiveUiUpload, type FileInfo } from 'naive-ui-upload'
 import { ref } from 'vue'
 
-import type { UploadFileInfo } from 'naive-ui'
-
-const fileList = ref<UploadFileInfo[]>([
+const fileList = ref<FileInfo[]>([
   {
     id: '1',
     url: 'https://eibp-frontend.oss-cn-hangzhou.aliyuncs.com/portal-website/images1/46.png',
