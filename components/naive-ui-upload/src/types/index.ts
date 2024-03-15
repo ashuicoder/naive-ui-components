@@ -11,5 +11,5 @@ export interface FileInfo {
   name: string
   url: string
   status?: string
-  id: string
+  id?: string
 }
