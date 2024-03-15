@@ -150,7 +150,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, toRaw, watchEffect } from 'vue'
+import { ref, computed, reactive, toRaw, watch } from 'vue'
 import {
   NForm,
   NGrid,
@@ -321,11 +321,17 @@ function getDynamicValue(schema: FormSchema) {
   return value
 }
 
-watchEffect(() => {
-  commonProps.value.schemas?.forEach((schema) => {
-    setDefaultValue(schema)
-  })
-})
+watch(
+  () => commonProps.value.schemas,
+  (val) => {
+    val?.forEach((schema) => {
+      setDefaultValue(schema)
+    })
+  },
+  {
+    immediate: true
+  }
+)
 
 function handleAddDynamicItem(schema: FormSchema) {
   formValue[schema.field].push(getDynamicValue(schema))

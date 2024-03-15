@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div style="width: 100%">
     <NUpload
       style="width: 100%"
       v-bind="getProps()"
       v-model:file-list="fileList"
       :on-before-upload="handleBeforeUpload"
+      :on-remove="handleRemove"
       :custom-request="handleCustomRequest"
     >
       <slot>
@@ -53,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAttrs, nextTick, inject, ref, computed } from 'vue'
+import { useAttrs, nextTick, inject, ref, watch } from 'vue'
 import { NUpload, useMessage, NModal, NButton, NText } from 'naive-ui'
 import to from 'await-to-js'
 import 'vue-cropper/dist/index.css'
@@ -61,14 +62,14 @@ import { VueCropper } from 'Vue-Cropper'
 import { provideKey } from './const'
 
 import type { UploadCustomRequestOptions, UploadFileInfo } from 'naive-ui'
-import type { RequestFun } from './types'
+import type { RequestFun, FileInfo } from './types'
 
 const attrs = useAttrs()
 const message = useMessage()
 
 interface Props {
   requestFunc?: RequestFun
-  value: UploadFileInfo[]
+  value: FileInfo[]
   size?: number
   cropper?: boolean | Record<string, any>
   showInfo?: boolean
@@ -89,17 +90,9 @@ function getCropperProps() {
 }
 
 const emits = defineEmits<{
-  'update:value': [value: UploadFileInfo[]]
+  'update:value': [value: FileInfo[]]
 }>()
-
-const fileList = computed({
-  get() {
-    return props.value
-  },
-  set(val) {
-    emits('update:value', val)
-  }
-})
+const fileList = ref<UploadFileInfo[]>([])
 
 const injectRequestFunc = inject<RequestFun | undefined>(provideKey, undefined)
 const uploadApi = props.requestFunc ?? injectRequestFunc
@@ -127,6 +120,27 @@ function verifyType(file: File) {
   }
   return true
 }
+
+let isChangeFromProps = true
+watch(
+  () => props.value,
+  (val) => {
+    if (!isChangeFromProps) return
+    fileList.value = val.map((item) => {
+      return {
+        id: item.id || window.crypto?.randomUUID() || Math.random().toString(36).substring(2, 9),
+        url: item.url,
+        name: item.name,
+        status: 'finished'
+      }
+    })
+    isChangeFromProps = true
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+)
 
 function handleBeforeUpload({ file }: { file: UploadFileInfo }) {
   if (!file.file) return false
@@ -175,12 +189,11 @@ async function handleConfirmCropper() {
   if (err) {
     return false
   }
-  currentCropperFile.value.id =
-    window.crypto?.randomUUID() || Math.random().toString(36).substring(2, 9)
   currentCropperFile.value.file = file
   currentCropperFile.value.url = res
   currentCropperFile.value.status = 'finished'
   fileList.value.push(currentCropperFile.value)
+  nextTick(() => handleFileListChange())
 }
 
 function handleCloseCropper() {
@@ -209,7 +222,39 @@ async function handleCustomRequest({
   nextTick(() => {
     const index = fileList.value.findIndex((item) => item.id === file.id)
     fileList.value[index].url = res
+    handleFileListChange()
   })
+}
+
+function handleRemove({ file }: { file: UploadFileInfo }) {
+  const _fileLIst = fileList.value
+    .filter((item) => item.id !== file.id && item.status === 'finished')
+    .map((item) => {
+      return {
+        id: item.id,
+        name: item.name,
+        url: item.url as string,
+        status: 'finished'
+      }
+    })
+  isChangeFromProps = false
+  emits('update:value', _fileLIst)
+  return true
+}
+
+function handleFileListChange() {
+  const uploadFileList = fileList.value
+    .filter((item) => item.status === 'finished')
+    .map((item) => {
+      return {
+        id: item.id,
+        name: item.name,
+        url: item.url as string,
+        status: 'finished'
+      }
+    })
+  isChangeFromProps = false
+  emits('update:value', uploadFileList)
 }
 </script>
 
