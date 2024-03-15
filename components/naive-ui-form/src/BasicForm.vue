@@ -150,7 +150,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, toRaw, watchEffect } from 'vue'
+import { ref, computed, reactive, toRaw, watch } from 'vue'
 import {
   NForm,
   NGrid,
@@ -270,6 +270,7 @@ const commonProps = computed(() => {
 const isExpand = ref(commonProps.value.defaultExpand)
 
 function setDefaultValue(schema: FormSchema, record = formValue) {
+  console.log('值被重置了')
   if (Reflect.has(schema, 'defaultValue')) {
     record[schema.field] = schema.defaultValue
     return
@@ -321,11 +322,17 @@ function getDynamicValue(schema: FormSchema) {
   return value
 }
 
-watchEffect(() => {
-  commonProps.value.schemas?.forEach((schema) => {
-    setDefaultValue(schema)
-  })
-})
+watch(
+  () => commonProps.value.schemas,
+  (val) => {
+    val?.forEach((schema) => {
+      setDefaultValue(schema)
+    })
+  },
+  {
+    immediate: true
+  }
+)
 
 function handleAddDynamicItem(schema: FormSchema) {
   formValue[schema.field].push(getDynamicValue(schema))

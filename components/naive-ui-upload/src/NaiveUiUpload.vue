@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width: 100%">
     <NUpload
       style="width: 100%"
       v-bind="getProps()"
