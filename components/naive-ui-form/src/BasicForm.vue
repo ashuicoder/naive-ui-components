@@ -270,7 +270,6 @@ const commonProps = computed(() => {
 const isExpand = ref(commonProps.value.defaultExpand)
 
 function setDefaultValue(schema: FormSchema, record = formValue) {
-  console.log('值被重置了')
   if (Reflect.has(schema, 'defaultValue')) {
     record[schema.field] = schema.defaultValue
     return
