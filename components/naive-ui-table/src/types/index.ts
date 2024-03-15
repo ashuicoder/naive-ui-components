@@ -1,4 +1,5 @@
-import type { DataTableColumn } from 'naive-ui'
+import type { ComputedRef } from 'vue'
+import type { DataTableColumn, DataTableRowKey } from 'naive-ui'
 import type { Props as FormProps, FormInstance } from 'naive-ui-form'
 
 export type { FormProps, FormInstance }
@@ -7,7 +8,9 @@ export type Recordable<T = any> = Record<string, T>
 
 type InternalRowData = Record<string, unknown>
 
-export type Columns<T = InternalRowData> = { vif?: boolean | ((column?: Columns) => boolean) } & DataTableColumn<T>
+export type Columns<T = InternalRowData> = {
+  vif?: boolean | ((column?: Columns) => boolean)
+} & DataTableColumn<T>
 
 export type TableColumns<T = InternalRowData> = Columns<T>[]
 
@@ -26,4 +29,19 @@ export interface TableProps {
   initParams?: Recordable // 初始化请求参数 ==> 非必传（默认为{}）
   dataCallback?: (data: Recordable) => Recordable // 返回数据的回调函数，可以对数据进行处理
   requestError?: (params: any) => void // 表格 api 请求错误监听
+}
+
+export interface TableInstance {
+  basicForm: FormInstance | null
+  tableRef: any
+  tableColumns: ComputedRef<any[]>
+  refresh(): Promise<any>
+  openDrawer(bool: boolean): void
+  height: ComputedRef<number>
+  scrollWidth: ComputedRef<number>
+  clearCheck(): void
+  getCheckValue(): { keys: DataTableRowKey[]; rows: object[] }
+  getTableValue(): any
+  getPageValue(): any
+  setLoading(loading: boolean): void
 }

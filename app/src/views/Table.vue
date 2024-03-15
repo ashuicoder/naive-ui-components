@@ -1,6 +1,7 @@
 <template>
   <div style="padding: 10px">
     <NaiveUiTable
+      ref="tableRef"
       :columns="columns"
       :requestApi="getTableList"
       :search-props="searchProps"
@@ -30,19 +31,28 @@
         <n-button type="error" ghost @click="fun('删除', row)">删除</n-button>
       </template>
     </NaiveUiTable>
+
+    <ModalForm v-model:show="showModal" :schemas="schemas" title="新增用户"> </ModalForm>
   </div>
 </template>
 
 <script setup lang="tsx">
+import { ref } from 'vue'
 import { NaiveUiTable } from 'naive-ui-table'
 import type { TableColumns, FormProps } from 'naive-ui-table'
+import { ModalForm } from 'naive-ui-form'
+import type { FormSchema } from 'naive-ui-form'
 import { NButton, NTag, NDrawer, NDrawerContent, NTooltip, useMessage } from 'naive-ui'
 
 const message = useMessage()
 
+const tableRef = ref()
+
 // 勾选回调
-function handleCheck(param) {
-  console.log('param: ', param)
+function handleCheck(keys, rows, meta) {
+  console.log('keys: ', keys)
+  console.log('rows: ', rows)
+  console.log('meta: ', meta)
 }
 
 // 搜索栏配置
@@ -139,13 +149,31 @@ async function getTableList(params: any) {
   return await api(params)
 }
 
+const showModal = ref(false)
 function fun(type, row) {
   message.info(type)
   console.log('row: ', row)
+  showModal.value = true
 }
 
+const schemas: FormSchema[] = [
+  {
+    field: 'username',
+    type: 'input',
+    label: '用户名',
+    required: true
+  },
+  {
+    field: 'age',
+    label: '年龄',
+    type: 'input-number',
+    required: true,
+    requiredType: 'number'
+  }
+]
+
 // 模拟接口请求
-function api(params) {
+function api(params: any = {}) {
   return new Promise((resolve, reject) => {
     const data = Array.from({ length: 42 }, (v, i) => {
       return {
