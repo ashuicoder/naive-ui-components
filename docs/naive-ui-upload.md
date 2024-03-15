@@ -32,11 +32,10 @@ pnpm add naive-ui-upload
 
 <script setup lang="ts">
 import { NConfigProvider, zhCN, dateZhCN, NMessageProvider } from 'naive-ui'
-import { NaiveUiUpload } from 'naive-ui-upload'
+import { NaiveUiUpload, type FileInfo } from 'naive-ui-upload'
 import { ref } from 'vue'
-import type { UploadFileInfo } from 'naive-ui'
 
-const fileList = ref<string[]>([])
+const fileList = ref<FileInfo[]>([])
 function handleUpload() {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -49,6 +48,17 @@ function handleUpload() {
 <style scoped></style>
 
 
+```
+
+`FileInfo`类型是`n-upload`的`UploadFileInfo`的简化：
+
+```ts
+interface FileInfo {
+  name: string
+  url: string
+  status?: string
+  id?: string
+}
 ```
 
 ### 全局导入
@@ -71,14 +81,14 @@ app.use(NaiveUiUpload, {
 
 ## props
 
-| 字段          | 类型                                                         | 描述                                                     | 必传 | 默认值   |
-| ------------- | ------------------------------------------------------------ | -------------------------------------------------------- | ---- | -------- |
-| requestFunc   | Function，见下发说明                                         | 上传文件的方法                                           | 否   | -        |
-| v-model:value | string[]                                                     | 文件列表，需要双向绑定                                   | 是   |          |
-| size          | number                                                       | 单个文件上传的限制大小（单位：M）                        | 否   |          |
+| 字段          | 类型                                                                     | 描述                                                     | 必传 | 默认值   |
+| ------------- | ------------------------------------------------------------------------ | -------------------------------------------------------- | ---- | -------- |
+| requestFunc   | Function，见下发说明                                                     | 上传文件的方法                                           | 否   | -        |
+| v-model:value | FileInfo[]                                                               | 文件列表，需要双向绑定                                   | 是   |          |
+| size          | number                                                                   | 单个文件上传的限制大小（单位：M）                        | 否   |          |
 | cropper       | Objec，具体参数见[vue-cropper](https://github.com/xyxiao001/vue-cropper) | 是否需要裁剪（**设置该值时确保上传的是图片格式的文件**） | 否   |          |
-| showInfo      | boolean                                                      | 是否显示提示信息                                         | 否   | 是       |
-| uploadText    | string                                                       | 默认插槽按钮文字                                         | 否   | 上传文件 |
+| showInfo      | boolean                                                                  | 是否显示提示信息                                         | 否   | 是       |
+| uploadText    | string                                                                   | 默认插槽按钮文字                                         | 否   | 上传文件 |
 
 此外，还可以传入[n-upload](https://ui.naiveadmin.com/zh-CN/os-theme/components/upload)的大部分`props`。
 
