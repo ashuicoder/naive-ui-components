@@ -7,9 +7,9 @@
       submitBtnText="查询"
       :defaultShowExpandRows="1"
       labelPlacement="left"
+      @register="register"
       @submit="handleSearch"
       @reset="handleReset"
-      v-bind="searchProps"
     ></BasicForm>
 
     <div class="table-main">
@@ -111,7 +111,7 @@ import {
 import type { DataTableRowKey } from 'naive-ui'
 import { ref, computed, onMounted, useSlots } from 'vue'
 import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
-import { BasicForm, type FormInstance } from 'naive-ui-form'
+import { BasicForm, useForm, type FormInstance } from 'naive-ui-form'
 import { cloneDeep } from 'lodash-es'
 import { useTable } from './hooks/useTable'
 import ColumnSetting from './ColumnSetting.vue'
@@ -138,6 +138,7 @@ const emit = defineEmits(['update:checked-row-keys'])
 
 /* 搜索表单ref */
 const basicForm = ref<FormInstance | null>(null)
+const [register] = useForm(props.searchProps)
 
 /* 工具栏显隐 */
 const showToolButton = (key: 'refresh' | 'size' | 'setting') => {
