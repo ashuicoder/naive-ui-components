@@ -242,10 +242,12 @@ const newPagination = computed(() => {
       prefix: (info) => `每页${info.pageSize}条，共${info.itemCount}条`,
       onUpdatePage: (page: number) => {
         state.pageAble.current = page
+        clearCheck()
       },
       onUpdatePageSize: (pageSize: number) => {
         state.pageAble.size = pageSize
         state.pageAble.current = 1
+        clearCheck()
       }
     }
   }

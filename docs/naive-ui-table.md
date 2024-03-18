@@ -655,14 +655,13 @@ async function getTableList(params: any) {
 
 通过ref调用以下状态：
 
-| 名称         | 类型               | 说明                                                             |
-| ------------ | ------------------ | ---------------------------------------------------------------- |
-| basicForm    | `FormInstance`     | 搜索表单组件的ref实例                                            |
-| state        | `object`           | 状态数据，包含：表格数据，分页数据等                             |
-| tableColumns | `DataTableColumns` | 最终传入n-data-table组件的columns属性                            |
-| tableRef     | `DataTableInst`    | n-data-table组件的ref，可通过这个ref调用n-data-table组件里的方法 |
-| height       | `number`           | 最终传入n-data-table组件的maxHeight                              |
-| scrollWidth  | `number`           | 最终传入n-data-table组件的scrollX                                |
+| 名称         | 类型               | 说明                                    |
+| ------------ | ------------------ | --------------------------------------- |
+| basicForm    | `FormInstance`     | 搜索表单组件`BasicForm`的ref实例        |
+| tableRef     | `DataTableInst`    | `naive-ui`的`n-data-table`组件的ref实例 |
+| tableColumns | `DataTableColumns` | 最终传入`n-data-table`组件的columns属性   |
+| height       | `number`           | 最终传入`n-data-table`组件的maxHeight     |
+| scrollWidth  | `number`           | 最终传入`n-data-table`组件的scrollX       |
 
 ## Slots
 
