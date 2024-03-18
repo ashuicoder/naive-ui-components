@@ -80,6 +80,7 @@
     is="naive-ui-upload"
     v-else-if="schema.type === 'upload'"
     list-type="image-card"
+    style="width: 100%"
     :style="schema?.style"
     v-bind="schema.componentProps"
     v-model:value="record[schema.field]"

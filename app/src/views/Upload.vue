@@ -5,10 +5,7 @@
     multiple
     accept=".Mp4  ,  .Png"
     :requestFunc="handleUpload"
-    list-type="image-card"
-    :cropper="{
-      autoCrop: true
-    }"
+    list-type="text"
   ></naive-ui-upload>
 </template>
 
@@ -21,8 +18,7 @@ const fileList = ref<FileInfo[]>([
   {
     id: '1',
     url: 'https://eibp-frontend.oss-cn-hangzhou.aliyuncs.com/portal-website/images1/46.png',
-    name: '自定义上传的',
-    status: 'finished'
+    name: '自定义上传的'
   }
 ])
 
