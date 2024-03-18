@@ -32,8 +32,16 @@ const schemas: FormSchema[] = [
     required: true,
     requiredType: 'array',
     componentProps: {
-      accept: '.png,.jpg'
-    }
+      accept: '.png,.jpg',
+      listType: 'text'
+    },
+    defaultValue: [
+      {
+        id: '1',
+        url: 'https://eibp-frontend.oss-cn-hangzhou.aliyuncs.com/portal-website/images1/46.png',
+        name: '自定义上传的'
+      }
+    ]
   }
   // {
   //   label: '姓名',
