@@ -7,9 +7,9 @@
       submitBtnText="查询"
       :defaultShowExpandRows="1"
       labelPlacement="left"
+      @register="register"
       @submit="handleSearch"
       @reset="handleReset"
-      v-bind="searchProps"
     >
       <template v-for="(_, slotName) in formSlot" :key="slotName" #[slotName]="scoped">
         <slot :name="slotName" :formValue="scoped.formValue" :field="scoped.field"></slot>
@@ -114,7 +114,7 @@ import {
 } from 'naive-ui'
 import { ref, computed, useSlots } from 'vue'
 import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
-import { BasicForm, type FormInstance } from 'naive-ui-form'
+import { BasicForm, useForm, type FormInstance } from 'naive-ui-form'
 import { cloneDeep } from 'lodash-es'
 import { useTable } from './hooks/useTable'
 import { useTableSize } from './hooks/useTableSize'
@@ -159,6 +159,7 @@ const emit = defineEmits<{
   (event: 'update:checked-row-keys', ...args: any[]): void
 }>()
 
+const [register] = useForm(props.searchProps)
 const basicForm = ref<FormInstance | null>(null) // 搜索表单ref
 const tableRef = ref() // 表格ref
 
