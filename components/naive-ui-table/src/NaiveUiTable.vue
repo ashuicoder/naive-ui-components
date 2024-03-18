@@ -7,10 +7,14 @@
       submitBtnText="查询"
       :defaultShowExpandRows="1"
       labelPlacement="left"
+      @register="register"
       @submit="handleSearch"
       @reset="handleReset"
-      v-bind="searchProps"
-    ></BasicForm>
+    >
+      <template v-for="(_, slotName) in formSlot" :key="slotName" #[slotName]="scoped">
+        <slot :name="slotName" :formValue="scoped.formValue" :field="scoped.field"></slot>
+      </template>
+    </BasicForm>
 
     <div class="table-main">
       <!-- 表格头部，操作按钮 -->
@@ -80,7 +84,7 @@
         :remote="tableRemote"
         :single-line="false"
         :row-key="(row) => row.id"
-        v-model:checked-row-keys="checkedRowKeys"
+        v-model:checked-row-keys="checkState.keys"
         @update:checked-row-keys="handleCheck"
         :max-height="height"
         :scroll-x="scrollWidth"
@@ -108,16 +112,16 @@ import {
   NIcon,
   NSpace
 } from 'naive-ui'
-import type { DataTableRowKey } from 'naive-ui'
-import { ref, computed, onMounted, useSlots } from 'vue'
+import { ref, computed, useSlots } from 'vue'
 import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
-import { BasicForm, type FormInstance } from 'naive-ui-form'
+import { BasicForm, useForm, type FormInstance } from 'naive-ui-form'
 import { cloneDeep } from 'lodash-es'
 import { useTable } from './hooks/useTable'
+import { useTableSize } from './hooks/useTableSize'
+import { useCheck } from './hooks/useCheck'
 import ColumnSetting from './ColumnSetting.vue'
 import { isFunction } from './utils'
 import { PageSizes } from './const'
-import { useTableSize } from './hooks/useTableSize'
 import type { TableProps, Columns } from './types'
 
 defineOptions({
@@ -134,10 +138,30 @@ const props = withDefaults(defineProps<TableProps>(), {
   remote: undefined
 })
 
-const emit = defineEmits(['update:checked-row-keys'])
+/* 表单插槽 */
+const slots = useSlots()
+const formSlot = computed(() => {
+  const slotName = props.searchProps?.schemas?.reduce((arr, item) => {
+    if (item.type === 'slot' && item.slot) {
+      arr.push(item.slot)
+    }
+    return arr
+  }, [] as string[])
+  return slotName?.reduce((obj: any, key: string) => {
+    if (slots[key]) {
+      obj[key] = slots[key]
+    }
+    return obj
+  }, {})
+})
 
-/* 搜索表单ref */
-const basicForm = ref<FormInstance | null>(null)
+const emit = defineEmits<{
+  (event: 'update:checked-row-keys', ...args: any[]): void
+}>()
+
+const [register] = useForm(props.searchProps)
+const basicForm = ref<FormInstance | null>(null) // 搜索表单ref
+const tableRef = ref() // 表格ref
 
 /* 工具栏显隐 */
 const showToolButton = (key: 'refresh' | 'size' | 'setting') => {
@@ -178,26 +202,21 @@ const tableColumns = computed(() => {
   return initColumns.value.filter((item: any) => item._show)
 })
 
-const { state, getTableList, handleSearch, handleReset, onUpdatePage, onUpdatePageSize } = useTable(
-  props.requestApi,
-  props.requestAuto,
-  props.initParams,
-  props.isPageApi,
-  props.dataCallback,
-  props.requestError,
-  basicForm
-)
+/* 勾选 */
+const { checkState, clearCheck, handleCheck, getCheckValue } = useCheck(emit)
 
-/* 初始化表格 */
-onMounted(() => {
-  props.requestAuto && getTableList()
-})
-
-/* 刷新 */
-function refresh() {
-  checkedRowKeys.value = []
-  getTableList()
-}
+/* api请求 */
+const {
+  state,
+  refresh,
+  handleSearch,
+  handleReset,
+  onUpdatePage,
+  onUpdatePageSize,
+  getTableValue,
+  getPageValue,
+  setLoading
+} = useTable(props, basicForm, clearCheck)
 
 /* 分页 */
 const newPagination = computed(() => {
@@ -246,38 +265,34 @@ function openDrawer(bool: boolean) {
   active.value = bool
 }
 
-/* 勾选 */
-const checkedRowKeys = ref<DataTableRowKey[]>([])
-function handleCheck(rowKeys: DataTableRowKey[], rows, meta) {
-  checkedRowKeys.value = rowKeys
-  emit('update:checked-row-keys', rowKeys, rows, meta)
-}
-
 /* 表格高度 */
-const tableRef = ref() // table 实例
 const { tableMaxHeight } = useTableSize(tableRef, props.resizeHeightOffset)
 const height = computed(() => {
   return props.maxHeight || tableMaxHeight.value
 })
 
 /* 表格宽度 */
-const tableWidth = tableColumns.value.reduce(
-  (num, item) => (num += item.width || item.minWidth || 100),
-  0
-)
 const scrollWidth = computed(() => {
+  const tableWidth = tableColumns.value.reduce(
+    (num, item) => (num += item.width || item.minWidth || 100),
+    0
+  )
   return props.scrollX || tableWidth
 })
 
 defineExpose({
+  basicForm,
+  tableRef,
+  tableColumns,
   refresh,
   openDrawer,
-  state,
-  tableColumns,
-  tableRef,
   height,
   scrollWidth,
-  basicForm
+  clearCheck,
+  getCheckValue,
+  getTableValue,
+  getPageValue,
+  setLoading
 })
 </script>
 
