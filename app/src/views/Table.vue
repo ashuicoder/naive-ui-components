@@ -55,6 +55,21 @@ function handleCheck(keys, rows, meta) {
   console.log('meta: ', meta)
 }
 
+const value = ref<any>([])
+
+setTimeout(() => {
+  value.value = [
+    {
+      label: '男',
+      value: 'male'
+    },
+    {
+      label: '女',
+      value: 'female'
+    }
+  ]
+}, 3000)
+
 // 搜索栏配置
 const searchProps: FormProps = {
   schemas: [
@@ -77,16 +92,7 @@ const searchProps: FormProps = {
       labelPlacement: 'left',
       defaultValue: 'male',
       componentProps: {
-        options: [
-          {
-            label: '男',
-            value: 'male'
-          },
-          {
-            label: '女',
-            value: 'female'
-          }
-        ]
+        options: value
       }
     },
     {
