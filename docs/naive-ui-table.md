@@ -153,7 +153,7 @@ async function getTableList(params: any) {
 
 ## 表格右上角-工具按钮
 
-右上角工具按钮，由`toolButton`属性控制；默认为`true`，表示展示全部按钮：
+`toolButton`属性：控制右上角工具按钮；默认为`true`，表示展示全部按钮：
 
 - 【刷新】：刷新当前页数据
 - 【密度】：也就是表格的`size`属性
@@ -196,7 +196,7 @@ toolButton?: ('refresh' | 'size' | 'setting')[] | boolean
 
 ---
 
-若要增加内容，通过插槽`toolButton`可以写入自定义内容：
+`toolButton`插槽：若要增加内容，通过该插槽可以写入自定义内容
 
 ```vue{6-8}
 <template>
@@ -277,7 +277,7 @@ async function getTableList(params: any) {
 
 可在 columns 的`operation`列配置里，用`render`函数自定义列。
 
-```vue{17-25}
+```vue{18-26}
 <template>
   <NaiveUiTable :columns="columns" :requestApi="getTableList"></NaiveUiTable>
 </template>
@@ -293,6 +293,7 @@ const columns: TableColumns = [
     title: '操作',
     key: 'operation',
     fixed: 'right',
+    align: 'center',
     width: 330,
     render(row) {
       return (
@@ -339,7 +340,7 @@ const columns: TableColumns = [
   { title: '姓名', key: 'name'},
   { title: '年龄', key: 'age' },
   { title: '地址', key: 'address' },
-  { title: '操作', key: 'operation', fixed: 'right', width: 330 }
+  { title: '操作', key: 'operation', fixed: 'right', align: 'center', width: 330 }
 ]
 
 function fun(type, row) {
@@ -352,13 +353,15 @@ async function getTableList(params: any) {
 </script>
 ```
 
-## 顶部带查询表单
+## 查询表单
 
-- 查询表单调用[**`naive-ui-form`**](/naive-ui-form)组件，`search-props`对象将全部传递给 **`BasicForm`** 组件；
+传入`search-props`配置将开启查询表单：
+
+- 查询表单调用[**`naive-ui-form`**](/naive-ui-form)组件，`search-props`配置自行参考表单组件；
 - 查询、重置功能已内置在表格组件里，无需额外传输；
 - 查询参数，已经与表格接口的参数合并；如需额外处理，可在`requestApi`接口请求之前处理。
 
-```vue{5}
+```vue{5,20-33}
 <template>
   <NaiveUiTable
     :columns="columns"
@@ -384,14 +387,11 @@ const search: FormProps = {
       label: '姓名',
       field: 'name',
       type: 'input',
-      required: true,
     },
     {
       label: '年龄',
       field: 'age',
       type: 'input-number',
-      required: true,
-      requiredType: 'number'
     }
   ]
 }
@@ -402,27 +402,78 @@ async function getTableList(params: any) {
 </script>
 ```
 
-::: info 组件内部
+::: info 组件内部：`search-props`对象将全部传递给useForm
 
-```vue
-<BasicForm
-  v-if="searchProps"
-  ref="basicForm"
-  :grid="{ cols: 4, xGap: 14 }"
-  submitBtnText="查询"
-  :defaultShowExpandRows="1"
-  labelPlacement="left"
-  @submit="handleSearch"
-  @reset="handleReset"
-  v-bind="searchProps"
-></BasicForm>
+```js
+const [register] = useForm(props.searchProps)
 ```
 
 :::
 
-## 可勾选
+## 查询表单-插槽
 
-只需传入`@update:checked-row-keys`回调函数，就可获取到已勾选的`keys`
+- 查询表单也可以使用插槽，用法与`naive-fi-form`组件的插槽完全一致，自行参考`naive-fi-form`的插槽用法。
+
+::: danger 注意：
+slot插槽名不能与`columns`的`key`重复。否则该插槽会同时作为表格的自定义列的内容。
+:::
+
+```vue{8-15,34-35}
+<template>
+  <NaiveUiTable
+    :columns="columns"
+    :requestApi="getTableList"
+    :search-props="search"
+  >
+    <!-- 查询表单插槽 -->
+    <template #username="{ formValue, field }">
+      <input
+        v-model="formValue[field]"
+        type="text"
+        placeholder="这是插槽"
+        style="border: 1px solid #ccc"
+      />
+    </template>
+  </NaiveUiTable>
+</template>
+
+<script setup lang="tsx">
+import type { TableColumns, FormProps } from 'naive-ui-table'
+
+const columns: TableColumns = [
+  { title: '姓名', key: 'name' },
+  { title: '年龄', key: 'age' },
+  { title: '地址', key: 'address' }
+]
+
+// 搜索栏配置
+const search: FormProps = {
+  schemas: [
+    {
+      label: '姓名',
+      field: 'name',
+      type: 'slot',
+      slot: 'username'
+    },
+    {
+      label: '年龄',
+      field: 'age',
+      type: 'input-number'
+    }
+  ]
+}
+
+async function getTableList(params: any) {
+  return await api(params)
+}
+</script>
+```
+
+## 获取勾选数据
+
+### 方式一：`@update:checked-row-keys`回调
+
+传入`@update:checked-row-keys`回调函数，可**实时获取**到已勾选的`keys, rows, meta`。
 ::: tip 注意
 
 - 该`@update:checked-row-keys`与naive-ui的`@update:checked-row-keys`完全一致；
@@ -430,14 +481,13 @@ async function getTableList(params: any) {
 
 :::
 
-```vue{5,14,20-23}
+```vue{5,13,20-22}
 <template>
   <NaiveUiTable
     :columns="columns"
     :requestApi="getTableList"
     @update:checked-row-keys="handleCheck"
-  >
-  </NaiveUiTable>
+  ></NaiveUiTable>
 </template>
 
 <script setup lang="tsx">
@@ -457,6 +507,42 @@ function handleCheck(keys: Array<string | number>) {
 
 async function getTableList(params: any) {
   return await api(params)
+}
+</script>
+```
+
+### 方式二：`getCheckValue`方法
+
+```vue{29}
+<template>
+  <NaiveUiTable
+    :ref="tableRef"
+    :columns="columns"
+    :requestApi="getTableList"
+  ></NaiveUiTable>
+  <button @click="func">获取勾选的数据</button>
+</template>
+
+<script setup lang="tsx">
+import type { TableColumns, TableInstance } from 'naive-ui-table'
+
+// 表格配置项
+const columns: TableColumns = [
+  { type: 'selection', multiple: true }, // 勾选列
+  { title: '姓名', key: 'name' },
+  { title: '年龄', key: 'age' },
+  { title: '地址', key: 'address' }
+]
+
+async function getTableList(params: any) {
+  return await api(params)
+}
+
+const tableRef = ref<TableInstance>()
+
+// 获取勾选的数据信息
+function func() {
+  const checkInfo = tableRef.value?.getCheckValue()
 }
 </script>
 ```
@@ -563,11 +649,11 @@ async function getTableList(params: any) {
 ## 数据处理回调`dataCallback`
 
 - 该函数**接收接口返回的原始数据，返回目标表格数据**。
-- 如果数据格式不符合要求、接口请求后立马需要执行某些逻辑，有两种解决方式：
-  - 方式一：在`dataCallback`回调函数里处理；
-  - 方式二：在`requestApi`接口请求里处理。
+- 如果数据格式不符合要求、或者接口请求后立马需要执行某些逻辑，有两种解决方式：
+  - 方式一：在`requestApi`接口请求里处理；
+  - 方式二：在`dataCallback`回调函数里处理。
 
-```vue{5,19-26}
+```vue{5,24-31}
 <template>
   <NaiveUiTable
     :columns="columns"
@@ -586,18 +672,18 @@ const columns: TableColumns = [
   { title: '地址', key: 'address' }
 ]
 
-// 方式一：dataCallback。返回正确的表格数据，或增加其他逻辑
+// 方式一：接口请求里。返回正确的表格数据，或增加其他逻辑
+async function getTableList(params: any) {
+  return await api(params)
+}
+
+// 方式二：dataCallback。返回正确的表格数据，或增加其他逻辑
 function dataCallback(data) {
   data.records = data.records.map((item, index) => {
     item.name = item.name + index
     return item
   })
   return data
-}
-
-// 方式二：接口请求里。返回正确的表格数据，或增加其他逻辑
-async function getTableList(params: any) {
-  return await api(params)
 }
 </script>
 ```
@@ -617,11 +703,11 @@ async function getTableList(params: any) {
 | 属性               | 类型                                              | 描述                                                                               | 必传 | 默认值 |
 | ------------------ | ------------------------------------------------- | ---------------------------------------------------------------------------------- | ---- | ------ |
 | columns            | `DataTableColumns`                                | 表格列配置，除`vif`外，与naive-ui的完全一致                                        | 是   | -      |
-| requestApi         | `(params: any) => Promise<any>`                   | 请求接口，返回Promise                                                              | 否   | -      |
+| requestApi         | `(params: any) => Promise<any>`                   | 请求接口，返回带结果的Promise                                                      | 否   | -      |
 | search-props       | `FormProps`                                       | 顶部查询表单配置                                                                   | 否   | -      |
 | requestAuto        | `boolean`                                         | 是否初始化自动请求接口                                                             | 否   | true   |
 | isPageApi          | `boolean`                                         | 接口是否为分页接口（为true，接口参数里添加分页参数，且分页变化会重新查询表格数据） | 否   | true   |
-| initParams         | `object`                                          | 初始化请求参数                                                                     | 否   | -      |
+| initParams         | `object`                                          | 额外的请求接口的参数                                                               | 否   | -      |
 | dataCallback       | `(data: object) => object`                        | 接收接口返回的原始数据，返回目标表格数据。（数据格式不符合要求时使用）             | 否   | -      |
 | requestError       | `(error: Error) => void`                          | 请求接口出错时回调                                                                 | 否   | -      |
 | toolButton         | `('refresh' \| 'size' \| 'setting')[] \| boolean` | 是否显示工具栏按钮                                                                 | 否   | true   |
@@ -646,10 +732,15 @@ async function getTableList(params: any) {
 
 通过ref调用以下方法：
 
-| 名称       | 类型                      | 说明           |
-| ---------- | ------------------------- | -------------- |
-| refresh    | `() => void`              | 刷新表格数据   |
-| openDrawer | `(bool: boolean) => void` | 打开列设置抽屉 |
+| 名称          | 类型                                                     | 说明            |
+| ------------- | -------------------------------------------------------- | --------------- |
+| refresh       | `() => void`                                             | 刷新表格数据    |
+| openDrawer    | `(bool: boolean) => void`                                | 打开列设置抽屉  |
+| clearCheck    | `() => void`                                             | 清除选中        |
+| setLoading    | `(bool: boolean) => void`                                | 设置表格loading |
+| getTableValue | `() => any[]`                                            | 获取表格数据    |
+| getPageValue  | `() => { current: number, size: number, total: number }` | 获取分页数据    |
+| getCheckValue | `() => { keys: DataTableRowKey[]; rows: object[] }`      | 获取勾选数据    |
 
 ## States
 
@@ -657,17 +748,54 @@ async function getTableList(params: any) {
 
 | 名称         | 类型               | 说明                                    |
 | ------------ | ------------------ | --------------------------------------- |
-| basicForm    | `FormInstance`     | 搜索表单组件`BasicForm`的ref实例        |
+| basicForm    | `FormInstance`     | 查询表单组件`BasicForm`的ref实例        |
 | tableRef     | `DataTableInst`    | `naive-ui`的`n-data-table`组件的ref实例 |
-| tableColumns | `DataTableColumns` | 最终传入`n-data-table`组件的columns属性   |
-| height       | `number`           | 最终传入`n-data-table`组件的maxHeight     |
-| scrollWidth  | `number`           | 最终传入`n-data-table`组件的scrollX       |
+| tableColumns | `DataTableColumns` | 最终传入`n-data-table`组件的columns属性 |
+| height       | `number`           | 最终传入`n-data-table`组件的maxHeight   |
+| scrollWidth  | `number`           | 最终传入`n-data-table`组件的scrollX     |
 
 ## Slots
 
-| 名称          | 参数                                | 说明                          |
-| ------------- | ----------------------------------- | ----------------------------- |
-| tableHeader   | ()                                  | 表格左上角的内容展示          |
-| toolButton    | ()                                  | 表格右上角的内容展示          |
-| operation     | (rowData: object, rowIndex: number) | 表格操作列的内容展示          |
-| [columns.key] | (rowData: object, rowIndex: number) | 表格[columns.key]列的内容展示 |
+| 名称           | 参数                                | 说明                            |
+| -------------- | ----------------------------------- | ------------------------------- |
+| tableHeader    | ()                                  | 表格左上角的内容展示            |
+| toolButton     | ()                                  | 表格右上角的内容展示            |
+| operation      | (rowData: object, rowIndex: number) | 表格操作列的内容展示            |
+| [columns.key]  | (rowData: object, rowIndex: number) | 表格[columns.key]列的自定义内容 |
+| [schemas.slot] | (formValue: object, field: string)  | 表单[schemas.slot]的自定义内容  |
+
+## TS类型
+
+**TableColumns：**
+
+```ts
+import type { TableColumns } from 'naive-ui-table'
+
+const columns: TableColumns<any> = [{ title: '姓名', key: 'name' }]
+```
+
+**TableInstance：**
+
+```ts
+import type { TableInstance } from 'naive-ui-table'
+
+const tableRef = ref<TableInstance>()
+```
+
+**其他：来自`naive-ui-form`**
+
+```ts
+import type { FormProps, FormInstance } from 'naive-ui-table'
+
+const search: FormProps = {
+  schemas: [
+    {
+      label: '关键词',
+      field: 'name',
+      type: 'input'
+    }
+  ]
+}
+
+const formRef = ref<FormInstance>()
+```
