@@ -1,19 +1,15 @@
-import { reactive, type Ref } from 'vue'
+import { reactive, onMounted, type Ref } from 'vue'
 import { PageField, SizeField, ListField, TotalField, DefaultPageSize } from '../const'
 import type { TableProps, FormInstance } from '../types'
 
 export function useTable(
-  api: TableProps['requestApi'],
-  requestAuto: TableProps['requestAuto'],
-  initParams: TableProps['initParams'],
-  isPageApi: TableProps['isPageApi'],
-  dataCallback: TableProps['dataCallback'],
-  requestError: TableProps['requestError'],
-  basicForm: Ref<FormInstance | null>
+  { requestApi, requestAuto, initParams, isPageApi, dataCallback, requestError }: TableProps,
+  basicForm: Ref<FormInstance | null>,
+  clearCheck: () => void
 ) {
   const state = reactive({
     tableData: [], // 表格数据
-    loading: api && requestAuto ? true : false,
+    loading: requestApi && requestAuto ? true : false,
     // 分页数据
     pageAble: {
       current: 1,
@@ -22,9 +18,14 @@ export function useTable(
     }
   })
 
+  /* 初始化表格 */
+  onMounted(() => {
+    requestAuto && refresh()
+  })
+
   // 获取表格数据
-  async function getTableList() {
-    if (!api) return
+  async function refresh() {
+    if (!requestApi) return
     state.loading = true
     try {
       // 分页参数
@@ -43,7 +44,7 @@ export function useTable(
       const filterParam = Object.fromEntries(
         Object.entries(totalParam).filter(([_, v]) => v != null)
       )
-      let res = await api(filterParam)
+      let res = await requestApi(filterParam)
       dataCallback && (res = dataCallback(res))
       state.tableData = isPageApi ? res[ListField] : res
       if (isPageApi) {
@@ -59,6 +60,7 @@ export function useTable(
       else throw new Error(err || '请求失败！')
     }
     closeLoading()
+    clearCheck()
   }
 
   function closeLoading() {
@@ -69,26 +71,46 @@ export function useTable(
   // 查询
   function handleSearch() {
     state.pageAble.current = 1
-    getTableList()
+    refresh()
   }
 
   // 重置
   function handleReset() {
     state.pageAble.current = 1
-    getTableList()
+    refresh()
   }
 
   // 当前页改变
   function onUpdatePage(page: number) {
     state.pageAble.current = page
-    getTableList()
+    refresh()
   }
   // 每条页数改变
   function onUpdatePageSize(pageSize: number) {
     state.pageAble.size = pageSize
     state.pageAble.current = 1
-    getTableList()
+    refresh()
   }
 
-  return { state, getTableList, handleSearch, handleReset, onUpdatePage, onUpdatePageSize }
+  function getTableValue() {
+    return state.tableData
+  }
+  function getPageValue() {
+    return state.pageAble
+  }
+  function setLoading(load: boolean) {
+    state.loading = load
+  }
+
+  return {
+    state,
+    refresh,
+    handleSearch,
+    handleReset,
+    onUpdatePage,
+    onUpdatePageSize,
+    getTableValue,
+    getPageValue,
+    setLoading
+  }
 }
