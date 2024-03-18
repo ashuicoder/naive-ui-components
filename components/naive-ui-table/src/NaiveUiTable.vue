@@ -10,7 +10,11 @@
       @submit="handleSearch"
       @reset="handleReset"
       v-bind="searchProps"
-    ></BasicForm>
+    >
+      <template v-for="(_, slotName) in formSlot" :key="slotName" #[slotName]="scoped">
+        <slot :name="slotName" :formValue="scoped.formValue" :field="scoped.field"></slot>
+      </template>
+    </BasicForm>
 
     <div class="table-main">
       <!-- 表格头部，操作按钮 -->
@@ -108,7 +112,7 @@ import {
   NIcon,
   NSpace
 } from 'naive-ui'
-import { ref, computed, onMounted, useSlots } from 'vue'
+import { ref, computed, useSlots } from 'vue'
 import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
 import { BasicForm, type FormInstance } from 'naive-ui-form'
 import { cloneDeep } from 'lodash-es'
@@ -132,6 +136,23 @@ const props = withDefaults(defineProps<TableProps>(), {
   resizeHeightOffset: 25,
   toolButton: true,
   remote: undefined
+})
+
+/* 表单插槽 */
+const slots = useSlots()
+const formSlot = computed(() => {
+  const slotName = props.searchProps?.schemas?.reduce((arr, item) => {
+    if (item.type === 'slot' && item.slot) {
+      arr.push(item.slot)
+    }
+    return arr
+  }, [] as string[])
+  return slotName?.reduce((obj: any, key: string) => {
+    if (slots[key]) {
+      obj[key] = slots[key]
+    }
+    return obj
+  }, {})
 })
 
 const emit = defineEmits<{
