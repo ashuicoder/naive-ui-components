@@ -7,6 +7,16 @@
       :search-props="searchProps"
       @update:checked-row-keys="handleCheck"
     >
+      <!-- 搜索表单插槽 -->
+      <template #username="{ formValue, field }">
+        <input
+          v-model="formValue[field]"
+          type="text"
+          placeholder="Slot Placeholder"
+          style="border: 1px solid #ccc"
+        />
+      </template>
+
       <!-- 表格header按钮 -->
       <template #tableHeader>
         <n-button type="primary"> 新增 </n-button>
@@ -74,22 +84,21 @@ setTimeout(() => {
 const searchProps: FormProps = {
   schemas: [
     {
-      label: '姓名',
-      field: 'name',
-      type: 'input',
-      labelPlacement: 'left'
+      field: 'username',
+      type: 'slot',
+      label: '用户名',
+      required: true,
+      slot: 'username'
     },
     {
       label: '年龄',
       field: 'age',
-      type: 'input-number',
-      labelPlacement: 'left'
+      type: 'input-number'
     },
     {
       label: '性别',
       field: 'sex',
       type: 'select',
-      labelPlacement: 'left',
       defaultValue: 'male',
       componentProps: {
         options: value
@@ -98,14 +107,12 @@ const searchProps: FormProps = {
     {
       label: '身份证号',
       field: 'idCode',
-      type: 'input',
-      labelPlacement: 'left'
+      type: 'input'
     },
     {
       label: '地址',
       field: 'address',
-      type: 'input',
-      labelPlacement: 'left'
+      type: 'input'
     }
   ]
 }
@@ -146,7 +153,7 @@ const columns: TableColumns = [
     // width: 400,
     align: 'center'
   },
-  { title: '操作', key: 'operation', fixed: 'right', width: 330 }
+  { title: '操作', key: 'operation', fixed: 'right', align: 'center', width: 330 }
 ]
 
 async function getTableList(params: any) {
