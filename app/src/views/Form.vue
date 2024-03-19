@@ -26,23 +26,29 @@ import { ref } from 'vue'
 const selectList = ref<Recordable[]>([])
 const schemas: FormSchema[] = [
   {
-    type: 'upload',
-    label: '上传',
-    field: 'avatar',
-    required: true,
-    requiredType: 'array',
-    componentProps: {
-      accept: '.png,.jpg',
-      listType: 'text'
-    },
-    defaultValue: [
-      {
-        id: '1',
-        url: 'https://eibp-frontend.oss-cn-hangzhou.aliyuncs.com/portal-website/images1/46.png',
-        name: '自定义上传的'
-      }
-    ]
+    type: 'switch',
+    label: '选择',
+    field: 'age',
+    tip: '233333333333333'
   }
+  // {
+  //   type: 'upload',
+  //   label: '上传',
+  //   field: 'avatar',
+  //   required: true,
+  //   requiredType: 'array',
+  //   componentProps: {
+  //     accept: '.png,.jpg',
+  //     listType: 'text'
+  //   },
+  //   defaultValue: [
+  //     {
+  //       id: '1',
+  //       url: 'https://eibp-frontend.oss-cn-hangzhou.aliyuncs.com/portal-website/images1/46.png',
+  //       name: '自定义上传的'
+  //     }
+  //   ]
+  // }
   // {
   //   label: '姓名',
   //   field: 'name',
