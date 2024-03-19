@@ -29,7 +29,8 @@ const schemas: FormSchema[] = [
     type: 'switch',
     label: '选择',
     field: 'age',
-    tip: '233333333333333'
+    tip: '233333333333333',
+    style: 'width: auto'
   }
   // {
   //   type: 'upload',

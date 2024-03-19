@@ -534,8 +534,7 @@ const [register] = useForm({
 
 | 字段            | 类型                             | 描述                                                                                                                                           | 是否必填 |
 | --------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| tip             | `string`或`() => VNode`          | 填写此字段会在label后面出现一个“问号”，鼠标移入就会显示该字段                                                                                  | 否       |
-| tipIconProps    | Object                           | 在label后面”问号“的props，可以传入[n-icon](https://ui.naiveadmin.com/zh-CN/os-theme/components/icon)的props                                    | 否       |
+| tip             | `string`或`() => VNode`          | 填写自此字段会在表单下面生成一句提示信息                                                                                                       | 否       |
 | field           | string                           | 整个表单的值是一个对象，该字段就是描述需要v-model到该字段上，如该字段设置为"name"，那么表单的值就是{name: xxx}                                 | 是       |
 | type            | string                           | 见[type字段说明](#type字段说明)                                                                                                                | 是       |
 | defaultValue    | any                              | 该项的默认值                                                                                                                                   | 否       |
