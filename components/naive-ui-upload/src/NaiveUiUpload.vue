@@ -128,7 +128,7 @@ watch(
     if (!isChangeFromProps) return
     fileList.value = val.map((item) => {
       return {
-        id: item.id || window.crypto?.randomUUID() || Math.random().toString(36).substring(2, 9),
+        id: item.id || Math.random().toString(36).substring(2, 9),
         url: item.url,
         name: item.name,
         status: 'finished'
