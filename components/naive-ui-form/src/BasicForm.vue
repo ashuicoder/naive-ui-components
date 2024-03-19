@@ -24,23 +24,14 @@
             :path="schema.field"
             :rule="getFormRule(schema)"
           >
-            <template v-if="schema.tip" #label>
-              <div style="display: flex; align-items: center">
-                <span>{{ schema.label }}</span>
-
-                <NPopover>
-                  <template #trigger>
-                    <NIcon color="#999" :size="18" v-bind="schema.tipIconProps">
-                      <HelpCircleOutline></HelpCircleOutline>
-                    </NIcon>
-                  </template>
-                  <NText> {{ schema.tip }}</NText>
-                </NPopover>
+            <div style="width: 100%">
+              <RenderComponent v-if="schema.type !== 'slot'" :schema="schema" :record="formValue">
+              </RenderComponent>
+              <slot v-else :name="schema.slot" :formValue="formValue" :field="schema.field"></slot>
+              <div v-if="schema.tip" style="margin-top: 8px">
+                <NText type="warning">{{ schema.tip }}</NText>
               </div>
-            </template>
-            <RenderComponent v-if="schema.type !== 'slot'" :schema="schema" :record="formValue">
-            </RenderComponent>
-            <slot v-else :name="schema.slot" :formValue="formValue" :field="schema.field"></slot>
+            </div>
           </NFormItemGi>
         </template>
 
@@ -61,32 +52,24 @@
                   :path="`${schema.field}[${index}].${dynamicSchema.field}`"
                   :rule="getFormRule(dynamicSchema)"
                 >
-                  <template v-if="dynamicSchema.tip" #label>
-                    <div style="display: flex; align-items: center">
-                      <span>{{ dynamicSchema.label }}</span>
+                  <div style="width: 100%">
+                    <RenderComponent
+                      v-if="dynamicSchema.type !== 'slot'"
+                      :schema="dynamicSchema"
+                      :record="item"
+                    ></RenderComponent>
 
-                      <NPopover>
-                        <template #trigger>
-                          <NIcon color="#999" :size="18" v-bind="dynamicSchema.tipIconProps">
-                            <HelpCircleOutline></HelpCircleOutline>
-                          </NIcon>
-                        </template>
-                        <NText> {{ dynamicSchema.tip }}</NText>
-                      </NPopover>
+                    <slot
+                      v-else
+                      :name="dynamicSchema.slot"
+                      :formValue="item"
+                      :field="dynamicSchema.field"
+                    ></slot>
+
+                    <div v-if="schema.tip" style="margin-top: 8px">
+                      <NText type="warning">{{ schema.tip }}</NText>
                     </div>
-                  </template>
-                  <RenderComponent
-                    v-if="dynamicSchema.type !== 'slot'"
-                    :schema="dynamicSchema"
-                    :record="item"
-                  ></RenderComponent>
-
-                  <slot
-                    v-else
-                    :name="dynamicSchema.slot"
-                    :formValue="item"
-                    :field="dynamicSchema.field"
-                  ></slot>
+                  </div>
                 </NFormItemGi>
               </template>
               <NGridItem>

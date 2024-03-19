@@ -9,12 +9,20 @@ export default defineConfig({
   base: '/naive-ui-components/',
   lang: 'zh-CN',
   title: 'naive-ui-components',
-  head: [['link', { rel: 'icon', href: '/logo.svg' }]],
+  head: [['link', { rel: 'icon', href: '/naive-ui-components/logo.svg' }]],
   description: '基于naive-ui封装的一些组件',
   themeConfig: {
     logo: '/logo.svg',
     lastUpdated: {
-      text: '上次更新'
+      text: '上次更新',
+      formatOptions: {
+        dateStyle: 'full',
+        timeStyle: 'medium'
+      }
+    },
+    docFooter: {
+      prev: '上一页',
+      next: '下一页'
     },
     outline: 'deep',
     aside: true,
