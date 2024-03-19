@@ -35,8 +35,6 @@ interface Emits {
   (e: 'submit', val: Recordable): void
   (e: 'cancel'): void
 }
-const slots = useSlots()
-console.log(slots)
 const attrs = useAttrs()
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()

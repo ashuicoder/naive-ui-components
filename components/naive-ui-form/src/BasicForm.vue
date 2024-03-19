@@ -28,7 +28,7 @@
               <RenderComponent v-if="schema.type !== 'slot'" :schema="schema" :record="formValue">
               </RenderComponent>
               <slot v-else :name="schema.slot" :formValue="formValue" :field="schema.field"></slot>
-              <div v-if="schema.tip" style="margin-top: 8px">
+              <div v-if="schema.tip">
                 <NText type="warning">{{ schema.tip }}</NText>
               </div>
             </div>
@@ -66,7 +66,7 @@
                       :field="dynamicSchema.field"
                     ></slot>
 
-                    <div v-if="schema.tip" style="margin-top: 8px">
+                    <div v-if="schema.tip">
                       <NText type="warning">{{ schema.tip }}</NText>
                     </div>
                   </div>
@@ -142,20 +142,13 @@ import {
   NSpace,
   NButton,
   NIcon,
-  NPopover,
   NText,
   NDivider
 } from 'naive-ui'
 
 import to from 'await-to-js'
 
-import {
-  ChevronUp,
-  ChevronDown,
-  HelpCircleOutline,
-  RemoveCircleOutline,
-  AddCircleOutline
-} from '@vicons/ionicons5'
+import { ChevronUp, ChevronDown, RemoveCircleOutline, AddCircleOutline } from '@vicons/ionicons5'
 
 import RenderComponent from './components/RenderComponent.vue'
 
