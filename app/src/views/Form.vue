@@ -31,7 +31,7 @@ const schemas: FormSchema[] = [
     field: 'age',
     tip: '233333333333333',
     style: 'width: auto'
-  }
+  },
   // {
   //   type: 'upload',
   //   label: '上传',
@@ -71,24 +71,56 @@ const schemas: FormSchema[] = [
   //   type: 'text',
   //   defaultValue: '信息展示'
   // },
-  // {
-  //   type: 'radio',
-  //   field: 'sex',
-  //   label: '姓别',
-  //   componentProps: {
-  //     options: [
-  //       {
-  //         label: '男',
-  //         value: 0
-  //       },
-  //       {
-  //         label: '女',
-  //         value: 1
-  //       }
-  //     ]
-  //   },
-  //   defaultValue: 0
-  // },
+  {
+    type: 'radio',
+    field: 'sex',
+    label: '姓别',
+    required: true,
+    componentProps: {
+      options: [
+        {
+          label: '男',
+          value: '01'
+        },
+        {
+          label: '女',
+          value: '02'
+        }
+      ]
+    }
+  },
+  {
+    label: '参考教程',
+    type: 'dynamic',
+    field: 'teachingMaterials',
+
+    dynamicOptions: [
+      {
+        label: '教程封面',
+        field: 'cover',
+        type: 'upload',
+        required: true,
+        requiredType: 'array',
+        componentProps: {
+          max: 1,
+          accept: '.jpg,.jpeg,.png',
+          size: 2
+        }
+      },
+      {
+        label: '教程名称',
+        type: 'input',
+        field: 'name',
+        required: true
+      },
+      {
+        label: '出版社',
+        type: 'input',
+        field: 'publisher',
+        required: true
+      }
+    ]
+  }
   // {
   //   label: '上传',
   //   field: 'avatar',
@@ -114,7 +146,7 @@ const schemas: FormSchema[] = [
   // }
 ]
 
-const showModal = ref(true)
+const showModal = ref(false)
 const [register] = useForm({
   grid: {
     cols: 1,
