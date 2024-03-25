@@ -159,7 +159,7 @@ const emit = defineEmits<{
   (event: 'update:checked-row-keys', ...args: any[]): void
 }>()
 
-const [register] = useForm(props.searchProps)
+const [register, { reset, getValue, setValue, getFieldValue }] = useForm(props.searchProps)
 const basicForm = ref<FormInstance | null>(null) // 搜索表单ref
 const tableRef = ref() // 表格ref
 
@@ -189,6 +189,7 @@ const initColumns = ref(
     ?.filter(checkIfShow)
     .map((item: any) => {
       item._show = true
+      item.ellipsis = { tooltip: true }
       if (item.render) return item
       if (slot[item.key] && isFunction(slot[item.key])) {
         item.render = slot[item.key]
@@ -294,7 +295,11 @@ defineExpose({
   getCheckValue,
   getTableValue,
   getPageValue,
-  setLoading
+  setLoading,
+  reset,
+  getValue,
+  setValue,
+  getFieldValue
 })
 </script>
 
