@@ -44,4 +44,8 @@ export interface TableInstance {
   getTableValue(): any
   getPageValue(): any
   setLoading(loading: boolean): void
+  reset:FormInstance['reset']
+  getValue:FormInstance['getValue']
+  setValue:FormInstance['setValue']
+  getFieldValue:FormInstance['getFieldValue']
 }
