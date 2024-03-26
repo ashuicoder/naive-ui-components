@@ -732,15 +732,19 @@ function dataCallback(data) {
 
 通过ref调用以下方法：
 
-| 名称          | 类型                                                     | 说明            |
-| ------------- | -------------------------------------------------------- | --------------- |
-| refresh       | `() => void`                                             | 刷新表格数据    |
-| openDrawer    | `(bool: boolean) => void`                                | 打开列设置抽屉  |
-| clearCheck    | `() => void`                                             | 清除选中        |
-| setLoading    | `(bool: boolean) => void`                                | 设置表格loading |
-| getTableValue | `() => any[]`                                            | 获取表格数据    |
-| getPageValue  | `() => { current: number, size: number, total: number }` | 获取分页数据    |
-| getCheckValue | `() => { keys: DataTableRowKey[]; rows: object[] }`      | 获取勾选数据    |
+| 名称          | 类型                                                     | 说明                       |
+| ------------- | -------------------------------------------------------- | -------------------------- |
+| refresh       | `() => void`                                             | 刷新表格数据               |
+| openDrawer    | `(bool: boolean) => void`                                | 打开列设置抽屉             |
+| clearCheck    | `() => void`                                             | 清除选中                   |
+| setLoading    | `(bool: boolean) => void`                                | 设置表格loading            |
+| getTableValue | `() => any[]`                                            | 获取表格数据               |
+| getPageValue  | `() => { current: number, size: number, total: number }` | 获取分页数据               |
+| getCheckValue | `() => { keys: DataTableRowKey[]; rows: object[] }`      | 获取勾选数据               |
+| reset         | `() => void`                                             | 搜索表单：手动调用重置按钮 |
+| getValue      | `() => Recordable`                                       | 搜索表单：获取值           |
+| setValue      | `(value: Recordable) => void`                            | 搜索表单：设置值           |
+| getFieldValue | `(field: string) => any`                                 | 搜索表单：获取指定字段的值   |
 
 ## States
 

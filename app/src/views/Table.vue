@@ -49,14 +49,14 @@
 <script setup lang="tsx">
 import { ref } from 'vue'
 import { NaiveUiTable } from 'naive-ui-table'
-import type { TableColumns, FormProps } from 'naive-ui-table'
+import type { TableColumns, FormProps,TableInstance } from 'naive-ui-table'
 import { ModalForm } from 'naive-ui-form'
 import type { FormSchema } from 'naive-ui-form'
 import { NButton, NTag, NDrawer, NDrawerContent, NTooltip, useMessage } from 'naive-ui'
 
 const message = useMessage()
 
-const tableRef = ref()
+const tableRef = ref<TableInstance>()
 
 // 勾选回调
 function handleCheck(keys, rows, meta) {
