@@ -16,10 +16,11 @@ Buttons是基于naive-ui的按钮组件封装的组件，主要区别是使用*�
 
 Buttons有`config`、`btnType`、`param`、`spaceProps`四个自定义属性，同时可传入`naive-ui`的button的所有属性
 
-- **config**：按钮配置，必传（`BtnItem[]`），`BtnItem`里有以下六个自定义属性，同时可配置`naive-ui`的button的所有属性：
+- **config**：按钮配置，必传（`BtnItem[]`），`BtnItem`里有以下七个自定义属性，同时可配置`naive-ui`的button的所有属性：
   - label：按钮文字（`string`）
   - icon：图标（`Component`）
   - vif：是否显示（`boolean | ((param?: any) => boolean）`）
+  - disabled：是否禁用（`boolean | ((param?: any) => boolean）`）
   - auth：权限（`string[]`）
   - eventName：点击事件名称（`string`）
   - btnType：按钮类型（`'tableBtn' | 'other'`）
@@ -28,44 +29,39 @@ Buttons有`config`、`btnType`、`param`、`spaceProps`四个自定义属性，�
 - **spaceProps**：`n-space`组件的属性
 
 ## 基础使用
+
 项目里该组件已全局注册，可直接使用。
+
 ```vue
 <template>
-	<Buttons
-		:config="config"
-		:param="row"
-		btnType="tableBtn"
-		@edit="edit"
-		@delete="del"
-	></Buttons>
+  <Buttons :config="config" :param="row" btnType="tableBtn" @edit="edit" @delete="del"></Buttons>
 </template>
 
 <script setup lang="tsx">
 import type { BtnItem } from 'comp/Buttons'
 
 const config: BtnItem[] = [
-	{
-		label: '编辑',
-		type: 'primary',
-		auth: ['BTN00460'],
-		eventName: 'edit'
-	},
-	{
-		label: '删除',
-		type: 'error',
-		auth: ['BTN00459'],
-		eventName: 'delete'
-	}
+  {
+    label: '编辑',
+    type: 'primary',
+    auth: ['BTN00460'],
+    eventName: 'edit'
+  },
+  {
+    label: '删除',
+    type: 'error',
+    auth: ['BTN00459'],
+    eventName: 'delete'
+  }
 ]
 
 function edit(row: any) {
-	console.log('编辑')
+  console.log('编辑')
 }
 function del(row: any) {
-	console.log('删除')
+  console.log('删除')
 }
 </script>
-
 ```
 
 ## 图标`icon`
@@ -208,16 +204,17 @@ function handleDelete() {
 如果给Buttons组件传递了`param`属性：
 
 - 该`param`就为点击事件的第一参数，`$event`为第二参数；**（注意：两种点击事件都有效）**
-- `vif`为`Function`时，该`param`为参数。
+- `vif`和`disabled`为`Function`时，该`param`为参数。
 
 |          | 不传`param`                 | 传递`param`                             |
 | -------- | --------------------------- | --------------------------------------- |
 | 点击事件 | `onClick: (e: Event) => {}` | `onClick: (param: any, e: Event) => {}` |
 | vif      | `vif: () => {}`             | `vif: (param: any) => {}`               |
+| disabled | `disabled: () => {}`        | `disabled: (param: any) => {}`          |
 
 完整例子：
 
-```vue{4,16-19,24,28-30}
+```vue{4,16-19,24-25,28-30}
 <template>
 	<Buttons
 		:config="config"
@@ -241,6 +238,7 @@ const config: BtnItem[] = [
 	{
 		label: '编辑',
 		type: 'primary',
+		disabled: (param: any) => param.name === '企安',
 		eventName: 'edit-data'
 	}
 ]
@@ -280,11 +278,37 @@ const config: BtnItem[] = [
 		vif: (param: any) => param.name === '企安',
 		onClick: () => console.log('编辑')
 	},
+]
+</script>
+```
+
+## 按钮禁用`disabled`
+
+`config.disabled`：（`boolean | (param?:object)=>boolean`），按钮是否禁用，不传表示启用。
+
+> 若组件上传递了`param`，`disabled`为函数时，`param`可作为函数的参数。
+
+```vue{12,18}
+<template>
+	<Buttons :config="config" :param="{ name: '企安' }"></Buttons>
+</template>
+
+<script setup lang="tsx">
+import type { BtnItem } from 'comp/Buttons'
+
+const config: BtnItem[] = [
 	{
-		label: '删除',
-		type: 'error',
-		onClick: () => console.log('删除')
-	}
+		label: '详情',
+		type: 'primary',
+		disabled: true,
+		onClick: () => console.log('详情')
+	},
+	{
+		label: '编辑',
+		type: 'primary',
+		disabled: (param: any) => param.name === '企安',
+		onClick: () => console.log('编辑')
+	},
 ]
 </script>
 ```
@@ -555,7 +579,7 @@ const config: BtnItem[] = [
 
 ## 在`naive-ui-table`中使用
 
-```vue{6,11-18,33-41,43-64,73-84}
+```vue{6,11-18,33-41,43-65,74-85}
 <template>
   <n-card>
     <NaiveUiTable :columns="columns" :requestApi="getTableList">
@@ -610,6 +634,7 @@ const operationBtn: BtnItem[] = [
   {
     label: '编辑',
     type: 'primary',
+    disabled: (row) => row.age < 10,
     auth: ['BTN00460'],
     eventName: 'edit'
   },
@@ -686,6 +711,9 @@ async function getTableList(params: object) {
 	</tr>
 	<tr>
 		<td>vif</td><td class="td">boolean | (param?:any)=>boolean</td><td>否</td><td>按钮是否回显（不传表示回显）</td>
+	</tr>
+	<tr>
+		<td>disabled</td><td class="td">boolean | (param?:any)=>boolean</td><td>否</td><td>按钮是否禁用（不传表示启用）</td>
 	</tr>
 	<tr>
 		<td>auth</td><td class="td">string[]</td><td>否</td><td>按钮权限（不传表示回显）</td>
