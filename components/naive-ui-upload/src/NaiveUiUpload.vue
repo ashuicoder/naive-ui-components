@@ -17,10 +17,10 @@
     <div v-if="accept || size" style="margin-top: 8px">
       <template v-if="accept"
         >支持<NText type="info">{{ accept }}</NText
-        >格式</template
+        >格式&nbsp;&nbsp;</template
       >
       <template v-if="size"
-        >，单个文件不超过<NText type="info">{{ size }}M</NText></template
+        >单个文件不超过<NText type="info">{{ size }}M</NText></template
       >
     </div>
     <NModal
