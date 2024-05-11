@@ -26,7 +26,7 @@ export function useTable(
   // 获取表格数据
   async function refresh() {
     if (!requestApi) return
-    state.loading = true
+
     try {
       // 分页参数
       const pageParam = isPageApi
@@ -42,6 +42,8 @@ export function useTable(
         await basicForm.value.validate()
         searchParam = basicForm.value?.getValue()
       }
+
+      state.loading = true
 
       // 总参数
       const totalParam = { ...initParams, ...pageParam, ...searchParam }

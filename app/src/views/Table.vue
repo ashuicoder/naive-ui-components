@@ -108,6 +108,7 @@ const searchProps: FormProps = {
     {
       label: '身份证号',
       field: 'idCode',
+      required: true,
       type: 'input'
     },
     {
