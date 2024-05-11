@@ -6,6 +6,7 @@
       :requestApi="getTableList"
       :search-props="searchProps"
       @update:checked-row-keys="handleCheck"
+      size="large"
     >
       <!-- 搜索表单插槽 -->
       <template #username="{ formValue, field }">
@@ -49,7 +50,7 @@
 <script setup lang="tsx">
 import { ref } from 'vue'
 import { NaiveUiTable } from 'naive-ui-table'
-import type { TableColumns, FormProps,TableInstance } from 'naive-ui-table'
+import type { TableColumns, FormProps, TableInstance } from 'naive-ui-table'
 import { ModalForm } from 'naive-ui-form'
 import type { FormSchema } from 'naive-ui-form'
 import { NButton, NTag, NDrawer, NDrawerContent, NTooltip, useMessage } from 'naive-ui'
@@ -87,12 +88,12 @@ const searchProps: FormProps = {
       field: 'username',
       type: 'slot',
       label: '用户名',
-      required: true,
       slot: 'username'
     },
     {
       label: '年龄',
       field: 'age',
+      requiredType: 'number',
       type: 'input-number'
     },
     {
