@@ -37,13 +37,18 @@ export function useTable(
         : {}
 
       // 查询参数
-      const searchParam = basicForm.value?.getValue() || {}
+      let searchParam = {}
+      if (basicForm.value) {
+        await basicForm.value.validate()
+        searchParam = basicForm.value?.getValue()
+      }
 
       // 总参数
       const totalParam = { ...initParams, ...pageParam, ...searchParam }
       const filterParam = Object.fromEntries(
         Object.entries(totalParam).filter(([_, v]) => v != null)
       )
+
       let res = await requestApi(filterParam)
       dataCallback && (res = dataCallback(res))
       state.tableData = isPageApi ? res[ListField] : res

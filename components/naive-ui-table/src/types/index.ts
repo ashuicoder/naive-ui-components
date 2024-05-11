@@ -21,6 +21,7 @@ export interface TableProps {
   requestAuto?: boolean // 是否自动执行请求 api（默认为true）
   pagination?: boolean | object // 表格分页配置
   isPageApi?: boolean // 接口是否为分页接口 （默认为true）
+  size?: 'small' | 'medium' | 'large' // 表格尺寸
   remote?: boolean // 是否异步
   maxHeight?: number | string // 表格最大高度
   scrollX?: number | string // 表格横向宽度
@@ -44,8 +45,8 @@ export interface TableInstance {
   getTableValue(): any
   getPageValue(): any
   setLoading(loading: boolean): void
-  reset:FormInstance['reset']
-  getValue:FormInstance['getValue']
-  setValue:FormInstance['setValue']
-  getFieldValue:FormInstance['getFieldValue']
+  reset: FormInstance['reset']
+  getValue: FormInstance['getValue']
+  setValue: FormInstance['setValue']
+  getFieldValue: FormInstance['getFieldValue']
 }

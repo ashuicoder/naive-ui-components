@@ -135,7 +135,8 @@ const props = withDefaults(defineProps<TableProps>(), {
   pagination: true,
   resizeHeightOffset: 25,
   toolButton: true,
-  remote: undefined
+  remote: undefined,
+  size: 'medium'
 })
 
 /* 表单插槽 */
@@ -159,7 +160,9 @@ const emit = defineEmits<{
   (event: 'update:checked-row-keys', ...args: any[]): void
 }>()
 
-const [register, { reset, getValue, setValue, getFieldValue }] = useForm(props.searchProps)
+const [register, { reset, getValue, setValue, getFieldValue }] = useForm(
+  props.searchProps
+)
 const basicForm = ref<FormInstance | null>(null) // 搜索表单ref
 const tableRef = ref() // 表格ref
 
@@ -169,7 +172,7 @@ const showToolButton = (key: 'refresh' | 'size' | 'setting') => {
 }
 
 /* 表格尺寸 */
-const tableSize = ref<'small' | 'medium' | 'large'>('medium')
+const tableSize = ref<'small' | 'medium' | 'large'>(props.size)
 const densityOptions = [
   { label: '紧凑', key: 'small' },
   { label: '默认', key: 'medium' },
