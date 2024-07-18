@@ -129,7 +129,6 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<TableProps>(), {
-  columns: () => [],
   requestAuto: true,
   isPageApi: true,
   pagination: true,
@@ -160,9 +159,7 @@ const emit = defineEmits<{
   (event: 'update:checked-row-keys', ...args: any[]): void
 }>()
 
-const [register, { reset, getValue, setValue, getFieldValue }] = useForm(
-  props.searchProps
-)
+const [register, { reset, getValue, setValue, getFieldValue }] = useForm(props.searchProps)
 const basicForm = ref<FormInstance | null>(null) // 搜索表单ref
 const tableRef = ref() // 表格ref
 
