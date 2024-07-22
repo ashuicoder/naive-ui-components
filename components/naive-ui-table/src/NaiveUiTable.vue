@@ -122,7 +122,7 @@ import { useCheck } from './hooks/useCheck'
 import ColumnSetting from './ColumnSetting.vue'
 import { isFunction } from './utils'
 import { PageSizes } from './const'
-import type { TableProps, Columns } from './types'
+import type { TableProps, Column } from './types'
 
 defineOptions({
   inheritAttrs: false
@@ -176,7 +176,7 @@ const densityOptions = [
   { label: '宽松', key: 'large' }
 ]
 
-function checkIfShow(action: Columns): boolean {
+function checkIfShow(action: Column): boolean {
   if (typeof action.vif === 'boolean') return action.vif
   if (typeof action.vif === 'function') return action.vif(action)
   return true
