@@ -16,7 +16,7 @@ export type Column<T = Recordable> = TableColumn<T>
 export type Columns<T = Recordable> = TableColumns<T>
 
 export interface TableProps {
-  columns: TableColumns // 列配置项
+  columns: TableColumns<any> // 列配置项
   searchProps?: FormProps // 传给BasicForm的属性
   requestApi?: (params: any) => Promise<any> // 请求表格数据的 api
   requestAuto?: boolean // 是否自动执行请求 api（默认为true）
