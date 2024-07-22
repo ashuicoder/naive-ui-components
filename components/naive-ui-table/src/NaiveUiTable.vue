@@ -122,7 +122,7 @@ import { useCheck } from './hooks/useCheck'
 import ColumnSetting from './ColumnSetting.vue'
 import { isFunction } from './utils'
 import { PageSizes } from './const'
-import type { TableProps, Columns, Column } from './types'
+import type { TableProps, Column } from './types'
 
 defineOptions({
   inheritAttrs: false
