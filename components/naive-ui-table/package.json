@@ -1,6 +1,6 @@
 {
   "name": "naive-ui-table",
-  "version": "1.0.35",
+  "version": "1.0.36",
   "private": false,
   "description": "基于naive-ui封装的表格组件",
   "main": "index.ts",

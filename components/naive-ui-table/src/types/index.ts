@@ -6,15 +6,14 @@ export type { FormProps, FormInstance }
 
 export type Recordable<T = any> = Record<string, T>
 
-type InternalRowData = Record<string, unknown>
+type CustomColumn<T> = {
+  vif?: boolean | ((column?: T) => boolean)
+}
+export type TableColumn<T = Recordable> = CustomColumn<T> & DataTableColumn<T>
+export type TableColumns<T = Recordable> = TableColumn<T>[]
 
-export type Columns<T = InternalRowData> = {
-  vif?: boolean | ((column?: Columns) => boolean)
-} & DataTableColumn<T>
-
-export type TableColumns<T = InternalRowData> = {
-  vif?: boolean | ((column?: Columns) => boolean)
-} & DataTableColumn<T>
+export type Column<T = Recordable> = TableColumn<T>
+export type Columns<T = Recordable> = TableColumns<T>
 
 export interface TableProps {
   columns: TableColumns // 列配置项
