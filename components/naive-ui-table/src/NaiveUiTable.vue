@@ -30,7 +30,9 @@
               <template #trigger>
                 <n-button circle @click="refresh">
                   <template #icon>
-                    <n-icon><SyncOutline /></n-icon>
+                    <n-icon>
+                      <SyncOutline />
+                    </n-icon>
                   </template>
                 </n-button>
               </template>
@@ -63,7 +65,9 @@
               <template #trigger>
                 <n-button circle @click="openDrawer(true)">
                   <template #icon>
-                    <n-icon><SettingsOutline /></n-icon>
+                    <n-icon>
+                      <SettingsOutline />
+                    </n-icon>
                   </template>
                 </n-button>
               </template>
@@ -177,7 +181,7 @@ const densityOptions = [
 ]
 
 function checkIfShow(action: Column): boolean {
-  if(isRef(action.vif)) return action.vif.value
+  if (isRef(action.vif)) return action.vif.value
   if (typeof action.vif === 'boolean') return action.vif
   if (typeof action.vif === 'function') return action.vif(action)
   return true
@@ -185,17 +189,18 @@ function checkIfShow(action: Column): boolean {
 
 /* 初始化列 */
 const slot = useSlots()
-const initColumns = computed(() => {
-  return cloneDeep(props.columns)?.filter(checkIfShow).map((item: any) => {
-    item._show = true
-    item.ellipsis = { tooltip: true }
-    if (item.render) return item
-    if (slot[item.key] && isFunction(slot[item.key])) {
-      item.render = slot[item.key]
-    }
-    return item
-  }) || []
-}
+const initColumns = ref(
+  cloneDeep(props.columns)
+    ?.filter(checkIfShow)
+    .map((item: any) => {
+      item._show = true
+      item.ellipsis = { tooltip: true }
+      if (item.render) return item
+      if (slot[item.key] && isFunction(slot[item.key])) {
+        item.render = slot[item.key]
+      }
+      return item
+    }) || []
 )
 
 /* 表格列 */
@@ -311,9 +316,11 @@ defineExpose({
     margin-bottom: 16px;
   }
 }
+
 .naive-ui-table :deep(.n-data-table-thead .n-data-table-th) {
   font-weight: 700;
 }
+
 .naive-ui-table :deep(.n-button + .n-button) {
   margin-left: 12px;
 }
