@@ -120,10 +120,10 @@ const searchProps: FormProps = {
   ]
 }
 
-const bool = ref(false)
+const bool = ref(true)
 
 // 表格配置项
-const columns = ref([
+let columns: TableColumns = [
   {
     type: 'selection',
     multiple: true
@@ -159,11 +159,11 @@ const columns = ref([
     align: 'center'
   },
   { title: '操作', key: 'operation', fixed: 'right', align: 'center', width: 330 }
-])
+]
 
 function test(){
   bool.value = !bool.value
-  // columns.value = [{
+  // columns = [{
   //   title: '年龄',
   //   key: 'age',
   //   align: 'center'
