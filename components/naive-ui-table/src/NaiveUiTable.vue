@@ -30,7 +30,9 @@
               <template #trigger>
                 <n-button circle @click="refresh">
                   <template #icon>
-                    <n-icon><SyncOutline /></n-icon>
+                    <n-icon>
+                      <SyncOutline />
+                    </n-icon>
                   </template>
                 </n-button>
               </template>
@@ -63,7 +65,9 @@
               <template #trigger>
                 <n-button circle @click="openDrawer(true)">
                   <template #icon>
-                    <n-icon><SettingsOutline /></n-icon>
+                    <n-icon>
+                      <SettingsOutline />
+                    </n-icon>
                   </template>
                 </n-button>
               </template>
@@ -112,15 +116,15 @@ import {
   NIcon,
   NSpace
 } from 'naive-ui'
-import { ref, computed, useSlots } from 'vue'
+import { ref, computed, useSlots, isRef, watch } from 'vue'
 import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
 import { BasicForm, useForm, type FormInstance } from 'naive-ui-form'
-import { cloneDeep } from 'lodash-es'
+
 import { useTable } from './hooks/useTable'
 import { useTableSize } from './hooks/useTableSize'
 import { useCheck } from './hooks/useCheck'
 import ColumnSetting from './ColumnSetting.vue'
-import { isFunction } from './utils'
+import { createInitColumns } from './utils'
 import { PageSizes } from './const'
 import type { TableProps, Column } from './types'
 
@@ -176,27 +180,13 @@ const densityOptions = [
   { label: '宽松', key: 'large' }
 ]
 
-function checkIfShow(action: Column): boolean {
-  if (typeof action.vif === 'boolean') return action.vif
-  if (typeof action.vif === 'function') return action.vif(action)
-  return true
-}
-
 /* 初始化列 */
 const slot = useSlots()
-const initColumns = ref(
-  cloneDeep(props.columns)
-    ?.filter(checkIfShow)
-    .map((item: any) => {
-      item._show = true
-      item.ellipsis = { tooltip: true }
-      if (item.render) return item
-      if (slot[item.key] && isFunction(slot[item.key])) {
-        item.render = slot[item.key]
-      }
-      return item
-    })
-)
+const initColumns = ref(createInitColumns(props.columns, slot))
+
+watch(() => props.columns, (val) => {
+  initColumns.value = createInitColumns(val, slot)
+}, { deep: true })
 
 /* 表格列 */
 const tableColumns = computed(() => {
@@ -311,9 +301,11 @@ defineExpose({
     margin-bottom: 16px;
   }
 }
+
 .naive-ui-table :deep(.n-data-table-thead .n-data-table-th) {
   font-weight: 700;
 }
+
 .naive-ui-table :deep(.n-button + .n-button) {
   margin-left: 12px;
 }

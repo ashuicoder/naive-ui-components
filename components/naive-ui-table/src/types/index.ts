@@ -1,4 +1,4 @@
-import type { ComputedRef } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
 import type { DataTableColumn, DataTableRowKey } from 'naive-ui'
 import type { Props as FormProps, FormInstance } from 'naive-ui-form'
 
@@ -7,7 +7,7 @@ export type { FormProps, FormInstance }
 export type Recordable<T = any> = Record<string, T>
 
 type CustomColumn<T> = {
-  vif?: boolean | ((column?: T) => boolean)
+  vif?: boolean | ((column?: T) => boolean) | Ref<boolean>
 }
 export type TableColumn<T = Recordable> = CustomColumn<T> & DataTableColumn<T>
 export type TableColumns<T = Recordable> = TableColumn<T>[]

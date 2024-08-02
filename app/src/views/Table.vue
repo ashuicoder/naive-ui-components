@@ -44,6 +44,8 @@
     </NaiveUiTable>
 
     <ModalForm v-model:show="showModal" :schemas="schemas" title="新增用户"> </ModalForm>
+
+    <n-button @click="test">按钮{{ bool }}</n-button>
   </div>
 </template>
 
@@ -108,7 +110,6 @@ const searchProps: FormProps = {
     {
       label: '身份证号',
       field: 'idCode',
-      required: true,
       type: 'input'
     },
     {
@@ -119,8 +120,10 @@ const searchProps: FormProps = {
   ]
 }
 
+const bool = ref(true)
+
 // 表格配置项
-const columns: TableColumns = [
+let columns: TableColumns = [
   {
     type: 'selection',
     multiple: true
@@ -132,7 +135,7 @@ const columns: TableColumns = [
     render(row) {
       return <NTag type="warning">{row.name}</NTag>
     },
-    vif: () => true
+    vif: bool
   },
   {
     title: '年龄',
@@ -158,6 +161,15 @@ const columns: TableColumns = [
   { title: '操作', key: 'operation', fixed: 'right', align: 'center', width: 330 }
 ]
 
+function test(){
+  bool.value = !bool.value
+  // columns = [{
+  //   title: '年龄',
+  //   key: 'age',
+  //   align: 'center'
+  // }]
+}
+
 async function getTableList(params: any) {
   console.log('params: ', params)
   // return Promise.reject('错误')
@@ -176,7 +188,7 @@ const schemas: FormSchema[] = [
     field: 'username',
     type: 'input',
     label: '用户名',
-    required: true
+    required: true,
   },
   {
     field: 'age',

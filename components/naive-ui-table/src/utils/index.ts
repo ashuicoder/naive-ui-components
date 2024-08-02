@@ -1,3 +1,6 @@
+import { isRef, type Slots } from 'vue'
+import type { TableColumns, Column } from '../types'
+
 /**
  * @description:  是否为函数
  */
@@ -15,4 +18,31 @@ export function debounce(fn: Function, delay: number) {
       fn(...args)
     }, delay)
   }
+}
+
+function checkIfShow(action: Column): boolean {
+  if (isRef(action.vif)) return action.vif.value
+  if (typeof action.vif === 'boolean') return action.vif
+  if (typeof action.vif === 'function') return action.vif(action)
+  return true
+}
+
+export function createInitColumns(columns: TableColumns<any>, slot: Slots) {
+  return copyColumns(columns).filter(checkIfShow).map((item: any) => {
+    item._show = true
+    item.ellipsis = { tooltip: true }
+    if (item.render) return item
+    if (slot[item.key] && isFunction(slot[item.key])) {
+      item.render = slot[item.key]
+    }
+    return item
+  }) || []
+}
+
+function copyColumns(columns: Column[]) {
+  const data: Column[] = []
+  columns?.forEach((column: Column) => {
+    data.push({ ...column });
+  });
+  return data
 }
