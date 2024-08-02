@@ -7,7 +7,7 @@ export type { FormProps, FormInstance }
 export type Recordable<T = any> = Record<string, T>
 
 type CustomColumn<T> = {
-  vif?: boolean | ((column?: T) => boolean) | Ref<boolean>
+  vif?: boolean | (() => boolean) | Ref<boolean>
 }
 export type TableColumn<T = Recordable> = CustomColumn<T> & DataTableColumn<T>
 export type TableColumns<T = Recordable> = TableColumn<T>[]
