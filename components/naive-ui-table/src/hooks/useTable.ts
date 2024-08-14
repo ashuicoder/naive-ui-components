@@ -18,6 +18,16 @@ export function useTable(
     }
   })
 
+  function resetState() {
+    state.tableData = []
+    state.loading = false
+    state.pageAble = {
+      current: 1,
+      size: DefaultPageSize,
+      total: 0
+    }
+  }
+
   /* 初始化表格 */
   onMounted(() => {
     requestAuto && refresh()
@@ -31,9 +41,9 @@ export function useTable(
       // 分页参数
       const pageParam = isPageApi
         ? {
-            [PageField]: state.pageAble.current,
-            [SizeField]: state.pageAble.size
-          }
+          [PageField]: state.pageAble.current,
+          [SizeField]: state.pageAble.size
+        }
         : {}
 
       // 查询参数
@@ -112,6 +122,7 @@ export function useTable(
   return {
     state,
     refresh,
+    resetState,
     handleSearch,
     handleReset,
     onUpdatePage,

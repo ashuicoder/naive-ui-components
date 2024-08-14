@@ -38,6 +38,7 @@ export interface TableInstance {
   tableRef: any
   tableColumns: ComputedRef<any[]>
   refresh(): Promise<any>
+  resetState(): void
   openDrawer(bool: boolean): void
   height: ComputedRef<number>
   scrollWidth: ComputedRef<number>
