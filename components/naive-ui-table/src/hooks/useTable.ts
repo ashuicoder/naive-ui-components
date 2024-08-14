@@ -73,6 +73,7 @@ export function useTable(
       }
     } catch (err: any) {
       closeLoading()
+      resetState()
       if (requestError) return requestError(err)
       else throw new Error(err || '请求失败！')
     }
