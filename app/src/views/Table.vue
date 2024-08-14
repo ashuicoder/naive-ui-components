@@ -46,6 +46,8 @@
     <ModalForm v-model:show="showModal" :schemas="schemas" title="新增用户"> </ModalForm>
 
     <n-button @click="test">按钮{{ bool }}</n-button>
+    <n-button @click="tableRef?.resetState">表格重置</n-button>
+
   </div>
 </template>
 

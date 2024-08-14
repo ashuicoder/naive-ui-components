@@ -200,6 +200,7 @@ const { checkState, clearCheck, handleCheck, getCheckValue } = useCheck(emit)
 const {
   state,
   refresh,
+  resetState,
   handleSearch,
   handleReset,
   onUpdatePage,
@@ -278,6 +279,7 @@ defineExpose({
   tableRef,
   tableColumns,
   refresh,
+  resetState,
   openDrawer,
   height,
   scrollWidth,
