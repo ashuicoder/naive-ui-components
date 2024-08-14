@@ -46,8 +46,7 @@
     <ModalForm v-model:show="showModal" :schemas="schemas" title="新增用户"> </ModalForm>
 
     <n-button @click="test">按钮{{ bool }}</n-button>
-    <n-button @click="tableRef?.resetState">表格重置</n-button>
-
+    <!-- <n-button @click="tableRef?.resetState">表格重置</n-button> -->
   </div>
 </template>
 
@@ -163,7 +162,7 @@ let columns: TableColumns = [
   { title: '操作', key: 'operation', fixed: 'right', align: 'center', width: 330 }
 ]
 
-function test(){
+function test() {
   bool.value = !bool.value
   // columns = [{
   //   title: '年龄',
@@ -190,7 +189,7 @@ const schemas: FormSchema[] = [
     field: 'username',
     type: 'input',
     label: '用户名',
-    required: true,
+    required: true
   },
   {
     field: 'age',
