@@ -125,7 +125,10 @@ let isChangeFromProps = true
 watch(
   () => props.value,
   (val) => {
-    if (!isChangeFromProps) return
+    if (!isChangeFromProps) {
+      isChangeFromProps = true
+      return
+    }
     fileList.value = val.map((item) => {
       return {
         id: item.id || Math.random().toString(36).substring(2, 9),
