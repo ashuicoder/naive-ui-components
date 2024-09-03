@@ -31,6 +31,7 @@ export interface TableProps {
   initParams?: Recordable // 初始化请求参数 ==> 非必传（默认为{}）
   dataCallback?: (data: Recordable) => Recordable // 返回数据的回调函数，可以对数据进行处理
   requestError?: (params: any) => void // 表格 api 请求错误监听
+  showOrderColumn?: boolean // 是否显示序号列
 }
 
 export interface TableInstance {

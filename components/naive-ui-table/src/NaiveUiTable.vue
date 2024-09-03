@@ -139,7 +139,8 @@ const props = withDefaults(defineProps<TableProps>(), {
   resizeHeightOffset: 25,
   toolButton: true,
   remote: undefined,
-  size: 'medium'
+  size: 'medium',
+  showOrderColumn: false
 })
 
 /* 表单插槽 */
@@ -188,11 +189,6 @@ watch(() => props.columns, (val) => {
   initColumns.value = createInitColumns(val, slot)
 }, { deep: true })
 
-/* 表格列 */
-const tableColumns = computed(() => {
-  return initColumns.value.filter((item: any) => item._show)
-})
-
 /* 勾选 */
 const { checkState, clearCheck, handleCheck, getCheckValue } = useCheck(emit)
 
@@ -209,6 +205,27 @@ const {
   getPageValue,
   setLoading
 } = useTable(props, basicForm, clearCheck)
+
+/* 表格列 */
+const tableColumns = computed(() => {
+  const lists = initColumns.value.filter((item: any) => item._show)
+  if (props.showOrderColumn) {
+    const order: Column = {
+      title: '序号',
+      key: '_order',
+      width: 60,
+      align: 'center',
+      render: (_: object, index: number) =>
+        (state.pageAble.current - 1) * state.pageAble.size + index + 1
+    }
+    if (lists[0]?.type === 'selection') {
+      lists.splice(1, 0, order)
+    } else {
+      lists.unshift(order)
+    }
+  }
+  return lists
+})
 
 /* 分页 */
 const newPagination = computed(() => {
