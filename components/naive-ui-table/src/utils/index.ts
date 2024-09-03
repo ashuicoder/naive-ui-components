@@ -27,16 +27,19 @@ function checkIfShow(action: Column): boolean {
   return true
 }
 
+/* 初始化列 */
 export function createInitColumns(columns: TableColumns<any>, slot: Slots) {
   return (
     copyColumns(columns)
       .filter(checkIfShow)
       .map((item: any) => {
         item._show = true
-        item.ellipsis = { tooltip: true }
+        if (item.ellipsis === undefined) {
+          item.ellipsis = { tooltip: true }
+        }
         if (item.render) return item
         if (slot[item.key] && isFunction(slot[item.key])) {
-          item.render = slot[item.key]
+          item.render = (row: object, index: number) => slot[item.key]!({ row, index })
         }
         return item
       }) || []

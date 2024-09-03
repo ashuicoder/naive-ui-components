@@ -7,6 +7,7 @@
       :search-props="searchProps"
       @update:checked-row-keys="handleCheck"
       size="large"
+      show-order-column
     >
       <!-- 搜索表单插槽 -->
       <template #username="{ formValue, field }">
@@ -28,15 +29,17 @@
       </template>
 
       <!-- 表格单元格 -->
-      <template #address="row, index">
+      <template #address="{row, index}">
         <n-tag type="primary">
           {{ row.address + index }}
         </n-tag>
       </template>
 
       <!-- 表格操作 -->
-      <template #operation="row">
-        <n-button type="primary" ghost @click="fun('查看', row)">查看</n-button>
+      <template #operation="{row, index}">
+
+        <n-button type="primary" ghost @click="aaa(row, index)">aaa</n-button>
+        <n-button type="primary" ghost @click="fun('查看', row, index)">查看</n-button>
         <n-button type="primary" ghost @click="fun('编辑', row)">编辑</n-button>
         <n-button type="primary" ghost @click="fun('重置密码', row)">重置密码</n-button>
         <n-button type="error" ghost @click="fun('删除', row)">删除</n-button>
@@ -159,16 +162,14 @@ let columns: TableColumns = [
     // width: 400,
     align: 'center'
   },
-  { title: '操作', key: 'operation', fixed: 'right', align: 'center', width: 330 }
+  { title: '操作', key: 'operation', fixed: 'right', align: 'center', width: 400 }
 ]
 
 function test() {
   bool.value = !bool.value
-  // columns = [{
-  //   title: '年龄',
-  //   key: 'age',
-  //   align: 'center'
-  // }]
+}
+function aaa(row:any, index:number){
+  console.log('row: ', index, row);
 }
 
 async function getTableList(params: any) {
