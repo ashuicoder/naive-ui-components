@@ -70,14 +70,14 @@ const columns: TableColumns = [
 ]
 
 // 返回带结果的promise对象
-async function getTableList(params: any) {
-  return await api(params)
+function getTableList(params: any) {
+  return api(params)
 }
 </script>
 ```
 
 ::: info 注意
-该 columns 配置除`vif`外，与`naive-ui`的`data-table`的`columns`完全一致。具体属性参考[naive-ui的columns](https://www.naiveui.com/zh-CN/light/components/data-table#DataTable-Props)
+该 columns 配置除了新增`vif`外，其余配置与`naive-ui`的`data-table`的`columns`完全一致。具体属性参考[naive-ui的columns](https://www.naiveui.com/zh-CN/light/components/data-table#DataTable-Props)
 :::
 
 ::: tip 是否分页：
@@ -87,16 +87,16 @@ async function getTableList(params: any) {
   - 接口返回数据格式为`{ current: 1, size: 10, total: 100, records: [...] }`；
 - **若接口不分页，需将`isPageApi`设为`false`**，即：
   - 接口参数里没有`current,size`
-  - 接口返回数据格式为`{ [...] }`；
+  - 接口返回数据格式为`[...]`；
 
 :::
 
-## 表格列权限`vif`
+## 表格列显隐`vif`
 
-- `columns.vif`：（`boolean | ((column?: Columns) => boolean`）动态显示该列。
-- 类型为返回布尔值的表达式或函数。不传默认显示。
+- `columns.vif`：（`boolean | (() => boolean) | Ref<boolean>`）动态显示该列。
+- 类型为返回布尔值的表达式、函数、ref状态。不传默认显示。
 
-```vue{12,17}
+```vue{13,18,23}
 <template>
   <NaiveUiTable :columns="columns" :requestApi="getTableList"></NaiveUiTable>
 </template>
@@ -104,6 +104,7 @@ async function getTableList(params: any) {
 <script setup lang="tsx">
 import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
+const sex = ref(true)
 const columns: TableColumns = [
   {
     title: '姓名',
@@ -114,16 +115,21 @@ const columns: TableColumns = [
     title: '年龄',
     key: 'age',
     vif: () => true
+  },
+  {
+    title: '性别',
+    key: 'sex',
+    vif: sex
   }
 ]
 
-async function getTableList(params: any) {
-  return await api(params)
+function getTableList(params: any) {
+  return api(params)
 }
 </script>
 ```
 
-## 表格左上角-自定义按钮
+## 表格左上角-Header按钮
 
 - `tableHeader`插槽，用于自定义表格左上角的内容，例如标题、按钮等。
 
@@ -145,8 +151,8 @@ const columns: TableColumns = [
   { title: '年龄', key: 'age' }
 ]
 
-async function getTableList(params: any) {
-  return await api(params)
+function getTableList(params: any) {
+  return api(params)
 }
 </script>
 ```
@@ -157,7 +163,7 @@ async function getTableList(params: any) {
 
 - 【刷新】：刷新当前页数据
 - 【密度】：也就是表格的`size`属性
-- 【列设置】：列设置抽屉里，可拖拽改变列的顺序、设置列的显隐、固定右侧列或固定左侧列
+- 【列设置】：列设置抽屉里，可拖拽改变列的顺序、设置列的显隐、固定右侧列或左侧列
 
 ```ts
 // 是否显示表格功能按钮
@@ -231,24 +237,23 @@ const columns: TableColumns = [
     key: 'name',
     render: (row) => <n-tag type="primary">{row.name}</n-tag>
   },
-  { title: '年龄', key: 'age' },
-  { title: '地址', key: 'address' }
+  { title: '年龄', key: 'age' }
 ]
 
-async function getTableList(params: any) {
-  return await api(params)
+function getTableList(params: any) {
+  return api(params)
 }
 </script>
 ```
 
-### 方式二：用插槽自定义列
+### 方式二：用插槽
 
-用插槽自定义列，**插槽名需与该列的`key`保持一致**，接收数据`row`为每一行数据，`index`为索引值。
+用插槽自定义列，**插槽名需与该列的`key`保持一致**，接收数据对象与render函数的参数一致：`row`为每一行数据，`index`为索引值。
 
 ```vue{3-5}
 <template>
   <NaiveUiTable :columns="columns" :requestApi="getTableList">
-    <template #name="row, index">
+    <template #name="{row, index}">
       <n-tag type="primary">{{ row.name }}</n-tag>
     </template>
   </NaiveUiTable>
@@ -259,12 +264,11 @@ import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
 const columns: TableColumns = [
   { title: '姓名', key: 'name' },
-  { title: '年龄', key: 'age' },
-  { title: '地址', key: 'address' }
+  { title: '年龄', key: 'age' }
 ]
 
-async function getTableList(params: any) {
-  return await api(params)
+function getTableList(params: any) {
+  return api(params)
 }
 </script>
 ```
@@ -275,9 +279,9 @@ async function getTableList(params: any) {
 
 ### 方式一：用`render`函数
 
-可在 columns 的`operation`列配置里，用`render`函数自定义列。
+按原来的属性，在 `columns` 的`operation`列配置里，用`render`函数自定义列。
 
-```vue{18-26}
+```vue{17-25}
 <template>
   <NaiveUiTable :columns="columns" :requestApi="getTableList"></NaiveUiTable>
 </template>
@@ -288,7 +292,6 @@ import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 const columns: TableColumns = [
   { title: '姓名', key: 'name' },
   { title: '年龄', key: 'age' },
-  { title: '地址', key: 'address' },
   {
     title: '操作',
     key: 'operation',
@@ -297,11 +300,11 @@ const columns: TableColumns = [
     width: 330,
     render(row) {
       return (
-        <>
+        <NSpace>
           <NButton type="primary" ghost onClick={() => fun('查看', row)}>查看</NButton>
           <NButton type="primary" ghost onClick={() => fun('编辑', row)}>编辑</NButton>
           <NButton type="error" ghost onClick={() => fun('删除', row)}>删除</NButton>
-        </>
+        </NSpace>
       )
     }
   }
@@ -311,21 +314,21 @@ function fun(type, row) {
   console.log(type, row)
 }
 
-async function getTableList(params: any) {
-  return await api(params)
+function getTableList(params: any) {
+  return api(params)
 }
 </script>
 ```
 
 ### 方式二：用插槽`operation`
 
-也可用插槽`operation`自定义列，接收`row`为每一行的数据，`index`为索引值。
+也可用插槽`operation`自定义列；接收数据对象中，`row`为每一行数据，`index`为索引值。
 
-```vue{4-8,19}
+```vue{4-8,18}
 <template>
   <NaiveUiTable :columns="columns" :requestApi="getTableList">
     <!-- 表格操作列 -->
-    <template #operation="row, index">
+    <template #operation="{row, index}">
       <n-button type="primary" ghost @click="fun('查看', row)">查看</n-button>
       <n-button type="primary" ghost @click="fun('编辑', row)">编辑</n-button>
       <n-button type="error" ghost @click="fun('删除', row)">删除</n-button>
@@ -339,7 +342,6 @@ import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 const columns: TableColumns = [
   { title: '姓名', key: 'name'},
   { title: '年龄', key: 'age' },
-  { title: '地址', key: 'address' },
   { title: '操作', key: 'operation', fixed: 'right', align: 'center', width: 330 }
 ]
 
@@ -347,8 +349,8 @@ function fun(type, row) {
   console.log(type, row)
 }
 
-async function getTableList(params: any) {
-  return await api(params)
+function getTableList(params: any) {
+  return api(params)
 }
 </script>
 ```
@@ -357,7 +359,7 @@ async function getTableList(params: any) {
 
 传入`search-props`配置将开启查询表单：
 
-- 查询表单调用[**`naive-ui-form`**](/naive-ui-form)组件，`search-props`配置自行参考表单组件；
+- 查询表单调用[**`naive-ui-form`**](/naive-ui-form)组件，`search-props`配置与`useForm`的参数一致；
 - 查询、重置功能已内置在表格组件里，无需额外传输；
 - 查询参数，已经与表格接口的参数合并；如需额外处理，可在`requestApi`接口请求之前处理。
 
@@ -396,8 +398,8 @@ const search: FormProps = {
   ]
 }
 
-async function getTableList(params: any) {
-  return await api(params)
+function getTableList(params: any) {
+  return api(params)
 }
 </script>
 ```
@@ -463,8 +465,8 @@ const search: FormProps = {
   ]
 }
 
-async function getTableList(params: any) {
-  return await api(params)
+function getTableList(params: any) {
+  return api(params)
 }
 </script>
 ```
@@ -481,7 +483,7 @@ async function getTableList(params: any) {
 
 :::
 
-```vue{5,13,20-22}
+```vue{5,13,19-21}
 <template>
   <NaiveUiTable
     :columns="columns"
@@ -496,8 +498,7 @@ import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 const columns: TableColumns = [
   { type: 'selection', multiple: true }, // 勾选列
   { title: '姓名', key: 'name' },
-  { title: '年龄', key: 'age' },
-  { title: '地址', key: 'address' }
+  { title: '年龄', key: 'age' }
 ]
 
 // 勾选回调
@@ -505,15 +506,15 @@ function handleCheck(keys: Array<string | number>) {
   console.log('param: ', keys)
 }
 
-async function getTableList(params: any) {
-  return await api(params)
+function getTableList(params: any) {
+  return api(params)
 }
 </script>
 ```
 
 ### 方式二：`getCheckValue`方法
 
-```vue{29}
+```vue{28}
 <template>
   <NaiveUiTable
     :ref="tableRef"
@@ -530,12 +531,11 @@ import type { TableColumns, TableInstance } from 'naive-ui-table'
 const columns: TableColumns = [
   { type: 'selection', multiple: true }, // 勾选列
   { title: '姓名', key: 'name' },
-  { title: '年龄', key: 'age' },
-  { title: '地址', key: 'address' }
+  { title: '年龄', key: 'age' }
 ]
 
-async function getTableList(params: any) {
-  return await api(params)
+function getTableList(params: any) {
+  return api(params)
 }
 
 const tableRef = ref<TableInstance>()
@@ -590,7 +590,7 @@ resizeHeightOffset?: number
 
 - 要额外增加接口请求的参数，可传入`initParams`对象，该对象将会与接口请求的参数合并。
 
-```vue{5-8,23}
+```vue{5-8,22}
 <template>
   <NaiveUiTable
     :columns="columns"
@@ -608,13 +608,12 @@ import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
 const columns: TableColumns = [
   { title: '姓名', key: 'name' },
-  { title: '年龄', key: 'age' },
-  { title: '地址', key: 'address' }
+  { title: '年龄', key: 'age' }
 ]
 
-async function getTableList(params: any) {
+function getTableList(params: any) {
   console.log(params) // {type: 1, id: 'xxxxxx', current: 1, size: 10}
-  return await api(params)
+  return api(params)
 }
 </script>
 ```
@@ -623,7 +622,7 @@ async function getTableList(params: any) {
 
 - 在`requestApi`接口请求之前，可在`params`对象上增加额外的参数。
 
-```vue{15-16}
+```vue{14-15}
 <template>
   <NaiveUiTable :columns="columns" :requestApi="getTableList"> </NaiveUiTable>
 </template>
@@ -633,14 +632,13 @@ import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
 const columns: TableColumns = [
   { title: '姓名', key: 'name' },
-  { title: '年龄', key: 'age' },
-  { title: '地址', key: 'address' }
+  { title: '年龄', key: 'age' }
 ]
 
-async function getTableList(params: any) {
+function getTableList(params: any) {
   params.type = 1
   params.id = 'xxxxxx'
-  return await api(params)
+  return api(params)
 }
 /* 参数：{current: 1, size: 10, type: 1, id: 'xxxxxx'} */
 </script>
@@ -653,7 +651,7 @@ async function getTableList(params: any) {
   - 方式一：在`requestApi`接口请求里处理；
   - 方式二：在`dataCallback`回调函数里处理。
 
-```vue{5,24-31}
+```vue{5,23-30}
 <template>
   <NaiveUiTable
     :columns="columns"
@@ -668,13 +666,12 @@ import { NaiveUiTable, type TableColumns } from 'naive-ui-table'
 
 const columns: TableColumns = [
   { title: '姓名', key: 'name' },
-  { title: '年龄', key: 'age' },
-  { title: '地址', key: 'address' }
+  { title: '年龄', key: 'age' }
 ]
 
 // 方式一：接口请求里。返回正确的表格数据，或增加其他逻辑
-async function getTableList(params: any) {
-  return await api(params)
+function getTableList(params: any) {
+  return api(params)
 }
 
 // 方式二：dataCallback。返回正确的表格数据，或增加其他逻辑
@@ -697,7 +694,7 @@ function dataCallback(data) {
 
 ## Props
 
-- 必传项只有`columns`，除`vif`外，与naive-ui的`columns`完全一致，具体配置参考[naive-ui的table组件](https://www.naiveui.com/zh-CN/light/components/data-table)
+- 必传项只有`columns`；`columns`配置除`vif`外，其余配置与naive-ui的`columns`完全一致，具体配置参考[naive-ui的table组件](https://www.naiveui.com/zh-CN/light/components/data-table)
 - 自定义属性如下：
 
 | 属性               | 类型                                              | 描述                                                                               | 必传 | 默认值 |
@@ -712,8 +709,9 @@ function dataCallback(data) {
 | requestError       | `(error: Error) => void`                          | 请求接口出错时回调                                                                 | 否   | -      |
 | toolButton         | `('refresh' \| 'size' \| 'setting')[] \| boolean` | 是否显示工具栏按钮                                                                 | 否   | true   |
 | resizeHeightOffset | `number`                                          | 表格高度自适应变化时，底部留白距离                                                 | 否   | 25     |
+| showOrderColumn    | `boolean`                                         | 是否显示序号列                                                                     | 否   | false  |
 
-- 其余属性：**支持naive-ui的`data-table`组件的全部属性**。组件内部已经对`data-table`配置了以下属性，均可传入将其覆盖：
+- 其余属性：**支持naive-ui的`data-table`组件的全部属性**。组件内部已经对`data-table`内置了以下属性，均可传入将其覆盖：
 
 | 内置属性    | 描述                                                                                            |
 | ----------- | ----------------------------------------------------------------------------------------------- |
@@ -735,6 +733,7 @@ function dataCallback(data) {
 | 名称          | 类型                                                     | 说明                       |
 | ------------- | -------------------------------------------------------- | -------------------------- |
 | refresh       | `() => void`                                             | 刷新表格数据               |
+| resetState    | `() => void`                                             | 清空重置表格数据              |
 | openDrawer    | `(bool: boolean) => void`                                | 打开列设置抽屉             |
 | clearCheck    | `() => void`                                             | 清除选中                   |
 | setLoading    | `(bool: boolean) => void`                                | 设置表格loading            |
@@ -744,7 +743,7 @@ function dataCallback(data) {
 | reset         | `() => void`                                             | 搜索表单：手动调用重置按钮 |
 | getValue      | `() => Recordable`                                       | 搜索表单：获取值           |
 | setValue      | `(value: Recordable) => void`                            | 搜索表单：设置值           |
-| getFieldValue | `(field: string) => any`                                 | 搜索表单：获取指定字段的值   |
+| getFieldValue | `(field: string) => any`                                 | 搜索表单：获取指定字段的值 |
 
 ## States
 
@@ -764,9 +763,9 @@ function dataCallback(data) {
 | -------------- | ----------------------------------- | ------------------------------- |
 | tableHeader    | ()                                  | 表格左上角的内容展示            |
 | toolButton     | ()                                  | 表格右上角的内容展示            |
-| operation      | (rowData: object, rowIndex: number) | 表格操作列的内容展示            |
-| [columns.key]  | (rowData: object, rowIndex: number) | 表格[columns.key]列的自定义内容 |
-| [schemas.slot] | (formValue: object, field: string)  | 表单[schemas.slot]的自定义内容  |
+| operation      | ({ row: object, index: number }) | 表格操作列的内容展示            |
+| [columns.key]  | ({ row: object, index: number }) | 表格[columns.key]列的自定义内容 |
+| [schemas.slot] | ({ formValue: object, field: string })  | 表单[schemas.slot]的自定义内容  |
 
 ## TS类型
 
