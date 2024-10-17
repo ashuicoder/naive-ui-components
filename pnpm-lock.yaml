@@ -392,9 +392,6 @@ importers:
       vue-draggable-plus:
         specifier: '>=0.5.3'
         version: 0.5.3(@types/sortablejs@1.15.8)
-      vuedraggable:
-        specifier: '>=4.0.1'
-        version: 4.1.0(vue@3.3.8(typescript@5.2.2))
     devDependencies:
       '@tsconfig/node18':
         specifier: ^18.2.2
@@ -5099,11 +5096,6 @@ packages:
       typescript:
         optional: true
 
-  vuedraggable@4.1.0:
-    resolution: {integrity: sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==}
-    peerDependencies:
-      vue: ^3.0.1
-
   vueuc@0.4.51:
     resolution: {integrity: sha512-pLiMChM4f+W8czlIClGvGBYo656lc2Y0/mXFSCydcSmnCR1izlKPGMgiYBGjbY9FDkFG8a2HEVz7t0DNzBWbDw==}
     peerDependencies:
@@ -9288,7 +9280,8 @@ snapshots:
 
   snabbdom@https://registry.npmmirror.com/snabbdom/-/snabbdom-3.5.1.tgz: {}
 
-  sortablejs@1.14.0: {}
+  sortablejs@1.14.0:
+    optional: true
 
   source-map-js@1.0.2: {}
 
@@ -9874,11 +9867,6 @@ snapshots:
       '@vue/shared': https://registry.npmmirror.com/@vue/shared/-/shared-3.3.8.tgz
     optionalDependencies:
       typescript: https://registry.npmmirror.com/typescript/-/typescript-5.2.2.tgz
-
-  vuedraggable@4.1.0(vue@3.3.8(typescript@5.2.2)):
-    dependencies:
-      sortablejs: 1.14.0
-      vue: 3.3.8(typescript@5.2.2)
 
   vueuc@0.4.51(vue@3.3.8(typescript@5.2.2)):
     dependencies:
