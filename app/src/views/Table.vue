@@ -29,17 +29,16 @@
       </template>
 
       <!-- 表格单元格 -->
-      <template #address="{row, index}">
-        <n-tag type="primary">
+      <template #address="{ row, index }">
+        <span style="color: yellowgreen">
           {{ row.address + index }}
-        </n-tag>
+        </span>
       </template>
 
       <!-- 表格操作 -->
       <template #operation="{row, index}">
-
         <n-button type="primary" ghost @click="aaa(row, index)">aaa</n-button>
-        <n-button type="primary" ghost @click="fun('查看', row, index)">查看</n-button>
+        <n-button type="primary" ghost @click="fun('查看', row)">查看</n-button>
         <n-button type="primary" ghost @click="fun('编辑', row)">编辑</n-button>
         <n-button type="primary" ghost @click="fun('重置密码', row)">重置密码</n-button>
         <n-button type="error" ghost @click="fun('删除', row)">删除</n-button>
@@ -130,7 +129,7 @@ const bool = ref(true)
 let columns: TableColumns = [
   {
     type: 'selection',
-    multiple: true
+    multiple: true,
   },
   {
     title: '姓名',
@@ -142,25 +141,40 @@ let columns: TableColumns = [
     vif: bool
   },
   {
-    title: '年龄',
-    key: 'age',
-    align: 'center'
-  },
-  {
-    title: '性别',
+    title: '个人信息',
     key: 'sex',
-    align: 'center'
-  },
-  {
-    title: '身份证号',
-    key: 'idCode',
-    align: 'center'
-  },
-  {
-    title: '地址',
-    key: 'address',
-    // width: 400,
-    align: 'center'
+    align: 'center',
+    fixed: 'left',
+    children: [
+      {
+        title: '性别年龄',
+        key: 'sexAge',
+        align: 'center',
+        children: [
+          {
+            title: '年龄',
+            key: 'age',
+            align: 'center',
+          },
+          {
+            title: '性别',
+            key: 'sex',
+            align: 'center'
+          }
+        ]
+      },
+      {
+        title: '身份证号',
+        key: 'idCode',
+        align: 'center'
+      },
+      {
+        title: '地址',
+        key: 'address',
+        // width: 400,
+        align: 'center'
+      }
+    ]
   },
   { title: '操作', key: 'operation', fixed: 'right', align: 'center', width: 400 }
 ]
@@ -211,7 +225,7 @@ function api(params: any = {}) {
         age: 18,
         sex: '男',
         idCode: '123456789012345678',
-        address: '北京市海淀区'
+        address: '新疆维吾尔自治区昌吉回族自治州木垒哈萨克自治县大南沟村37号'
       }
     })
     let allRecords = data

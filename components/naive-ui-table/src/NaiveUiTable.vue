@@ -30,9 +30,7 @@
               <template #trigger>
                 <n-button circle @click="refresh">
                   <template #icon>
-                    <n-icon>
-                      <SyncOutline />
-                    </n-icon>
+                    <n-icon><SyncOutline /></n-icon>
                   </template>
                 </n-button>
               </template>
@@ -60,19 +58,8 @@
               <span>密度</span>
             </n-tooltip>
 
-            <!-- 设置 -->
-            <n-tooltip v-if="showToolButton('setting')">
-              <template #trigger>
-                <n-button circle @click="openDrawer(true)">
-                  <template #icon>
-                    <n-icon>
-                      <SettingsOutline />
-                    </n-icon>
-                  </template>
-                </n-button>
-              </template>
-              <span>列设置</span>
-            </n-tooltip>
+            <!-- 列设置 -->
+            <ColumnSetting v-if="showToolButton('setting')" v-model:columns="initColumns" />
           </template>
         </n-space>
       </div>
@@ -94,30 +81,14 @@
         :scroll-x="scrollWidth"
         v-bind="$attrs"
       />
-
-      <!-- 列设置 -->
-      <n-drawer v-model:show="active" :width="502" placement="right">
-        <n-drawer-content title="列设置" closable>
-          <ColumnSetting v-model:columns="initColumns" />
-        </n-drawer-content>
-      </n-drawer>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  NButton,
-  NDataTable,
-  NDropdown,
-  NDrawer,
-  NDrawerContent,
-  NTooltip,
-  NIcon,
-  NSpace
-} from 'naive-ui'
-import { ref, computed, useSlots, isRef, watch } from 'vue'
-import { SyncOutline, SettingsOutline, BarbellOutline } from '@vicons/ionicons5'
+import { NButton, NDataTable, NDropdown, NTooltip, NIcon, NSpace } from 'naive-ui'
+import { ref, computed, useSlots, watch } from 'vue'
+import { SyncOutline, BarbellOutline } from '@vicons/ionicons5'
 import { BasicForm, useForm, type FormInstance } from 'naive-ui-form'
 
 import { useTable } from './hooks/useTable'
@@ -185,9 +156,13 @@ const densityOptions = [
 const slot = useSlots()
 const initColumns = ref(createInitColumns(props.columns, slot))
 
-watch(() => props.columns, (val) => {
-  initColumns.value = createInitColumns(val, slot)
-}, { deep: true })
+watch(
+  () => props.columns,
+  (val) => {
+    initColumns.value = createInitColumns(val, slot)
+  },
+  { deep: true }
+)
 
 /* 勾选 */
 const { checkState, clearCheck, handleCheck, getCheckValue } = useCheck(emit)
@@ -285,10 +260,19 @@ const height = computed(() => {
 /* 表格宽度 */
 const scrollWidth = computed(() => {
   const tableWidth = tableColumns.value.reduce(
-    (num, item) => (num += item.width || item.minWidth || 100),
+    (num, item) => (num += Number(item.width) || Number(item.minWidth) || 100),
     0
   )
   return props.scrollX || tableWidth
+})
+
+/* 头部与表格的间距 */
+const headerMarginBottom = computed(() => {
+  if (!slot.tableHeader && !slot.toolButton && !props.toolButton) {
+    return 0
+  } else {
+    return 16 + 'px'
+  }
 })
 
 defineExpose({
@@ -317,7 +301,7 @@ defineExpose({
   .table-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: v-bind(headerMarginBottom);
   }
 }
 

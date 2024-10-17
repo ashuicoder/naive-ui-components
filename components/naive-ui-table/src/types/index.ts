@@ -8,8 +8,9 @@ export type Recordable<T = any> = Record<string, T>
 
 type CustomColumn<T> = {
   vif?: boolean | (() => boolean) | Ref<boolean>
+  children?: DataTableColumn<T>[]
 }
-export type TableColumn<T = Recordable> = CustomColumn<T> & DataTableColumn<T>
+export type TableColumn<T = Recordable> = DataTableColumn<T> & CustomColumn<T>
 export type TableColumns<T = Recordable> = TableColumn<T>[]
 
 export type Column<T = Recordable> = TableColumn<T>
