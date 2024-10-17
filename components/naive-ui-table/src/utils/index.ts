@@ -13,11 +13,18 @@ export function debounce(fn: Function, delay: number) {
   let timer: any = null
   return function (...args: any[]) {
     timer && clearTimeout(timer)
-
     timer = setTimeout(() => {
       fn(...args)
     }, delay)
   }
+}
+
+function copyColumns(columns: Column[]) {
+  const data: Column[] = []
+  columns?.forEach((column: Column) => {
+    data.push({ ...column })
+  })
+  return data
 }
 
 function checkIfShow(action: Column): boolean {
@@ -27,29 +34,29 @@ function checkIfShow(action: Column): boolean {
   return true
 }
 
+function generateColumn(item: any, slot: Slots) {
+  item._show = true
+  if (item.ellipsis === undefined) {
+    item.ellipsis = { tooltip: true }
+  }
+  if (item.type === 'selection' && !item.title) {
+    item.title = '勾选'
+  }
+  if (Array.isArray(item.children)) {
+    item.children = createInitColumns(item.children, slot)
+  }
+  if (item.render) return item
+  if (slot[item.key] && isFunction(slot[item.key])) {
+    item.render = (row: object, index: number) => slot[item.key]!({ row, index })
+  }
+  return item
+}
+
 /* 初始化列 */
 export function createInitColumns(columns: TableColumns<any>, slot: Slots) {
   return (
     copyColumns(columns)
       .filter(checkIfShow)
-      .map((item: any) => {
-        item._show = true
-        if (item.ellipsis === undefined) {
-          item.ellipsis = { tooltip: true }
-        }
-        if (item.render) return item
-        if (slot[item.key] && isFunction(slot[item.key])) {
-          item.render = (row: object, index: number) => slot[item.key]!({ row, index })
-        }
-        return item
-      }) || []
+      .map((item: any) => generateColumn(item, slot)) || []
   )
-}
-
-function copyColumns(columns: Column[]) {
-  const data: Column[] = []
-  columns?.forEach((column: Column) => {
-    data.push({ ...column })
-  })
-  return data
 }
