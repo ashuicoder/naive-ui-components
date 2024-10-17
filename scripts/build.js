@@ -5,14 +5,14 @@ const packagesList = ['naive-ui-form', 'naive-ui-table', 'naive-ui-upload', 'nai
 
 async function main() {
   const answers = await checkbox({
-    message: 'select need to build package',
+    message: '选择要构建的包',
     choices: packagesList.map(item => ({
       name: item,
       value: item,
     })),
     validate: (selectedOptions) => {
       if (selectedOptions.length === 0) {
-        return 'at least one package must be selected';
+        return '至少选择一个包';
       }
       return true;
     }
