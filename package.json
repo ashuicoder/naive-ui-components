@@ -13,14 +13,8 @@
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve",
     "docs:preview": "vitepress preview docs",
-    "build": "node ./scripts/build.js",
-    "build:form": "pnpm -F naive-ui-form build",
-    "build:editor": "pnpm -F naive-ui-editor build",
-    "build:ai-editor": "pnpm -F naive-ui-ai-editor build",
-    "build:editor-view": "pnpm -F naive-ui-editor-view build",
-    "build:table": "pnpm -F naive-ui-table build",
-    "build:upload": "pnpm -F naive-ui-upload build",
-    "build:all": "run-p build:form build:ai-editor build:editor build:ai-editor build:editor-view build:table build:upload"
+    "build:pkg": "node ./scripts/build.js",
+    "update:pkg": "node ./scripts/update.js"
   },
   "dependencies": {
     "await-to-js": "^3.0.0",
