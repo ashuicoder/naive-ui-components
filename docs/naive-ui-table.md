@@ -1,5 +1,26 @@
 # naive-ui-table文档
 
+## 版本变更日志
+
+**2.0.0**
+
+更新日期：2024-10-17
+
+更新点：
+1. 修复表格作用域插槽格式：由原先的`<template #operation="row, index">`换成标准格式`<template #operation="{row, index}">`；
+2. 更换拖拽插件：由`vuedraggable`换成了`vue-draggable-plus`；
+3. 更换列设置功能和样式：由抽屉换成弹出信息，删除列固定功能；
+4. 兼容多级表头的属性添加（ellipsis省略号、列slot）；
+5. 修复表格顶部无内容时的样式冗余。
+
+---
+
+**1.0.x**
+
+功能点：
+1. 表格作用域插槽格式为：`<template #operation="row, index">`；
+2. 列设置功能：右侧抽屉弹出，支持列固定、列拖拽排序、列隐藏。
+
 ## 介绍
 
 **naive-ui-table**是基于[naive-ui的table组件](https://www.naiveui.com/zh-CN/light/components/data-table)封装的组件，主要区别是内置了很多常用功能，但配置非常简单，更能满足多种情况的开发需求。且支持`naive-ui`的`data-table`的所有属性。
@@ -9,7 +30,7 @@
 - 表格列`columns`配置与`naive-ui`一致（增加了`vif`），且自定义列增加了插槽配置；
 - 自带分页：若接口可以分页查询，则分页配置与接口相结合；若接口不分页，则由表格自动分页。
 - 自带搜索：只需要传入`search-props`配置，即可实现搜索功能；
-- 自带列设置：可设置列显隐、列固定，可拖拽排序列顺序；
+- 自带列设置：可设置列显隐、拖拽排序等；
 - 表格高度自适应，避免数据过多时页面出现滚动条。
 
 ::: tip 提示
@@ -163,7 +184,7 @@ function getTableList(params: any) {
 
 - 【刷新】：刷新当前页数据
 - 【密度】：也就是表格的`size`属性
-- 【列设置】：列设置抽屉里，可拖拽改变列的顺序、设置列的显隐、固定右侧列或左侧列
+- 【列设置】：列设置弹出信息框，可拖拽改变列的顺序、设置列的显隐
 
 ```ts
 // 是否显示表格功能按钮
@@ -802,3 +823,5 @@ const search: FormProps = {
 
 const formRef = ref<FormInstance>()
 ```
+
+
