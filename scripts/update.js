@@ -1,5 +1,5 @@
 import { checkbox, select } from '@inquirer/prompts';
-import { exec } from 'child_process';
+import { execSync } from 'child_process';
 import colors from 'colors-console'
 const packagesList = ['naive-ui-form', 'naive-ui-table', 'naive-ui-upload', 'naive-ui-editor'];
 
@@ -22,7 +22,7 @@ async function main() {
 
 
   for (const packageNameItem of answers) {
-    console.log(`正在构建包: ${packageNameItem}`);
+    console.log(`正在更新包: ${packageNameItem}`);
     const versionAnswer = await select({
       message: `${packageNameItem}：选择要更新的版本`,
       choices: versionList.map(item => ({
@@ -36,17 +36,14 @@ async function main() {
         return true;
       }
     });
-    exec(`cd components/${packageNameItem} && pnpm version ${versionAnswer}`, (error, stdout, stderr) => {
-      if (error) {
-        console.log(colors('red', `更新 ${packageNameItem} 失败: ${error.message}`));
-        return;
-      }
-      if (stderr) {
-        console.error(colors('red', `更新 ${packageNameItem} 时发生错误: ${stderr}`));
-        return;
-      }
+
+    try {
+      // 同步执行 pnpm version 命令
+      execSync(`cd components/${packageNameItem} && pnpm version ${versionAnswer}`, { stdio: 'inherit' });
       console.log(colors('green', `更新 ${packageNameItem} 成功`));
-    });
+    } catch (error) {
+      console.log(colors('red', `更新 ${packageNameItem} 失败: ${error.message}`));
+    }
   }
 }
 
