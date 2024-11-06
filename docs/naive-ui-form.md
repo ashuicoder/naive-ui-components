@@ -1,5 +1,11 @@
 # naive-ui-form文档
 
+## 更新日志
+
+### v3.1.0
+
+- 修改富文本为`naive-ui-editor`
+
 ## 简介
 
 ::: info
@@ -181,7 +187,7 @@ import { NConfigProvider, zhCN, dateZhCN, NMessageProvider } from 'naive-ui'
 ::: tip 提示
 
 - 如果表单中使用了`type: 'upload'`，则需要安装[naive-ui-upload](/naive-ui-upload)，并注册该组件。
-- 如果表单中使用了`type: 'editor'`，则需要安装[naive-ui-ai-editor](/naive-ui-ai-editor)，并注册该组件。
+- 如果表单中使用了`type: 'editor'`，则需要安装[naive-ui-editor](/naive-ui-editor)，并注册该组件。
 
 :::
 
@@ -672,6 +678,10 @@ const [register] = useForm({
 
 ### 动态表单
 
+::: warning 提示
+在使用动态表单时候，由于`naive-ui`的`n-form`组件设置了`label-width: "auto"`后，导致子组件无法自适应宽度，所以需要设置`naive-ui-form`的`label-width`不为`auto`，否则会出现宽度不协调的问题。
+:::
+
 `动态表单`需要将`type `设置为`dynamic`，再新增一个`dynamicOptions`配置，示例如下：
 
 ```vue{13-27}
@@ -683,6 +693,7 @@ const [register] = useForm({
 import { BasicForm, useForm } from 'naive-ui-form'
 
 const [register] = useForm({
+  labelWidth: '200px',
   schemas: [
     {
       field: 'family',

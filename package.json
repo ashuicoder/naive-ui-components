@@ -2,6 +2,7 @@
   "name": "naive-ui-components",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "pnpm -F app dev",
     "preinstall": "npx only-allow pnpm",
@@ -12,13 +13,9 @@
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve",
     "docs:preview": "vitepress preview docs",
-    "build:form": "pnpm -F naive-ui-form build",
-    "build:editor": "pnpm -F naive-ui-editor build",
-    "build:ai-editor": "pnpm -F naive-ui-ai-editor build",
-    "build:editor-view": "pnpm -F naive-ui-editor-view build",
-    "build:table": "pnpm -F naive-ui-table build",
-    "build:upload": "pnpm -F naive-ui-upload build",
-    "build:all": "run-p build:form build:ai-editor build:editor build:ai-editor build:editor-view build:table build:upload"
+    "build:pkg": "node ./scripts/build.js",
+    "update:pkg": "node ./scripts/update.js",
+    "publish:pkg": "node ./scripts/publish.js"
   },
   "dependencies": {
     "await-to-js": "^3.0.0",
@@ -27,6 +24,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@inquirer/prompts": "^7.0.0",
     "@rushstack/eslint-patch": "^1.3.3",
     "@tsconfig/node18": "^18.2.2",
     "@types/jsdom": "^21.1.3",
@@ -38,6 +36,7 @@
     "@vue/eslint-config-typescript": "^12.0.0",
     "@vue/test-utils": "^2.4.1",
     "@vue/tsconfig": "^0.4.0",
+    "colors-console": "^1.0.3",
     "eslint": "^8.49.0",
     "eslint-plugin-vue": "^9.17.0",
     "jsdom": "^22.1.0",

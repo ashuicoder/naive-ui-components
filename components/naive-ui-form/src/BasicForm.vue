@@ -40,62 +40,65 @@
             v-if="typeof schema.vif === 'function' ? schema.vif(formValue) : true"
             v-bind="schema"
           >
-            <NGrid :cols="1">
-              <NGridItem v-for="(item, index) in formValue[schema.field]">
-                <NGrid :cols="schema.dynamicOptions!.length + 1" :xGap="14">
-                  <template v-for="dynamicSchema in schema.dynamicOptions">
-                    <NFormItemGi
-                      v-show="
-                        typeof dynamicSchema.vif === 'function' ? dynamicSchema.vif(item) : true
-                      "
-                      v-bind="dynamicSchema"
-                      :path="`${schema.field}[${index}].${dynamicSchema.field}`"
-                      :rule="getFormRule(dynamicSchema)"
-                    >
-                      <div style="width: 100%">
-                        <RenderComponent
-                          v-if="dynamicSchema.type !== 'slot'"
-                          :schema="dynamicSchema"
-                          :record="item"
-                        ></RenderComponent>
+            <div style="width: 100%">
+              <NGrid
+                v-for="(item, index) in formValue[schema.field]"
+                :cols="schema.dynamicOptions!.length + 1"
+                :xGap="14"
+              >
+                <template v-for="dynamicSchema in schema.dynamicOptions">
+                  <NFormItemGi
+                    v-show="
+                      typeof dynamicSchema.vif === 'function' ? dynamicSchema.vif(item) : true
+                    "
+                    v-bind="dynamicSchema"
+                    :path="`${schema.field}[${index}].${dynamicSchema.field}`"
+                    :rule="getFormRule(dynamicSchema)"
+                  >
+                    <div style="width: 100%">
+                      <RenderComponent
+                        v-if="dynamicSchema.type !== 'slot'"
+                        :schema="dynamicSchema"
+                        :record="item"
+                      ></RenderComponent>
 
-                        <slot
-                          v-else
-                          :name="dynamicSchema.slot"
-                          :formValue="item"
-                          :field="dynamicSchema.field"
-                        ></slot>
+                      <slot
+                        v-else
+                        :name="dynamicSchema.slot"
+                        :formValue="item"
+                        :field="dynamicSchema.field"
+                      ></slot>
 
-                        <div v-if="schema.tip">
-                          <NText type="warning">{{ schema.tip }}</NText>
-                        </div>
+                      <div v-if="schema.tip">
+                        <NText type="warning">{{ schema.tip }}</NText>
                       </div>
-                    </NFormItemGi>
-                  </template>
-                  <NGridItem>
-                    <div style="height: 100%; display: flex; align-items: center">
-                      <NSpace>
-                        <NButton
-                          :disabled="formValue[schema.field].length === 1"
-                          text
-                          @click="handleRemoveDynamicItem(schema, index)"
-                        >
-                          <NIcon :size="24">
-                            <RemoveCircleOutline />
-                          </NIcon>
-                        </NButton>
-
-                        <NButton text @click="handleAddDynamicItem(schema)">
-                          <NIcon :size="24">
-                            <AddCircleOutline />
-                          </NIcon>
-                        </NButton>
-                      </NSpace>
                     </div>
-                  </NGridItem>
-                </NGrid>
-              </NGridItem>
-            </NGrid>
+                  </NFormItemGi>
+                </template>
+
+                <NGridItem>
+                  <div style="height: 100%; display: flex; align-items: center">
+                    <NSpace>
+                      <NButton
+                        :disabled="formValue[schema.field].length === 1"
+                        text
+                        @click="handleRemoveDynamicItem(schema, index)"
+                      >
+                        <NIcon :size="24">
+                          <RemoveCircleOutline />
+                        </NIcon>
+                      </NButton>
+
+                      <NButton text @click="handleAddDynamicItem(schema)">
+                        <NIcon :size="24">
+                          <AddCircleOutline />
+                        </NIcon>
+                      </NButton>
+                    </NSpace>
+                  </div>
+                </NGridItem>
+              </NGrid>
+            </div>
           </NFormItemGi>
         </template>
       </template>
