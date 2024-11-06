@@ -120,34 +120,19 @@ const schemas: FormSchema[] = [
         required: true
       }
     ]
+  },
+  {
+    label: '内容',
+    field: 'content',
+    type: 'editor',
+    defaultValue: '信息展示',
+    componentProps: {}
   }
-  // {
-  //   label: '上传',
-  //   field: 'avatar',
-  //   type: 'upload',
-  //   componentProps: {
-  //     'list-type': 'text'
-  //   }
-  // },
-  // {
-  //   label: '爱好',
-  //   field: 'hobbies',
-  //   type: 'select',
-  //   componentProps: {
-  //     options: selectList
-  //   }
-  // },
-  // {
-  //   label: '内容',
-  //   field: 'content',
-  //   type: 'editor',
-  //   defaultValue: '信息展示',
-  //   componentProps: {}
-  // }
 ]
 
 const showModal = ref(false)
 const [register] = useForm({
+  labelWidth: undefined,
   grid: {
     cols: 1,
     xGap: 14
