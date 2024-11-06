@@ -39,11 +39,6 @@ const attrs = useAttrs()
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-const slotSchemas = computed(() => {
-  if (!Array.isArray(attrs.schemas)) return []
-  return attrs.schemas.filter((item) => item.type === 'slot')
-})
-
 const showModal = computed({
   get() {
     return props.show
