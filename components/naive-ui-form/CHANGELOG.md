@@ -1,5 +1,9 @@
 # naive-ui-form
 
+## 3.1.1
+
+- 修复`groupName`渲染错误
+
 ## 3.0.0
 
 ### Major Changes
