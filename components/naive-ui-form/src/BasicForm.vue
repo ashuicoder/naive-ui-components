@@ -14,14 +14,15 @@
       <template v-for="schema in commonProps.schemas">
         <template v-if="schema.type !== 'dynamic'">
           <NGridItem v-if="schema.groupName" :span="commonProps?.grid?.cols">
-            <NDivider title-placement="left">
-              <div style="font-size: 16px">{{ schema.groupName }}</div>
+            <NDivider>
+              {{ schema.groupName }}
             </NDivider>
           </NGridItem>
           <NFormItemGi
             v-if="typeof schema.vif === 'function' ? schema.vif(formValue) : true"
             v-bind="schema"
             :path="schema.field"
+            :key="schema.field"
             :rule="getFormRule(schema)"
           >
             <div style="width: 100%">

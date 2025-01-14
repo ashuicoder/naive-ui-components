@@ -32,6 +32,7 @@ pnpm add naive-ui-editor
 
 <script setup lang="ts">
 import { NaiveUiEditor } from 'naive-ui-editor'
+import 'naive-ui-editor/dist/style.css'
 import { ref } from 'vue'
 
 const content = ref<string | null>(null)
@@ -53,6 +54,7 @@ function handleUpload() {
 
 ```ts
 import { createApp } from 'vue'
+import 'naive-ui-editor/dist/style.css'
 import NaiveUiEditor from 'naive-ui-editor'
 
 const app = createApp(App)
@@ -69,15 +71,15 @@ app.use(NaiveUiEditor, {
 
 ## props
 
-| 字段          | 类型                 | 描述                     | 必传 | 默认值  |
-| ------------- | -------------------- | ------------------------ | ---- | ------- |
-| mode          | string               | 富文本模式               | 否   | default |
-| height        | number               | 富文本高度               | 否   | 500     |
+| 字段          | 类型                 | 描述                                                                | 必传 | 默认值  |
+| ------------- | -------------------- | ------------------------------------------------------------------- | ---- | ------- |
+| mode          | string               | 富文本模式                                                          | 否   | default |
+| height        | number               | 富文本高度                                                          | 否   | 500     |
 | disabled      | boolean              | 富文本是否禁用逻辑：先判断该字段，再判断injectForm?.props?.disabled | 否   | -       |
-| requestFunc   | Function，见下方说明 | 上传文件的函数           | 否   | -       |
-| v-model:value | string               | 富文本内容，需要双向绑定 | 是   |         |
-| toolbarConfig | Object，见下方说明   | 菜单栏配置               | 否   |         |
-| editorConfig  | Object，同上         | 富文本配置               | 否   | 见下方  |
+| requestFunc   | Function，见下方说明 | 上传文件的函数                                                      | 否   | -       |
+| v-model:value | string               | 富文本内容，需要双向绑定                                            | 是   |         |
+| toolbarConfig | Object，见下方说明   | 菜单栏配置                                                          | 否   |         |
+| editorConfig  | Object，同上         | 富文本配置                                                          | 否   | 见下方  |
 
 `requestFunc`字段定义类型如下：
 
