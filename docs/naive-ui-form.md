@@ -2,6 +2,10 @@
 
 ## 更新日志
 
+### v3.1.1
+
+- `fix`：修复`groupName`在`vif`动态渲染问题
+
 ### v3.1.0
 
 - 修改富文本为`naive-ui-editor`
