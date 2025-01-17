@@ -47,7 +47,7 @@
 
     <ModalForm v-model:show="showModal" :schemas="schemas" title="新增用户"> </ModalForm>
 
-    <n-button @click="test">按钮{{ bool }}</n-button>
+    <!-- <n-button @click="test">按钮{{ bool }}</n-button> -->
     <!-- <n-button @click="tableRef?.resetState">表格重置</n-button> -->
   </div>
 </template>
@@ -176,6 +176,14 @@ let columns: TableColumns = [
       }
     ]
   },
+  ...(Array.from({ length: 40 }, (v, i) => {
+    return {
+      title: '姓名' + i,
+      key: 'name' + i,
+      align: 'center'
+    }
+  }) as TableColumns),
+
   { title: '操作', key: 'operation', fixed: 'right', align: 'center', width: 400 }
 ]
 
