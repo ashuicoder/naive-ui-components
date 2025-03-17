@@ -134,7 +134,7 @@ import {
 } from 'naive-ui'
 
 import type { FormSchema, Recordable } from '../types'
-import { isRef, unref, watch } from 'vue'
+import { isRef, unref } from 'vue'
 
 defineOptions({
   components: {
