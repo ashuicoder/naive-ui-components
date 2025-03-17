@@ -105,7 +105,7 @@
       </template>
 
       <NFormItemGi v-if="commonProps.showActionBtns" label=" " suffix>
-        <NSpace style="width: 100%" :justify="commonProps.grid.cols === 1 ? 'start' : 'end'">
+        <NSpace style="width: 100%" :justify="commonProps.grid?.cols === 1 ? 'start' : 'end'">
           <NButton
             v-if="commonProps.showSubmitBtn"
             type="primary"
@@ -139,7 +139,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, toRaw, watch } from 'vue'
+import { ref, computed, reactive, toRaw, watch, toRefs, toRef, toValue, type Prop } from 'vue'
 import {
   NForm,
   NGrid,
@@ -245,7 +245,7 @@ defineExpose(formMethod)
 
 emit('register', formMethod)
 
-const commonProps = computed(() => {
+const commonProps = computed<Props>(() => {
   return Object.assign({}, props, hookProps.value)
 })
 
