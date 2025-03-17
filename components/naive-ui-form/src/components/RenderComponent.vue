@@ -16,7 +16,7 @@
   >
     <NSpace>
       <NCheckbox
-        v-for="item in schema.componentProps?.options"
+        v-for="item in handleOptions(schema.componentProps?.options)"
         v-bind="item"
         :value="item.value"
         :label="item.label"
@@ -50,7 +50,7 @@
   >
     <NSpace>
       <NRadio
-        v-for="item in schema.componentProps?.options"
+        v-for="item in handleOptions(schema.componentProps?.options)"
         :key="item.label"
         v-bind="item"
         :value="item.value"
@@ -134,6 +134,7 @@ import {
 } from 'naive-ui'
 
 import type { FormSchema, Recordable } from '../types'
+import { isRef, unref } from 'vue'
 
 defineOptions({
   components: {
@@ -166,6 +167,14 @@ interface Props {
 }
 
 defineProps<Props>()
+
+function handleOptions(options: Recordable[]): Recordable[] {
+  if (!options) return []
+  if (isRef(options)) {
+    return unref(options) as Recordable[]
+  }
+  return options
+}
 </script>
 
 <style scoped></style>
