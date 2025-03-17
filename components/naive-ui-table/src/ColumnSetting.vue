@@ -1,5 +1,5 @@
 <template>
-  <NPopover placement="bottom-end" trigger="click">
+  <NPopover placement="bottom-end" trigger="click" :style="{'max-height': maxHeight + 'px'}" scrollable>
     <template #trigger>
       <n-tooltip>
         <template #trigger>
@@ -34,6 +34,10 @@ const props = defineProps({
   columns: {
     type: Array as PropType<Recordable>,
     default: () => []
+  },
+  maxHeight: {
+    type: [Number, String] as PropType<number | string>,
+    default: 500
   }
 })
 

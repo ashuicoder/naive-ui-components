@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { NModal } from 'naive-ui'
-import { computed, useAttrs, useSlots } from 'vue'
+import { computed, useAttrs } from 'vue'
 import to from 'await-to-js'
 
 import BasicForm from './BasicForm.vue'

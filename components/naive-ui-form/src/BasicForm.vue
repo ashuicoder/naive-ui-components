@@ -105,7 +105,7 @@
       </template>
 
       <NFormItemGi v-if="commonProps.showActionBtns" label=" " suffix>
-        <NSpace style="width: 100%" :justify="commonProps.grid.cols === 1 ? 'start' : 'end'">
+        <NSpace style="width: 100%" :justify="commonProps.grid?.cols === 1 ? 'start' : 'end'">
           <NButton
             v-if="commonProps.showSubmitBtn"
             type="primary"
@@ -245,7 +245,7 @@ defineExpose(formMethod)
 
 emit('register', formMethod)
 
-const commonProps = computed(() => {
+const commonProps = computed<Props>(() => {
   return Object.assign({}, props, hookProps.value)
 })
 

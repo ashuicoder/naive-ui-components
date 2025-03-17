@@ -59,7 +59,7 @@
             </n-tooltip>
 
             <!-- 列设置 -->
-            <ColumnSetting v-if="showToolButton('setting')" v-model:columns="initColumns" />
+            <ColumnSetting  v-if="showToolButton('setting')" v-model:columns="initColumns" :max-height="height"/>
           </template>
         </n-space>
       </div>
