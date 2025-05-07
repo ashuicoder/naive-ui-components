@@ -4,8 +4,8 @@
     :size="5"
     multiple
     accept=".Mp4  ,  .Png"
-    :requestFunc="handleUpload"
     list-type="text"
+    @update:value="handleChange"
   ></naive-ui-upload>
 </template>
 
@@ -18,11 +18,14 @@ const fileList = ref<FileInfo[]>([
   {
     id: '1',
     url: 'https://eibp-frontend.oss-cn-hangzhou.aliyuncs.com/portal-website/images1/46.png',
-    name: '自定义上传的'
+    name: '自定义上传的',
+    status: 'success'
   }
 ])
 
-console.log(fileList.value)
+function handleChange(value) {
+  console.log(value)
+}
 
 async function handleUpload(file: File) {
   const formData = new FormData()
@@ -37,7 +40,7 @@ async function handleUpload(file: File) {
     throw err
   }
   const data = await res.json()
-  return data.url
+  return data
 }
 </script>
 

@@ -13,8 +13,8 @@ export { provideKey }
 export default {
   install(app: App, option?: Option) {
     app.component('NaiveUiUpload', NaiveUiUpload)
-    if (option?.requestFunc) {
-      app.provide(provideKey, option.requestFunc)
+    if (option) {
+      app.provide(provideKey, option)
     }
   }
 }
