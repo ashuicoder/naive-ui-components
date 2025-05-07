@@ -37,6 +37,11 @@
         </template>
 
         <template v-else>
+          <NGridItem v-if="schema.groupName" :span="commonProps?.grid?.cols">
+            <NDivider>
+              {{ schema.groupName }}
+            </NDivider>
+          </NGridItem>
           <NFormItemGi
             v-if="typeof schema.vif === 'function' ? schema.vif(formValue) : true"
             v-bind="schema"
@@ -49,9 +54,7 @@
               >
                 <template v-for="dynamicSchema in schema.dynamicOptions">
                   <NFormItemGi
-                    v-show="
-                      typeof dynamicSchema.vif === 'function' ? dynamicSchema.vif(item) : true
-                    "
+                    v-if="typeof dynamicSchema.vif === 'function' ? dynamicSchema.vif(item) : true"
                     v-bind="dynamicSchema"
                     :path="`${schema.field}[${index}].${dynamicSchema.field}`"
                     :rule="getFormRule(dynamicSchema)"

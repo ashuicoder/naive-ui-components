@@ -1,1 +1,1 @@
-export const provideKey = 'uploadRequestFunc'
+export const provideKey = 'naive-ui-upload-provide'
