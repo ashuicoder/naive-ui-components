@@ -39,7 +39,9 @@ const fileList = ref<FileInfo[]>([])
 function handleUpload() {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve('https://picsum.photos/200/300')
+      resolve({
+        url: 'https://picsum.photos/200/300'
+      })
     }, 1000)
   })
 }
@@ -72,7 +74,9 @@ app.use(NaiveUiUpload, {
   requestFunc() {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve('https://picsum.photos/200/300')
+        resolve({
+          url: 'https://picsum.photos/200/300'
+        })
       }, 1000)
     })
   }
@@ -102,7 +106,13 @@ app.use(NaiveUiUpload, {
 `requestFunc`字段定义类型如下：
 
 ```ts
-type RequestFun = (file: File, onProgerss?: (e: { percent: number }) => void) => Promise<string>
+type RequestFun = (
+  file: File,
+  onProgerss?: (e: { percent: number }) => void
+) => Promise<{
+  id: string
+  [key: string]: any
+}>
 ```
 
 可以在`全局注册`传入`requestFunc`，也可在`naive-ui-upload`的`props`传入。`props`优先级最高。
