@@ -55,14 +55,16 @@
 
 <script setup lang="ts">
 import { useAttrs, nextTick, inject, ref, watch } from 'vue'
+
 import { NUpload, useMessage, NModal, NButton, NText } from 'naive-ui'
 import to from 'await-to-js'
 import 'vue-cropper/dist/index.css'
 import { VueCropper } from 'Vue-Cropper'
 import { provideKey } from './const'
+import { filterParams } from './utils'
 
 import type { UploadCustomRequestOptions, UploadFileInfo } from 'naive-ui'
-import type { RequestFun, FileInfo } from './types'
+import type { Option, RequestFun, FileInfo } from './types'
 
 const attrs = useAttrs()
 const message = useMessage()
@@ -74,6 +76,7 @@ interface Props {
   cropper?: boolean | Record<string, any>
   showInfo?: boolean
   uploadText?: string
+  params?: string[]
 }
 const props = withDefaults(defineProps<Props>(), {
   showInfo: true,
@@ -94,8 +97,13 @@ const emits = defineEmits<{
 }>()
 const fileList = ref<UploadFileInfo[]>([])
 
-const injectRequestFunc = inject<RequestFun | undefined>(provideKey, undefined)
+const option = inject<Option>(provideKey, {})
+
+const injectRequestFunc = option.requestFunc
+const injectParams = option.params
 const uploadApi = props.requestFunc ?? injectRequestFunc
+
+const params = props.params ?? injectParams ?? []
 
 if (!uploadApi) {
   throw new Error('requestFunc is required')
@@ -187,14 +195,19 @@ async function handleConfirmCropper() {
   })
   if (!verifySize(file)) return false
   cropperLoading.value = true
-  const [err, res] = await to<string>(uploadApi(file))
+  const [err, res] = await to<Record<string, any>>(uploadApi(file))
   cropperLoading.value = false
   if (err) {
     return false
   }
   currentCropperFile.value.file = file
-  currentCropperFile.value.url = res
+
   currentCropperFile.value.status = 'finished'
+
+  Object.keys(res).forEach((key) => {
+    currentCropperFile.value![key] = res[key]
+  })
+
   fileList.value.push(currentCropperFile.value)
   nextTick(() => handleFileListChange())
 }
@@ -217,14 +230,20 @@ async function handleCustomRequest({
     throw new Error('requestFunc is required')
   }
   const [err, res] = await to(uploadApi(file.file as File, onProgress))
+
   if (err) {
     onError()
     return
   }
+
   onFinish()
+
   nextTick(() => {
     const index = fileList.value.findIndex((item) => item.id === file.id)
-    fileList.value[index].url = res
+    Object.keys(res).forEach((key) => {
+      fileList.value[index]![key] = res[key]
+    })
+
     handleFileListChange()
   })
 }
@@ -233,11 +252,13 @@ function handleRemove({ file }: { file: UploadFileInfo }) {
   const _fileLIst = fileList.value
     .filter((item) => item.id !== file.id && item.status === 'finished')
     .map((item) => {
+      const filterObj = filterParams(params, item)
       return {
         id: item.id,
         name: item.name,
         url: item.url as string,
-        status: 'finished'
+        status: 'finished',
+        ...filterObj
       }
     })
   isChangeFromProps = false
@@ -249,11 +270,13 @@ function handleFileListChange() {
   const uploadFileList = fileList.value
     .filter((item) => item.status === 'finished')
     .map((item) => {
+      const filterObj = filterParams(params, item)
       return {
         id: item.id,
         name: item.name,
         url: item.url as string,
-        status: 'finished'
+        status: 'finished',
+        ...filterObj
       }
     })
   isChangeFromProps = false

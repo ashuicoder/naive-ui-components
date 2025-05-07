@@ -81,16 +81,23 @@ app.use(NaiveUiUpload, {
 
 ## props
 
-| 字段          | 类型                                                                     | 描述                                                     | 必传 | 默认值   |
-| ------------- | ------------------------------------------------------------------------ | -------------------------------------------------------- | ---- | -------- |
-| requestFunc   | Function，见下方说明                                                     | 上传文件的方法                                           | 否   | -        |
-| v-model:value | FileInfo[]                                                               | 文件列表，需要双向绑定                                   | 是   |          |
-| size          | number                                                                   | 单个文件上传的限制大小（单位：M）                        | 否   |          |
-| cropper       | Objec，具体参数见[vue-cropper](https://github.com/xyxiao001/vue-cropper) | 是否需要裁剪（**设置该值时确保上传的是图片格式的文件**） | 否   |          |
-| showInfo      | boolean                                                                  | 是否显示提示信息                                         | 否   | 是       |
-| uploadText    | string                                                                   | 默认插槽按钮文字                                         | 否   | 上传文件 |
+| 字段          | 类型                                                                     | 描述                                                     | 必传 | 默认值                                                     |
+| ------------- | ------------------------------------------------------------------------ | -------------------------------------------------------- | ---- | ---------------------------------------------------------- |
+| requestFunc   | Function，见下方说明                                                     | 上传文件的方法                                           | 否   | -                                                          |
+| v-model:value | FileInfo[]                                                               | 文件列表，需要双向绑定                                   | 是   |                                                            |
+| size          | number                                                                   | 单个文件上传的限制大小（单位：M）                        | 否   |                                                            |
+| cropper       | Objec，具体参数见[vue-cropper](https://github.com/xyxiao001/vue-cropper) | 是否需要裁剪（**设置该值时确保上传的是图片格式的文件**） | 否   |                                                            |
+| showInfo      | boolean                                                                  | 是否显示提示信息                                         | 否   | 是                                                         |
+| uploadText    | string                                                                   | 默认插槽按钮文字                                         | 否   | 上传文件                                                   |
+| params        | string[]                                                                 | 默认插槽按钮文字                                         | 否   | api返回的数据，需要加入到`v-model:value`的数组项的额外字段 |
 
 此外，还可以传入[n-upload](https://ui.naiveadmin.com/zh-CN/os-theme/components/upload)的大部分`props`。
+
+::: tip 提示
+
+通过`app.use`或`provide`可以传入`requestFunc`、`params`，其他的没有封装进去
+
+:::
 
 `requestFunc`字段定义类型如下：
 
@@ -110,7 +117,9 @@ app.use(NaiveUiUpload, {
 
 ```ts
 import { provideKey } from 'naive-ui-upload'
-app.provide(provideKey, function)
+app.provide(provideKey, {
+  requestFunc: function
+})
 ```
 
 ::: danger 提示
