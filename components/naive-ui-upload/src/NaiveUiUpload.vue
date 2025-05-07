@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAttrs, nextTick, inject, ref, watch } from 'vue'
+import { useAttrs, nextTick, inject, ref, watch, onUnmounted } from 'vue'
 
 import { NUpload, useMessage, NModal, NButton, NText } from 'naive-ui'
 import to from 'await-to-js'
@@ -105,6 +105,8 @@ const uploadApi = props.requestFunc ?? injectRequestFunc
 
 const params = props.params ?? injectParams ?? []
 
+const paramsMap = new Map()
+
 if (!uploadApi) {
   throw new Error('requestFunc is required')
 }
@@ -139,11 +141,14 @@ watch(
     }
     fileList.value = val.map((item) => {
       return {
-        id: item.id || Math.random().toString(36).substring(2, 9),
+        id: item.id,
         url: item.url,
         name: item.name,
         status: 'finished'
       }
+    })
+    val.forEach((item) => {
+      paramsMap.set(item.id, filterParams(params, item))
     })
     isChangeFromProps = true
   },
@@ -201,14 +206,11 @@ async function handleConfirmCropper() {
     return false
   }
   currentCropperFile.value.file = file
-
   currentCropperFile.value.status = 'finished'
-
-  Object.keys(res).forEach((key) => {
-    currentCropperFile.value![key] = res[key]
-  })
-
+  currentCropperFile.value!.url = res.url
+  paramsMap.set(currentCropperFile.value.id, filterParams(params, res))
   fileList.value.push(currentCropperFile.value)
+
   nextTick(() => handleFileListChange())
 }
 
@@ -238,21 +240,22 @@ async function handleCustomRequest({
 
   onFinish()
 
-  nextTick(() => {
-    const index = fileList.value.findIndex((item) => item.id === file.id)
-    Object.keys(res).forEach((key) => {
-      fileList.value[index]![key] = res[key]
-    })
+  await nextTick()
 
-    handleFileListChange()
+  const index = fileList.value.findIndex((item) => item.id === file.id)
+  Object.keys(res).forEach((key) => {
+    fileList.value[index]![key] = res[key]
   })
+  paramsMap.set(file.id, filterParams(params, res))
+  handleFileListChange()
 }
 
 function handleRemove({ file }: { file: UploadFileInfo }) {
+  paramsMap.delete(file.id)
   const _fileLIst = fileList.value
     .filter((item) => item.id !== file.id && item.status === 'finished')
     .map((item) => {
-      const filterObj = filterParams(params, item)
+      const filterObj = paramsMap.get(item.id) as Record<string, any> | undefined
       return {
         id: item.id,
         name: item.name,
@@ -266,11 +269,12 @@ function handleRemove({ file }: { file: UploadFileInfo }) {
   return true
 }
 
-function handleFileListChange() {
+async function handleFileListChange() {
+  console.log(paramsMap)
   const uploadFileList = fileList.value
     .filter((item) => item.status === 'finished')
     .map((item) => {
-      const filterObj = filterParams(params, item)
+      const filterObj = paramsMap.get(item.id) as Record<string, any> | undefined
       return {
         id: item.id,
         name: item.name,
@@ -282,6 +286,10 @@ function handleFileListChange() {
   isChangeFromProps = false
   emits('update:value', uploadFileList)
 }
+
+onUnmounted(() => {
+  paramsMap.clear()
+})
 </script>
 
 <style scoped></style>
