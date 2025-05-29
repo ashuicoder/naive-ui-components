@@ -13,16 +13,20 @@
     >
       <template v-for="schema in commonProps.schemas">
         <template v-if="schema.type !== 'dynamic'">
-          <NGridItem v-if="schema.groupName" :span="commonProps?.grid?.cols">
+          <NGridItem
+            v-if="schema.groupName"
+            :key="schema.groupName"
+            :span="commonProps?.grid?.cols"
+          >
             <NDivider>
               {{ schema.groupName }}
             </NDivider>
           </NGridItem>
           <NFormItemGi
             v-if="typeof schema.vif === 'function' ? schema.vif(formValue) : true"
+            :key="schema.field"
             v-bind="schema"
             :path="schema.field"
-            :key="schema.field"
             :rule="getFormRule(schema)"
           >
             <div style="width: 100%">
@@ -58,6 +62,7 @@
                     v-bind="dynamicSchema"
                     :path="`${schema.field}[${index}].${dynamicSchema.field}`"
                     :rule="getFormRule(dynamicSchema)"
+                    :key="dynamicSchema.field"
                   >
                     <div style="width: 100%">
                       <RenderComponent
