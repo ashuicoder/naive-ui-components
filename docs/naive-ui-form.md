@@ -2,6 +2,10 @@
 
 ## 更新日志
 
+### 3.1.4
+
+- `fix`：修复groupName动态渲染的问题
+
 ### v3.1.2
 
 - `fix`：修复props传值的时候，componentProps的options数据为响应式数据报错的问题
