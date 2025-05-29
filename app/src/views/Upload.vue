@@ -3,7 +3,6 @@
     v-model:value="fileList"
     :size="5"
     multiple
-    accept=".Mp4  ,  .Png"
     list-type="text"
     @update:value="handleChange"
   ></naive-ui-upload>
@@ -16,10 +15,11 @@ import { ref } from 'vue'
 
 const fileList = ref<FileInfo[]>([
   {
-    id: '1',
-    url: 'https://eibp-frontend.oss-cn-hangzhou.aliyuncs.com/portal-website/images1/46.png',
-    name: '自定义上传的',
-    status: 'success'
+    id: '88ae79b0',
+    name: '微信截图_20250421181445.png',
+    url: 'http://localhost:3000/1746609828451.png',
+    status: 'finished',
+    fileName: '微信截图_20250421181445.png'
   }
 ])
 
