@@ -25,7 +25,7 @@ app.use(NaiveUiUpload, {
     const data = await res.json()
     return data
   },
-  params: ['fileName']
+  params: ['filename']
 })
 
 app.use(NaiveuiEditor, {
