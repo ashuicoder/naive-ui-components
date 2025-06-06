@@ -243,10 +243,12 @@ async function handleCustomRequest({
   await nextTick()
 
   const index = fileList.value.findIndex((item) => item.id === file.id)
-  Object.keys(res).forEach((key) => {
-    fileList.value[index]![key] = res[key]
-  })
-  paramsMap.set(file.id, filterParams(params, res))
+  fileList.value[index].url = res.url as string
+
+  if (params.length) {
+    paramsMap.set(file.id, filterParams(params, res))
+  }
+
   handleFileListChange()
 }
 
@@ -270,7 +272,6 @@ function handleRemove({ file }: { file: UploadFileInfo }) {
 }
 
 async function handleFileListChange() {
-  console.log(paramsMap)
   const uploadFileList = fileList.value
     .filter((item) => item.status === 'finished')
     .map((item) => {
